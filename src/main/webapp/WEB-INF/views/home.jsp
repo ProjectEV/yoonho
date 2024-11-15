@@ -90,7 +90,15 @@ desired effect
 			
 			<td>
 				<a href="/project/mypage"> 마이페이지 </a>
-			</td>				
+			</td>	
+			
+			<td>
+				<a href="/project/join"> 회원가입 </a>
+			</td>	
+			
+			<td>
+				<a href="/project/inventory"> 재고관리 </a>
+			</td>			
 			
 		</tr>
 		</table>	

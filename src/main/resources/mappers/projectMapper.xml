@@ -53,6 +53,14 @@
       LIMIT #{start}, #{pageSIZE}
   </select>
   
+  <select id="listProductVoid" resultType="ProductVO">
+	  SELECT *
+      FROM product
+      order by product_id
+  </select>
+  
+  
+  
   
   
   <select id="reviewlist" parameterType="String" resultType="BoardsVO">
@@ -110,9 +118,34 @@
   
   
   
+  <insert id="productRegister" parameterType="ProductVO">
+		insert into 
+		product (product_id, product_name, product_price, product_content, product_category, product_remain, product_sales)
+		values (#{product_id}, #{product_name}, #{product_price}, #{product_content}, #{product_category}, #{product_remain}, 0)
+  </insert>
+  
+  <delete id="productDelete" parameterType="String">
+  		delete from 
+  		product
+  		where product_id = #{product_id} 
+  </delete>
+  
+  <update id="productRemainPlus" parameterType="map">
+  		update product
+  		set product_remain = product_remain + #{product_plus}
+  		where product_id = #{product_id}
+  </update>
   
   
   
+	<!-- 글 수정하는 SQL "update"-->
+	<update id="productUpdate" parameterType="ProductVO">
+		update product
+		set
+		product_name=#{product_name} , product_price=#{product_price} , product_category=#{product_category},
+		product_content=#{product_content}
+		where product_id = #{product_id}
+	</update>
   
   
   

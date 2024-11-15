@@ -27,7 +27,7 @@ public interface BoardService {
 	// 글삭제
 	public int delete(int bno);
 	
-	// 슬수정
+	// 글수정
 	public int update(BoardDTO boardDTO);
 	
 	//로그인 처리를 위한 메소드

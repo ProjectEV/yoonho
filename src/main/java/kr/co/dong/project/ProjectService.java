@@ -20,15 +20,25 @@ public interface ProjectService {
 	
 	public List<ProductVO> listProduct(int start, int pageSIZE);
 	public List<ProductVO> listMypage(int start, int pageSIZE, String user_id);
-	
+	public List<ProductVO> listProduct();
 	
 	
 	public Map<String, Object> projectLogin(Map<String, Object> map);
 	
 	
+	
 	public int join(UserVO userVO);
 	public int pay(BuyVO buyVO);
 	public int review(BoardsVO boardsVO);
+	
+	
+	public int productRegister(ProductVO productVO);
+	public int productDelete(String product_id);
+	public int productRemainPlus(int product_plus, String product_id);
+	
+	
+	public int productUpdate(ProductVO productVO);
+	
 	
 	
 	

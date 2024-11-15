@@ -67,6 +67,11 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.listMypage(start, pageSIZE, user_id);
 	}
+	@Override
+	public List<ProductVO> listProduct() {
+		// TODO Auto-generated method stub
+		return projectDAO.listProduct();
+	}
 	
 	
 
@@ -91,6 +96,32 @@ public class ProjectServiceImpl implements ProjectService {
 	public int review(BoardsVO boardsVO) {
 		// TODO Auto-generated method stub
 		return projectDAO.review(boardsVO);
+	}
+	
+	
+	
+	@Override
+	public int productRegister(ProductVO productVO) {
+		// TODO Auto-generated method stub
+		return projectDAO.productRegister(productVO);
+	}
+	@Override
+	public int productDelete(String product_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.productDelete(product_id);
+	}
+	@Override
+	public int productRemainPlus(int product_plus, String product_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.productRemainPlus(product_plus, product_id);
+	}
+	
+	
+	
+	@Override
+	public int productUpdate(ProductVO productVO) {
+		// TODO Auto-generated method stub
+		return projectDAO.productUpdate(productVO);
 	}
 
 	

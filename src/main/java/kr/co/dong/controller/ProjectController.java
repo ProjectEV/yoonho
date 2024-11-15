@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.co.dong.board.BoardDTO;
+import kr.co.dong.board.BoardReply;
 import kr.co.dong.project.AddressVO;
 import kr.co.dong.project.BoardsVO;
 import kr.co.dong.project.BuyVO;
@@ -34,16 +36,18 @@ public class ProjectController {
 	
 	
 	
-	// 재고관리 화면으로 이동시키며 동시에 필요한 재고 정보를 호출하는 컨트롤러
-//	@RequestMapping(value="project/inventory",method= RequestMethod.GET)
-//	public ModelAndView inventory() {
-//		ModelAndView mav = new ModelAndView();
-//		
-//		List<InventoryVO> list = projectService.listInventory();
-//		mav.addObject("list", list);
-//		mav.setViewName("inventory");
-//		return mav;
-//	}
+	 // 재고관리 화면으로 이동시키며 동시에 필요한 재고 정보를 호출하는 컨트롤러
+	@RequestMapping(value="project/inventory",method= RequestMethod.GET)
+	public ModelAndView inventory() {
+		ModelAndView mav = new ModelAndView();
+		
+		int totalRecord = projectService.product_totalRecord();
+		List<ProductVO> list = projectService.listProduct();
+		mav.addObject("list", list);
+		mav.addObject("totalRecord",totalRecord);
+		mav.setViewName("inventory");
+		return mav;
+	}
 	
 	
 	// 프로젝트 로그인 화면으로 단순 이동시키는 컨트롤러
@@ -130,7 +134,7 @@ public class ProjectController {
 	
 	// 제품 목록 화면에서 제품을 클릭했을 때 출력될 상세페이지 (product_detail.jsp)
 	@RequestMapping(value = "project/product_detail", method = RequestMethod.GET)
-	public String detail(@RequestParam("product_id")String product_id, Model model) {	
+	public String productDetail(@RequestParam("product_id")String product_id, Model model) {	
 		ProductVO productVO = projectService.productDetail(product_id);
 		
 		model.addAttribute("product", productVO);
@@ -142,6 +146,88 @@ public class ProjectController {
 		return "product_detail";
 	}
 	
+	@RequestMapping(value = "project/inventory_detail", method = RequestMethod.GET)
+	public String inventoryDetail(@RequestParam("product_id")String product_id, Model model) {	
+		ProductVO productVO = projectService.productDetail(product_id);
+		
+		model.addAttribute("product", productVO);
+		
+		
+		return "inventory_detail";
+	}
+	
+	
+	
+	@RequestMapping(value="project/product_register", method= RequestMethod.GET)
+	public String productRegister() {
+		logger.info("관리자 글 작성 이동");
+		return "admin_post";
+	}
+	
+	// 신규 product 등록
+	@RequestMapping(value="project/product_register", method= RequestMethod.POST) 
+	public String productRegister(ProductVO productVO, HttpServletRequest request,RedirectAttributes rttr) throws Exception {
+		request.setCharacterEncoding("UTF-8");
+		logger.info("내용" + productVO);
+
+		int r = projectService.productRegister(productVO);
+		
+		if(r>0) {
+			rttr.addFlashAttribute("msg","추가에 성공하였습니다.");	//세션저장
+			}
+		return "redirect:inventory";
+	}
+	
+	// 기존에 있던 product 수량만 추가
+	@RequestMapping(value="project/productRemainPlus", method= RequestMethod.POST)
+	public String productRemainPlus(@RequestParam("product_plus") int product_plus,
+						@RequestParam("product_id") String product_id) {
+		int r = projectService.productRemainPlus(product_plus, product_id);
+		
+		return "redirect:inventory";
+	}
+	
+	
+	@RequestMapping(value="project/product_update", method= RequestMethod.GET)
+	public String productUpdate(@RequestParam("product_id") String product_id, Model model) {
+		ProductVO productVO = projectService.productDetail(product_id);
+		model.addAttribute("product", productVO);
+		return "admin_update";
+	}
+	
+	@RequestMapping(value="project/product_update", method = RequestMethod.POST)
+	public String productUpdate(ProductVO productVO, RedirectAttributes attr,HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		int r = projectService.productUpdate(productVO);
+		// 수정에 성공하면 목록보기로 이동
+		if (r > 0) {
+			attr.addFlashAttribute("msg", "수정에 성공 하였습니다.");
+			return "redirect:inventory";
+		}
+		// 수정에 실패하면 수정보기 화면으로 이동
+		return "redirect:inventory";
+	}
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping(value="project/product_delete",method = RequestMethod.GET)
+	public String productDelete(@RequestParam("product_id") String product_id, RedirectAttributes rttr) {
+		int r = projectService.productDelete(product_id);
+		
+		if(r > 0) {
+			rttr.addFlashAttribute("msg","글삭제에 성공하였습니다.");
+			return "redirect:inventory";
+		}
+		return "redirect:inventory_detail?product_id=" + product_id;
+	}
+	
+	
+	
+	
 	
 	
 	
@@ -150,8 +236,7 @@ public class ProjectController {
 	// 주문/결제 페이지로 이동
 	@RequestMapping(value="project/pay", method= RequestMethod.GET)
 	public String pay(@RequestParam("product_id")String product_id, Model model, HttpSession session,
-			HttpServletRequest request, HttpServletResponse response)
-			{
+			HttpServletRequest request, HttpServletResponse response) {
 		logger.info("pay 이동");
 		
 		Map<String, Object> user = (Map)session.getAttribute("user");
@@ -187,7 +272,7 @@ public class ProjectController {
 	@RequestMapping(value="project/join", method= RequestMethod.GET)
 	public String join() {
 		logger.info("글쓰기 이동");
-		return "register";
+		return "join";
 	}
 		
 	// 회원가입 정보 제출 + 등록
@@ -200,7 +285,7 @@ public class ProjectController {
 		if(r>0) {
 			rttr.addFlashAttribute("msg","추가에 성공하였습니다.");	//세션저장
 		}
-		return "redirect:join";
+		return "redirect:login";
 	}	
 		
 	

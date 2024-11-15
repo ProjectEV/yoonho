@@ -80,7 +80,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 		map.put("user_id", user_id);
 		return sqlSession.selectList(nameSpace + ".listMypage", map);
 	}
-	
+	@Override
+	public List<ProductVO> listProduct() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".listProductVoid");
+	}
 	
 	
 
@@ -104,6 +108,36 @@ public class ProjectDAOImpl implements ProjectDAO {
 	public int review(BoardsVO boardsVO) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert(nameSpace+".review", boardsVO);
+	}
+	
+	
+	
+	@Override
+	public int productRegister(ProductVO productVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(nameSpace + ".productRegister", productVO);
+	}
+	@Override
+	public int productDelete(String product_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(nameSpace + ".productDelete", product_id);
+	}
+	@Override
+	public int productRemainPlus(int product_plus, String product_id) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("product_plus", product_plus);
+		map.put("product_id", product_id);
+		return sqlSession.update(nameSpace+".productRemainPlus", map);
+	}
+	
+	
+	
+	
+	@Override
+	public int productUpdate(ProductVO productVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(nameSpace + ".productUpdate", productVO);
 	}
 
 	
