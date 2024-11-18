@@ -241,7 +241,12 @@ desired effect
 				</div>
 				
 				<div>
-				<a href="pay?product_id=${product.product_id}"> 구매 </a>
+				
+				
+				<!-- <a href="pay?product_id=${product.product_id}"> 구매 </a> -->
+				<!-- <a href="/project/cart_register" value="aa"> 장바구니에 담기 </a> -->
+				<a href="cart_register?product_id=${product.product_id}"> 장바구니에 담기 </a>
+				
 				</div>
 				
 				<div class="form-group">

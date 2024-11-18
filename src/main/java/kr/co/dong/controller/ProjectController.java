@@ -18,11 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import kr.co.dong.board.BoardDTO;
-import kr.co.dong.board.BoardReply;
 import kr.co.dong.project.AddressVO;
 import kr.co.dong.project.BoardsVO;
 import kr.co.dong.project.BuyVO;
+import kr.co.dong.project.CartVO;
 import kr.co.dong.project.ProductVO;
 import kr.co.dong.project.ProjectService;
 import kr.co.dong.project.UserVO;
@@ -243,10 +242,10 @@ public class ProjectController {
 		String user_id = (String)user.get("user_id");
 		
 		ProductVO productVO = projectService.productDetail(product_id);
-		List<AddressVO> addressVO = projectService.addresslist(user_id);
+		// List<AddressVO> addressVO = projectService.listAddress(user_id);
 		
 		model.addAttribute("product", productVO);
-		model.addAttribute("address", addressVO);
+		// model.addAttribute("address", addressVO);
 		
 		return "pay";
 	}
@@ -371,15 +370,46 @@ public class ProjectController {
 	
 		
 		
+	
+	
+	
+	@RequestMapping(value="project/address_select",method= RequestMethod.GET)
+	public ModelAndView address_select(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		Map<String, Object> user = (Map)session.getAttribute("user");
+		String user_id = (String)user.get("user_id");
+		
+		ModelAndView mav = new ModelAndView();
+		
+		int totalRecord = projectService.address_totalRecord(user_id);
+		List<AddressVO> list = projectService.listAddress(user_id);
+		mav.addObject("list", list);
+		mav.addObject("totalRecord",totalRecord);
+		mav.setViewName("address_select");
+		return mav;
+	}
 		
 		
 		
+	@RequestMapping(value="project/cart_register", method= RequestMethod.GET) 
+	public String cartRegister(@RequestParam("product_id")String product_id, HttpServletRequest request,
+			RedirectAttributes rttr, HttpSession session, HttpServletResponse response, Model model) throws Exception {
+		request.setCharacterEncoding("UTF-8");
+
+		Map<String, Object> user = (Map)session.getAttribute("user");
+		String user_id = (String)user.get("user_id");
 		
+		ProductVO productVO = projectService.productDetail(product_id);
+		String product_name = (String)productVO.getProduct_name();
 		
+		int r = projectService.cartRegister(user_id, product_id, product_name);
 		
+		return "redirect:product";
+	}
 		
-		
-		
+	
+	
 		
 		
 	

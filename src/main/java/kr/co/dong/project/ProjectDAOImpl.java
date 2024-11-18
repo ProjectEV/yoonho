@@ -31,6 +31,12 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(nameSpace + ".mypage_totalRecord", user_id);
 	}
+	@Override
+	public int address_totalRecord(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".address_totalRecord", user_id);
+	}
+	
 	
 
 	@Override
@@ -53,11 +59,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(nameSpace+".productDetail", product_id);
 	}
-	@Override
-	public List<AddressVO> addresslist(String user_id) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(nameSpace+".addresslist", user_id);
-	}
+	
 	
 	
 	
@@ -85,6 +87,14 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(nameSpace + ".listProductVoid");
 	}
+	@Override
+	public List<AddressVO> listAddress(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace+".listAddress", user_id);
+	}
+	
+	
+	
 	
 	
 
@@ -138,6 +148,17 @@ public class ProjectDAOImpl implements ProjectDAO {
 	public int productUpdate(ProductVO productVO) {
 		// TODO Auto-generated method stub
 		return sqlSession.update(nameSpace + ".productUpdate", productVO);
+	}
+	
+	
+	@Override
+	public int cartRegister(String user_id, String product_id, String product_name) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user_id);
+		map.put("product_id", product_id);
+		map.put("product_name", product_name);
+		return sqlSession.insert(nameSpace + ".cartRegister", map);
 	}
 
 	

@@ -25,6 +25,11 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.mypage_totalRecord(user_id);
 	}
+	@Override
+	public int address_totalRecord(String user_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.address_totalRecord(user_id);
+	}
 	
 
 	@Override
@@ -47,11 +52,7 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.productDetail(product_id);
 	}
-	@Override
-	public List<AddressVO> addresslist(String user_id) {
-		// TODO Auto-generated method stub
-		return projectDAO.addresslist(user_id);
-	}
+	
 	
 	
 	
@@ -72,6 +73,12 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.listProduct();
 	}
+	@Override
+	public List<AddressVO> listAddress(String user_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.listAddress(user_id);
+	}
+	
 	
 	
 
@@ -122,6 +129,13 @@ public class ProjectServiceImpl implements ProjectService {
 	public int productUpdate(ProductVO productVO) {
 		// TODO Auto-generated method stub
 		return projectDAO.productUpdate(productVO);
+	}
+	
+	
+	@Override
+	public int cartRegister(String user_id, String product_id, String product_name) {
+		// TODO Auto-generated method stub
+		return projectDAO.cartRegister(user_id, product_id, product_name);
 	}
 
 	
