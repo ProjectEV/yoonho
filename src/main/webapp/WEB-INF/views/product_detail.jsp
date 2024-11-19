@@ -247,6 +247,14 @@ desired effect
 				<!-- <a href="/project/cart_register" value="aa"> 장바구니에 담기 </a> -->
 				<a href="cart_register?product_id=${product.product_id}"> 장바구니에 담기 </a>
 				
+				<form action="cart_register" method="get">
+					<input type="hidden" name="product_id" id="product_id" value="${product.product_id}">
+					<input type="hidden" name="product_name" id="product_name" value="${product.product_name}">
+					<input type="number" name="amount" id="amount" value="1">
+					<button type="submit">장바구니 담기</button>
+				</form>
+				
+				
 				</div>
 				
 				<div class="form-group">

@@ -18,6 +18,11 @@
 		where address_userid = #{user_id}
   </select>
   
+  <select id="cart_totalRecord" parameterType="String" resultType="int">
+		select count(*) from cart
+		where cart_userid = #{user_id}
+  </select>
+  
   
   
   
@@ -66,6 +71,12 @@
 		select *
 		from address
 		where address_userid = #{user_id}
+  </select>
+  
+  <select id="listCart" parameterType="String" resultType="CartVO">
+		select *
+		from cart
+		where cart_userid = #{user_id}
   </select>
   
   
@@ -160,10 +171,40 @@
   <insert id="cartRegister" parameterType="map">
 		insert into 
 		cart (cart_userid, cart_productid, cart_productname, cart_amount)
-		values (#{user_id}, #{product_id}, #{product_name}, 1)
+		values (#{user_id}, #{product_id}, #{product_name}, #{amount})
   </insert>
   
+  <update id="cartUpdate" parameterType="map">
+		update cart
+		set
+		cart_amount=#{amount}
+		where cart_productid = #{product_id} and cart_userid=#{user_id}
+  </update>
   
+  
+  
+  
+  
+  
+  
+  
+  <insert id="buyRegister" parameterType="map">
+		insert into 
+		buy (buy_userid, buy_regdate, buy_amount, buy_address, buy_receive)
+		values (#{buy_userid}, curdate(), #{totalRecord}, #{buy_address}, #{buy_receive})
+  </insert>
+  
+  <insert id="buyDetailRegister" parameterType="list">
+		insert into 
+		cart (cart_userid, cart_productid, cart_productname, cart_amount)
+		values (#{user_id}, #{product_id}, #{product_name}, #{amount})
+  </insert>
+  
+  <delete id="cartDelete" parameterType="String">
+  		delete from 
+  		cart
+  		where cart_userid = #{user_id} 
+  </delete>
   
   
   

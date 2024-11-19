@@ -98,7 +98,11 @@ desired effect
 			
 			<td>
 				<a href="/project/inventory"> 재고관리 </a>
-			</td>			
+			</td>	
+			
+			<td>
+				<a href="/project/cart"> 장바구니 </a>
+			</td>		
 			
 		</tr>
 		</table>	

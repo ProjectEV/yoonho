@@ -30,6 +30,12 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.address_totalRecord(user_id);
 	}
+	@Override
+	public int cart_totalRecord(String user_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.cart_totalRecord(user_id);
+	}
+	
 	
 
 	@Override
@@ -78,7 +84,11 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.listAddress(user_id);
 	}
-	
+	@Override
+	public List<CartVO> listCart(String user_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.listCart(user_id);
+	}
 	
 	
 
@@ -133,9 +143,34 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	
 	@Override
-	public int cartRegister(String user_id, String product_id, String product_name) {
+	public int cartRegister(String user_id, String product_id, String product_name, int amount) {
 		// TODO Auto-generated method stub
-		return projectDAO.cartRegister(user_id, product_id, product_name);
+		return projectDAO.cartRegister(user_id, product_id, product_name, amount);
+	}
+	@Override
+	public int cartUpdate(String user_id, String product_id, int amount) {
+		// TODO Auto-generated method stub
+		return projectDAO.cartUpdate(user_id, product_id, amount);
+	}
+	@Override
+	public int buyRegister(BuyVO buyVO, int totalRecord) {
+		// TODO Auto-generated method stub
+		return projectDAO.buyRegister(buyVO, totalRecord);
+	}
+	@Override
+	public int buyDetailRegister(List<CartVO> list) {
+		// TODO Auto-generated method stub
+		return projectDAO.buyDetailRegister(list);
+	}
+	@Override
+	public int cartDelete(String user_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.cartDelete(user_id);
+	}
+	@Override
+	public int findBuyno() {
+		// TODO Auto-generated method stub
+		return projectDAO.findBuyno();
 	}
 
 	

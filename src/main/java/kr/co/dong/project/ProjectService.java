@@ -9,7 +9,7 @@ public interface ProjectService {
 	public int product_totalRecord();
 	public int mypage_totalRecord(String user_id);
 	public int address_totalRecord(String user_id);
-	
+	public int cart_totalRecord(String user_id);
 	
 	public int boardsReadCnt(int boards_no);
 	public List<BoardsVO> reviewlist(String product_id);
@@ -22,7 +22,7 @@ public interface ProjectService {
 	public List<ProductVO> listMypage(int start, int pageSIZE, String user_id);
 	public List<ProductVO> listProduct();
 	public List<AddressVO> listAddress(String user_id);
-	
+	public List<CartVO> listCart(String user_id);
 	
 	
 	public Map<String, Object> projectLogin(Map<String, Object> map);
@@ -34,6 +34,10 @@ public interface ProjectService {
 	public int review(BoardsVO boardsVO);
 	
 	
+	
+	
+	
+	
 	public int productRegister(ProductVO productVO);
 	public int productDelete(String product_id);
 	public int productRemainPlus(int product_plus, String product_id);
@@ -41,7 +45,15 @@ public interface ProjectService {
 	
 	public int productUpdate(ProductVO productVO);
 	
-	public int cartRegister(String user_id, String product_id, String product_name);
+	public int cartRegister(String user_id, String product_id, String product_name, int amount);
+	public int cartUpdate(String user_id, String product_id, int amount);
+	
+	
+	public int buyRegister(BuyVO buyVO, int totalRecord);
+	public int buyDetailRegister(List<CartVO> list);
+	public int cartDelete(String user_id);
+	public int findBuyno();
+	
 	
 	
 }

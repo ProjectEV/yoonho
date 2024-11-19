@@ -36,7 +36,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(nameSpace + ".address_totalRecord", user_id);
 	}
-	
+	@Override
+	public int cart_totalRecord(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".cart_totalRecord", user_id);
+	}
 	
 
 	@Override
@@ -92,7 +96,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(nameSpace+".listAddress", user_id);
 	}
-	
+	@Override
+	public List<CartVO> listCart(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace+".listCart", user_id);
+	}
 	
 	
 	
@@ -152,13 +160,49 @@ public class ProjectDAOImpl implements ProjectDAO {
 	
 	
 	@Override
-	public int cartRegister(String user_id, String product_id, String product_name) {
+	public int cartRegister(String user_id, String product_id, String product_name, int amount) {
 		// TODO Auto-generated method stub
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("user_id", user_id);
 		map.put("product_id", product_id);
 		map.put("product_name", product_name);
+		map.put("amount", amount);
 		return sqlSession.insert(nameSpace + ".cartRegister", map);
+	}
+	@Override
+	public int cartUpdate(String user_id, String product_id, int amount) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user_id);
+		map.put("product_id", product_id);
+		map.put("amount", amount);
+		return sqlSession.update(nameSpace + ".cartUpdate", map);
+	}
+	
+	
+	
+	@Override
+	public int buyRegister(BuyVO buyVO, int totalRecord) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("buy", buyVO);
+		map.put("totalRecord", totalRecord);
+		return sqlSession.insert(nameSpace + ".buyRegister", map);
+	}
+	@Override
+	public int buyDetailRegister(List<CartVO> list) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(nameSpace + ".buyDetailRegister", list);
+	}
+	@Override
+	public int cartDelete(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(nameSpace + ".cartDelete", user_id);
+	}
+	@Override
+	public int findBuyno() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".findBuyno");
 	}
 
 	

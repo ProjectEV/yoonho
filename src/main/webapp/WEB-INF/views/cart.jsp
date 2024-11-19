@@ -42,23 +42,15 @@ table {
 </style>
 
 
-</script>
+
+
 
 </head>
 
 <body>
 
-	<script>
-		$(function(){
-			//메인 버튼을 눌렀을 때 처리
-			$(".btn-success").click(function(){
-				location.href="../";
-			});
-			$(".btn-success").click(function(){
-				location.href="../";
-			});
-		})
-	</script>
+	
+
 
 
    <div>
@@ -74,22 +66,55 @@ table {
 		  </tr>
 		  
 		 <c:forEach var="cart" items="${list }" varStatus="status">
+		 
+		 <form action="/project/cart_update" method="post" name="cart${totalRecord - status.index}">
 		 	<tr>
+		 
 		 	<td>${totalRecord - status.index}</td>
-		 	<td><a href="inventory_detail?product_id=${product.product_id}">${product.product_id}</a></td>
-		 	<td>${product.product_name}</td>
-		 	<td> <input type="number" min="0"> </td>
+		 	<td><a href="inventory_detail?product_id=${cart.cart_productid}">${cart.cart_productid}</a></td>
+		 	<td>${cart.cart_productname}</td>
+		 	<td> ${cart.cart_amount} <input type="hidden" id="cartbtn" value="전송"></td>
+		 	
 		 	</tr>
-		</c:forEach>
+		 	
+		 </form>
+		 
+		 </c:forEach>
 		 
 		<tr>
 			<td colspan="5" align="center">
 				<input class="btn btn-success" type="button" value="메인으로"	id="main" />
-				<a href="/project/buy"> 장바구니에 있는 제품들 구매 </a>		
+				
+				<!-- <a href="/project/buy"> 장바구니에 있는 제품들 구매 </a> -->
+				
+				<input type="button" value="구매" onclick="/project/pay">
+				
+				
 			</td>
 		</tr>
       </table>
-
+      
+	<script>
+		$(function(){
+			//메인 버튼을 눌렀을 때 처리
+			$(".btn-success").click(function(){
+				location.href="../";
+			});
+			$(".btn-success").click(function(){
+				location.href="../";
+			});
+		})
+		
+		function cartBuy() {
+			var i;
+			for (i=${totalRecord}; i>=1; i--) {
+				var name = (String)("cart"+i);
+				document.cart3.submit();
+			}
+		}
+		
+		
+	</script>
 
 </body>
 </html>

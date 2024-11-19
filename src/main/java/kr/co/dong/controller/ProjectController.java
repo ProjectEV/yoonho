@@ -234,27 +234,53 @@ public class ProjectController {
 	
 	// 주문/결제 페이지로 이동
 	@RequestMapping(value="project/pay", method= RequestMethod.GET)
-	public String pay(@RequestParam("product_id")String product_id, Model model, HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView pay(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		logger.info("pay 이동");
+		ModelAndView mav = new ModelAndView();
 		
 		Map<String, Object> user = (Map)session.getAttribute("user");
 		String user_id = (String)user.get("user_id");
 		
-		ProductVO productVO = projectService.productDetail(product_id);
-		// List<AddressVO> addressVO = projectService.listAddress(user_id);
+		List<CartVO> list = projectService.listCart(user_id);
 		
-		model.addAttribute("product", productVO);
-		// model.addAttribute("address", addressVO);
+		int totalRecord = projectService.cart_totalRecord(user_id);
 		
-		return "pay";
+		mav.addObject("list", list);
+		mav.addObject("totalRecord",totalRecord);
+		mav.setViewName("pay");
+		return mav;
 	}
 	
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value="project/pay", method= RequestMethod.POST)
-	public String pay(BuyVO buyVO, HttpServletRequest request,RedirectAttributes rttr) throws Exception {
+	public String pay(BuyVO buyVO, HttpSession session, HttpServletRequest request,  HttpServletResponse response,
+			 			RedirectAttributes rttr) throws Exception {
 		request.setCharacterEncoding("UTF-8");
-		logger.info("내용" + buyVO);
-		int r = projectService.pay(buyVO);
+		logger.info("내용");
+		
+		Map<String, Object> user = (Map)session.getAttribute("user");
+		String user_id = (String)user.get("user_id");
+		
+		List<CartVO> list = projectService.listCart(user_id);
+		int totalRecord = projectService.cart_totalRecord(user_id);
+		
+		
+		int r = projectService.buyRegister(buyVO, totalRecord);
+		
+		int s = projectService.buyDetailRegister(list);
+		
+		int t = projectService.cartDelete(user_id);
+		
+		
+		
+		
+		
+		
 		
 		if(r>0) {
 			rttr.addFlashAttribute("msg","추가에 성공하였습니다.");	//세션저장
@@ -390,10 +416,32 @@ public class ProjectController {
 		return mav;
 	}
 		
+	
+	
+	
+	
+	
+	@RequestMapping(value="project/cart",method= RequestMethod.GET)
+	public ModelAndView cart(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
 		
+		Map<String, Object> user = (Map)session.getAttribute("user");
+		String user_id = (String)user.get("user_id");
+		
+		int totalRecord = projectService.cart_totalRecord(user_id);
+		List<CartVO> list = projectService.listCart(user_id);
+		mav.addObject("list", list);
+		mav.addObject("totalRecord",totalRecord);
+		mav.setViewName("cart");
+		return mav;
+	}
+	
+	
 		
 	@RequestMapping(value="project/cart_register", method= RequestMethod.GET) 
-	public String cartRegister(@RequestParam("product_id")String product_id, HttpServletRequest request,
+	public String cartRegister(@RequestParam("product_id")String product_id, 
+			@RequestParam("amount")int amount, HttpServletRequest request,
 			RedirectAttributes rttr, HttpSession session, HttpServletResponse response, Model model) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 
@@ -403,12 +451,24 @@ public class ProjectController {
 		ProductVO productVO = projectService.productDetail(product_id);
 		String product_name = (String)productVO.getProduct_name();
 		
-		int r = projectService.cartRegister(user_id, product_id, product_name);
+		int r = projectService.cartRegister(user_id, product_id, product_name, amount);
 		
 		return "redirect:product";
 	}
 		
-	
+	@RequestMapping(value="/project/cart_update", method= RequestMethod.POST)
+	public String cartUpdate(@RequestParam("product_id")String product_id, 
+			@RequestParam("amount")int amount, HttpServletRequest request,
+			RedirectAttributes rttr, HttpSession session, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("UTF-8");
+		
+		Map<String, Object> user = (Map)session.getAttribute("user");
+		String user_id = (String)user.get("user_id");
+		
+		int r = projectService.cartUpdate(user_id, product_id, amount);
+		
+		return "redirect:cart";
+	}
 	
 		
 		
