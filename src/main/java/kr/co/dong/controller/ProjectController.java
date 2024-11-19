@@ -271,6 +271,7 @@ public class ProjectController {
 		
 		
 		int r = projectService.buyRegister(buyVO, totalRecord);
+		int u = projectService.findBuyno();
 		
 		int s = projectService.buyDetailRegister(list);
 		

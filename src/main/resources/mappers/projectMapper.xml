@@ -195,9 +195,19 @@
   </insert>
   
   <insert id="buyDetailRegister" parameterType="list">
-		insert into 
-		cart (cart_userid, cart_productid, cart_productname, cart_amount)
-		values (#{user_id}, #{product_id}, #{product_name}, #{amount})
+	INSERT INTO buydetail (
+            buydetail_buyno
+            , buydetail_productid
+            , buydetail_amount
+        )
+	VALUES
+        <foreach collection="list" item="item" separator=",">
+        (
+            #{item.id}
+            , #{item.cart_productid}
+            , #{item.cart_amount}
+        )
+        </foreach>
   </insert>
   
   <delete id="cartDelete" parameterType="String">
