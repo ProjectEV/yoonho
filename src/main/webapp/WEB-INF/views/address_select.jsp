@@ -32,7 +32,7 @@
 
 <script>
 function addressChoose() {
-	opener.document.getElementById("address").value = document.frm.address.value;
+	opener.document.getElementById("buy_address").value = document.frm.address.value;
 	window.close();
 }
 </script>
@@ -68,7 +68,7 @@ function addressChoose() {
 		
 		<form method="get" name="frm">
 		
-		<c:forEach var="address" items="${list}">
+		<c:forEach var="address" items="${list}" varStatus="status">
 			 	<div style="margin: 20px 10px; padding: 10px; border: 1px solid rgb(235, 235, 235); ">
 					  <input type="radio" name="address" value="${address.address_content}">
 					  <label style="font-weight: bold;">${address.address_name}</label><br>
@@ -76,10 +76,7 @@ function addressChoose() {
 			 	</div>
 		</c:forEach>
 		
-			<input type="button" value="선택완료" class="cancel" onclick="addressChoose()">
-			
-			
-			
+			<input type="submit" value="선택완료" class="cancel" onclick="addressChoose()">
 			
 			<button style="margin: 30px 300px;" id="btn1" onclick="addressChoose()">선택완료</button>
 		</form>

@@ -153,26 +153,35 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectDAO.cartUpdate(user_id, product_id, amount);
 	}
 	@Override
-	public int buyRegister(BuyVO buyVO, int totalRecord) {
+	public int findCart(String product_id) {
 		// TODO Auto-generated method stub
-		return projectDAO.buyRegister(buyVO, totalRecord);
-	}
-	@Override
-	public int buyDetailRegister(List<CartVO> list) {
-		// TODO Auto-generated method stub
-		return projectDAO.buyDetailRegister(list);
-	}
-	@Override
-	public int cartDelete(String user_id) {
-		// TODO Auto-generated method stub
-		return projectDAO.cartDelete(user_id);
-	}
-	@Override
-	public int findBuyno() {
-		// TODO Auto-generated method stub
-		return projectDAO.findBuyno();
+		return projectDAO.findCart(product_id);
 	}
 
+	
+	
+	
+	@Override
+	public int buyRegister(BuyVO buyVO, int totalRecord, String user_id) {
+			// TODO Auto-generated method stub
+			return projectDAO.buyRegister(buyVO, totalRecord, user_id);
+		}
+	@Override
+	public int buyDetailRegister(List<CartVO> list, int u) {
+			// TODO Auto-generated method stub
+			return projectDAO.buyDetailRegister(list, u);
+		}
+	@Override
+	public int cartDelete(String user_id) {
+			// TODO Auto-generated method stub
+			return projectDAO.cartDelete(user_id);
+		}
+	@Override
+	public int findBuyno() {
+			// TODO Auto-generated method stub
+			return projectDAO.findBuyno();
+		}
+	
 	
 
 	

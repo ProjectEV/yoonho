@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title> 재고 현황 </title>
+<title>Insert title here</title>
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device=width, initial-scale=1.0">
@@ -42,56 +42,45 @@ table {
 </style>
 
 
-</script>
 
 </head>
 
 <body>
 
-	<script>
-		$(function(){
-			//메인 버튼을 눌렀을 때 처리
-			$(".btn-success").click(function(){
-				location.href="../";
-			});
-			$(".btn-success").click(function(){
-				location.href="../";
-			});
-		})
-	</script>
-
-
    <div>
       <h1>재고현황</h1>
    </div>
 
-      <table>
-         <tr>
-		  	<td>번호</td>
+ <table class="table">
+ 	 <thead>
+		  <tr>
+		    <td>번호</td>
 		  	<td>제품코드</td>
-		  	<td>제품명</td>
+		  	<td>제목</td>
 		  	<td>재고</td>
 		  	<td>누적판매량</td>
 		  </tr>
+	</thead>
 		  
+		<tbody>
 		 <c:forEach var="product" items="${list }" varStatus="status">
 		 	<tr>
-		 	<td>${totalRecord - status.index}</td>
-		 	<td><a href="inventory_detail?product_id=${product.product_id}">${product.product_id}</a></td>
-		 	<td>${product.product_name}</td>
-		 	<td>${product.product_remain}</td>
-		 	<td>${product.product_sales}</td>
+		 		<td>${totalRecord - status.index}</td>
+		 		<td><a href="inventory_detail?product_id=${product.product_id}">${product.product_id}</a></td>
+		 		<td><a href="product_detail?product_id=${product.product_id}"> ${product.product_name} </a></td>
+		 		<td>${product.product_remain}</td>
+		 		<td>${product.product_sales}</td>
 		 	</tr>
 		</c:forEach>
 		 
+		
 		<tr>
 			<td colspan="5" align="center">
-				<input class="btn btn-success" type="button" value="메인으로"	id="main" />
-				<a href="/project/product_register"> 제품 등록 </a>		
+				<input class="btn btn-success" type="button" value="메인으로"	id="main" />		
 			</td>
 		</tr>
-      </table>
-
+		</tbody>
+	</table>
 
 </body>
 </html>

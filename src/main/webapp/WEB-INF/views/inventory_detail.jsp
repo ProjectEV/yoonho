@@ -35,25 +35,40 @@
       	<button type="submit"> 수량 추가 </button>
       </form>
       
-      
    </div>
 
-      <table>
-         <tr>
-		  	<td>제품코드</td> <td> ${product.product_id}</td><br>
-		  	<td>제품명</td> <td> ${product.product_name} </td><br>
-		  	<td>가격</td> <td> ${product.product_price} </td><br>
-		  	<td>수량</td> <td> ${product.product_remain} </td><br>
-		  	<td>제품설명</td> <td> ${product.product_content} </td><br>
-		  </tr>
-		 
-		 
+	<table>
 		<tr>
-			<td colspan="5" align="center">
+			<td rowspan="6"><img style="width: 400px; height: 400px; border: 1px solid rgb(146, 146, 146);" src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="제품메인사진"></td>
+			<td></td> <td></td>
+		</tr>
+		<tr>
+		 	<td>제품코드</td>
+		 	<td>${product.product_id}</td>	
+		</tr>
+		<tr>
+		 	<td>제품명</td>
+		 	<td>${product.product_name}</td>
+		</tr>
+		<tr>
+		 	<td>가격</td>
+		 	<td>${product.product_price}</td>
+		</tr>
+		<tr>
+		 	<td>수량</td>
+		 	<td>${product.product_remain}</td>	
+		</tr>
+		<tr>
+		 	<td colspan="5" align="center">
 					<a href="/project/inventory"> 뒤로가기 </a>
 			</td>
 		</tr>
-      </table>
+		
+	</table>
+
+
+
+     
 
 
 </body>

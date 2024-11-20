@@ -85,9 +85,8 @@ table {
 			<td colspan="5" align="center">
 				<input class="btn btn-success" type="button" value="메인으로"	id="main" />
 				
-				<!-- <a href="/project/buy"> 장바구니에 있는 제품들 구매 </a> -->
+				<a href="/project/pay"> 장바구니에 있는 제품들 구매 </a>
 				
-				<input type="button" value="구매" onclick="/project/pay">
 				
 				
 			</td>

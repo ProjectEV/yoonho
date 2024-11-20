@@ -181,7 +181,10 @@
 		where cart_productid = #{product_id} and cart_userid=#{user_id}
   </update>
   
-  
+  <select id="findCart" parameterType="String" resultType="int">
+  		select count(*) from cart
+		where cart_productid = #{product_id}
+  </select>
   
   
   
@@ -191,31 +194,27 @@
   <insert id="buyRegister" parameterType="map">
 		insert into 
 		buy (buy_userid, buy_regdate, buy_amount, buy_address, buy_receive)
-		values (#{buy_userid}, curdate(), #{totalRecord}, #{buy_address}, #{buy_receive})
-  </insert>
+		values (#{user_id}, curdate(), #{totalRecord}, #{buy_address}, #{buy_receive})
+ </insert>
   
-  <insert id="buyDetailRegister" parameterType="list">
-	INSERT INTO buydetail (
-            buydetail_buyno
-            , buydetail_productid
-            , buydetail_amount
-        )
+ <insert id="buyDetailRegister" parameterType="list">
+	INSERT INTO 
+	buydetail (buydetail_buyno, buydetail_productid, buydetail_amount)
 	VALUES
         <foreach collection="list" item="item" separator=",">
-        (
-            #{item.id}
-            , #{item.cart_productid}
-            , #{item.cart_amount}
-        )
+        (#{u}, #{item.cart_productid}, #{item.cart_amount})
         </foreach>
-  </insert>
+ </insert>
   
-  <delete id="cartDelete" parameterType="String">
+ <delete id="cartDelete" parameterType="String">
   		delete from 
   		cart
   		where cart_userid = #{user_id} 
-  </delete>
+ </delete>
   
+ <select id="findBuyno" resultType="int">
+  		select max(buy_no) from buy
+ </select>
   
   
   

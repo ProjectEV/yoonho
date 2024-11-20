@@ -70,7 +70,7 @@
 <body>
 
 <h2 style="text-align: center;">주문결제</h2>
-	<form action="/project/pay" method="post">
+	<form action="/project/pay" method="post" name="frm">
 	<div style="">
 		<div style="margin: 0 auto; width: 700px;">
 			<p>구매자 정보</p>
@@ -95,7 +95,7 @@
 			 		<th>배송 주소</th>
 		 			<td>
 		 			<input type="text" id="buy_address" name="buy_address" size="40" value="${main_address}" readonly>
-		 			<button id="btn1" onclick="windowOpen()">배송지 선택</button>
+		 			<button type="button" onclick="windowOpen()">배송지 선택</button>
 		 			
 		 			</td>
 			 	</tr>
@@ -110,7 +110,7 @@
 			 		</tr>
 			 		<tr>
 			 			<th>가격</th>
-		 				<td>${cart.product_price}원</td>	
+		 				<td>원</td>	
 			 		</tr>
 			 		<tr>
 			 			<th>수량</th>
@@ -119,10 +119,7 @@
 		 		</table>
 			</c:forEach>
 			
-			<form action="/project/pay" method="post">
-				<input type="hidden" id="buy_userid" name="buy_userid" value="${user.user_id}">
-				<button style="margin: 30px 300px;" id="btn2" type="submit">주문완료</button>
-			</form>
+				<button style="margin: 30px 300px;" type="submit">주문완료</button>
 			
 		</div>	
 	</div>

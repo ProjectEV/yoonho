@@ -270,24 +270,18 @@ public class ProjectController {
 		int totalRecord = projectService.cart_totalRecord(user_id);
 		
 		
-		int r = projectService.buyRegister(buyVO, totalRecord);
+		int r = projectService.buyRegister(buyVO, totalRecord, user_id);
 		int u = projectService.findBuyno();
-		
-		int s = projectService.buyDetailRegister(list);
-		
+		int s = projectService.buyDetailRegister(list, u);
 		int t = projectService.cartDelete(user_id);
-		
-		
-		
-		
-		
 		
 		
 		if(r>0) {
 			rttr.addFlashAttribute("msg","추가에 성공하였습니다.");	//세션저장
 		}
+		
 		return "redirect:mypage";
-	}
+}
 	
 	
 	
@@ -452,7 +446,11 @@ public class ProjectController {
 		ProductVO productVO = projectService.productDetail(product_id);
 		String product_name = (String)productVO.getProduct_name();
 		
-		int r = projectService.cartRegister(user_id, product_id, product_name, amount);
+		
+		int s = projectService.findCart(product_id);
+		if (s==0) {
+			int r = projectService.cartRegister(user_id, product_id, product_name, amount);
+		}
 		
 		return "redirect:product";
 	}

@@ -178,32 +178,44 @@ public class ProjectDAOImpl implements ProjectDAO {
 		map.put("amount", amount);
 		return sqlSession.update(nameSpace + ".cartUpdate", map);
 	}
+	@Override
+	public int findCart(String product_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".findCart", product_id);
+	}
+	
+	
 	
 	
 	
 	@Override
-	public int buyRegister(BuyVO buyVO, int totalRecord) {
-		// TODO Auto-generated method stub
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("buy", buyVO);
-		map.put("totalRecord", totalRecord);
-		return sqlSession.insert(nameSpace + ".buyRegister", map);
-	}
+	public int buyRegister(BuyVO buyVO, int totalRecord, String user_id) {
+			// TODO Auto-generated method stub
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("buy", buyVO);
+			map.put("totalRecord", totalRecord);
+			map.put("user_id", user_id);
+			return sqlSession.insert(nameSpace + ".buyRegister", map);
+		}
 	@Override
-	public int buyDetailRegister(List<CartVO> list) {
-		// TODO Auto-generated method stub
-		return sqlSession.insert(nameSpace + ".buyDetailRegister", list);
-	}
+	public int buyDetailRegister(List<CartVO> list, int u) {
+			// TODO Auto-generated method stub
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("list", list);
+			map.put("u", u);
+			return sqlSession.insert(nameSpace + ".buyDetailRegister", map);
+		}
 	@Override
 	public int cartDelete(String user_id) {
-		// TODO Auto-generated method stub
-		return sqlSession.delete(nameSpace + ".cartDelete", user_id);
-	}
+			// TODO Auto-generated method stub
+			return sqlSession.delete(nameSpace + ".cartDelete", user_id);
+		}
 	@Override
 	public int findBuyno() {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(nameSpace + ".findBuyno");
-	}
+			// TODO Auto-generated method stub
+			return sqlSession.selectOne(nameSpace + ".findBuyno");
+		}
+	
 
 	
 

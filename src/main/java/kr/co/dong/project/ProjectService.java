@@ -47,10 +47,11 @@ public interface ProjectService {
 	
 	public int cartRegister(String user_id, String product_id, String product_name, int amount);
 	public int cartUpdate(String user_id, String product_id, int amount);
+	public int findCart(String product_id);
 	
 	
-	public int buyRegister(BuyVO buyVO, int totalRecord);
-	public int buyDetailRegister(List<CartVO> list);
+	public int buyRegister(BuyVO buyVO, int totalRecord, String user_id);
+	public int buyDetailRegister(List<CartVO> list, int u);
 	public int cartDelete(String user_id);
 	public int findBuyno();
 	
