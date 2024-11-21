@@ -61,6 +61,32 @@
       LIMIT #{start}, #{pageSIZE}
   </select>
   
+  <select id="listBuy" parameterType="String" resultType="BuyVO">
+	  SELECT *
+      FROM buy
+      where buy_userid = #{user_id}
+  </select>
+  
+   <select id="listBuydetail" parameterType="java.lang.Integer" resultType="BuydetailVO">
+	    select * 
+	    from buydetail 
+	    where buydetail_buyno in 
+	    <foreach collection="array" item="buyno" open="(" separator="," close=")">
+	        #{buyno}
+	    </foreach>
+	</select>
+  
+   <select id="mypageDetailProduct" parameterType="java.lang.String" resultType="ProductVO">
+	    select * 
+	    from product 
+	    where product_id in 
+	    <foreach collection="array" item="productno" open="(" separator="," close=")">
+	        #{productno}
+	    </foreach>
+	</select>
+  
+  
+  
   <select id="listProductVoid" resultType="ProductVO">
 	  SELECT *
       FROM product
@@ -75,8 +101,8 @@
   
   <select id="listCart" parameterType="String" resultType="CartVO">
 		select *
-		from cart
-		where cart_userid = #{user_id}
+		from cart, product
+		where cart.cart_productid = product.product_id and cart_userid = #{user_id}
   </select>
   
   
@@ -191,7 +217,7 @@
   
   
   
-  <insert id="buyRegister" parameterType="map">
+  <insert id="buyRegister" parameterType="buyVO">
 		insert into 
 		buy (buy_userid, buy_regdate, buy_amount, buy_address, buy_receive)
 		values (#{user_id}, curdate(), #{totalRecord}, #{buy_address}, #{buy_receive})

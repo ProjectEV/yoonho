@@ -38,7 +38,15 @@
   		  <option value="10">10</option>		  
 		</select>
 		
-		<button id="nav-btn" onclick="location.href='/product/buy'">구매하기</button>
+		<!-- <button id="nav-btn" onclick="location.href='/product/buy'">구매하기</button> -->
+		
+		
+		<form action="cart_register" method="get">
+					<input type="hidden" name="product_id" id="product_id" value="${product.product_id}">
+					<input type="hidden" name="product_name" id="product_name" value="${product.product_name}">
+					<input type="number" name="amount" id="amount" value="1">
+					<button type="submit" id="nav-btn" onclick="location.href='/product/buy'">장바구니담기</button>
+				</form>
 	</div>
 	
 	<div style="text-align: center;">

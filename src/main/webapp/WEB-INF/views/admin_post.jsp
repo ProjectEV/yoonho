@@ -19,27 +19,7 @@
 <script
    src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-<style>
-th, td {
-   padding: 5px;
-   text-align: left;
-}
 
-#title {
-   text-align: center;
-   background-color: #49516b;
-   color: white;
-}
-
-div {
-   text-align: center;
-   margin-top: 20px;
-}
-
-table {
-   margin: 0 auto;
-}
-</style>
 
 <script>
    function join() {
@@ -96,14 +76,14 @@ table {
 </head>
 
 <body>
-
+<%@ include file="header.jsp" %>
    <div>
-      <h1>제품 등록</h1>
+      <h3>제품 등록</h3>
    </div>
 
    <form method="post" action="/project/product_register">
 
-      <table>
+      <table class="table">
          <thead>
           
          </thead>
@@ -111,33 +91,33 @@ table {
          <tbody>
          	<tr>
                <th>* 제품코드</th>
-               <td><input id="product_id" name="product_id" type="text" required /> </td>
+               <td><input id="product_id" name="product_id" type="text" size="30" required /> </td>
             </tr>
          <!-- 이미 존재하는 제품코드면 신규등록을 이용할 수 없게 하는 스크립트 필요 -->
             <tr>
                <th>* 제품명</th>
-               <td><input id="product_name" name="product_name" type="text" required /> </td>
+               <td><input id="product_name" name="product_name" type="text" size="30" required /> </td>
             </tr>
 
             <tr>
                <th>* 제품 가격</th>
-               <td><input id="product_price" name="product_price" type="text" required /> </td>
+               <td><input id="product_price" name="product_price" type="text" size="30" required /> </td>
             </tr>
 
             <tr>
                <th>* 제품 수량</th>
-               <td><input id="product_remain" name="product_remain" type="text" required /></td>
+               <td><input id="product_remain" name="product_remain" type="text" size="30" required /></td>
             </tr>
 			
 			<tr>
                <th>* 제품 카테고리 </th>
-               <td><input id="product_category" name="product_category" type="text" required /> </td>
+               <td><input id="product_category" name="product_category" type="text" size="30" required /> </td>
             </tr>
 			
             <tr>
                <th>* 제품 설명</th>
-               <td><textarea name="product_content" rows="8"
-						placeholder="내용을 입력하세요" id="product_content"></textarea></td>
+               <td><textarea name="product_content" cols="64" rows="8"
+						placeholder="내용을 입력하세요." id="product_content"></textarea></td>
             </tr>
 
             
@@ -150,6 +130,29 @@ table {
       </div>
 
    </form>
+<style>
+th, td {
+   padding: 5px;
+   text-align: left;
+}
 
+th {
+	width: 10%;
+}
+#title {
+   text-align: center;
+   background-color: #49516b;
+   color: white;
+}
+
+div {
+   text-align: center;
+   margin-top: 20px;
+}
+
+table {
+   margin: 0 auto;
+}
+</style>
 </body>
 </html>

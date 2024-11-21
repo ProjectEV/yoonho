@@ -38,6 +38,7 @@ div {
 
 table {
    margin: 0 auto;
+
 }
 </style>
 
@@ -46,9 +47,9 @@ table {
 </head>
 
 <body>
-
+<%@ include file="header.jsp" %>
    <div>
-      <h1>재고현황</h1>
+      <h3>재고현황</h3>
    </div>
 
  <table class="table">
@@ -56,7 +57,7 @@ table {
 		  <tr>
 		    <td>번호</td>
 		  	<td>제품코드</td>
-		  	<td>제목</td>
+		  	<td>제품명</td>
 		  	<td>재고</td>
 		  	<td>누적판매량</td>
 		  </tr>
@@ -76,7 +77,8 @@ table {
 		
 		<tr>
 			<td colspan="5" align="center">
-				<input class="btn btn-success" type="button" value="메인으로"	id="main" />		
+				<input type="button" class="btn btn-success" onclick="location.href='/'" value="메인으로"/>
+				<button id="nav-btn" onclick="location.href='/project/product_register'">제품 등록</button>
 			</td>
 		</tr>
 		</tbody>

@@ -33,6 +33,7 @@
 <body>
 
 <h2 style="text-align: center;">마이페이지</h2>
+<h2 style="text-align: center;">아이디 : ${user.user_id }</h2>
 
 	<div style="">
 		<div style="margin: 0 auto; width: 700px;">
@@ -46,9 +47,7 @@
 						  	
 										  	<div>
 										  		<img style="width: 50px; height: 50px;" src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="마이페이지 제품 사진">
-											    <p>${buydetailProduct.product_name}</p>
-											    <p>${buydetailProduct.product_price}</p>
- 												<p>${buydetail.buydetail_amount}</p>
+											    <p>${buydetailProduct.product_name} | ${buydetailProduct.product_price} | ${buydetail.buydetail_amount}</p>
 										  	</div>
 										  	
 			  							 </c:if>					  	
@@ -61,6 +60,8 @@
 			</c:forEach>	
 		</div>	
 	</div>
-
+			<div colspan="5" align="center">
+				<input type="button" class="btn btn-success" onclick="location.href='/'" value="메인으로"/>
+			</div>
 </body>
 </html>

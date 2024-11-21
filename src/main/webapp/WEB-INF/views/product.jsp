@@ -5,61 +5,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>제품목록</title>          
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
-  <div class="content-wrapper">
-<section class="content container-fluid">
-		 <div>${msg}</div>
-		<div class="table-responsive">
-		<table class="table">
-		  <tr>
-		  	<td>제품코드</td>
-		  	<td>제품명</td>
-		  	<td>가격</td>
-		  	<td>카테고리</td>
-		  	<td>재고</td>
-		  </tr>
-		  
-		  
-		
-		 <c:forEach var="product" items="${list }">
-		 	<tr>
-		 	<td>${product.product_id}</td>
-		 	<td><a href="product_detail?product_id=${product.product_id}"> ${product.product_name} </a></td>
-		 	<td>${product.product_price}</td>
-		 	<td>${product.product_category}</td>
-		 	<td><span class="badge">${product.product_remain }</span></td>
-		 	</tr>
-		</c:forEach>
-		 
-		
-		<tr>
-			<td colspan="5" align="center">
-				<input class="btn btn-success" type="button" value="메인으로"	id="main" />		
-			</td>
-		</tr>
-</table>
+<body>
 
- 		  <c:if test="${pageListNUM>1}">
-		  <a href="product?pageListNUM=${pageListNUM-1}&pageNUM=${pageListNUM*10-10}"> 이전 </a>
-		  </c:if>
-		  	
-		  <c:forEach var="i" begin="${startPage }" end="${endPage }">
-				<a href="product?pageListNUM=${pageListNUM }&pageNUM=${i }"> ${i } </a>
-		  </c:forEach>
-		  
-		  <c:if test="${pageListNUM<(totalPage/10)}">
-		  <a href="product?pageListNUM=${pageListNUM+1}&pageNUM=${pageListNUM*10+1}"> 다음 </a>
-		  </c:if>
-
-
-
-		</div>
-    </section>
-</div>
-</div>
+  <%@ include file="header.jsp" %>
+  
+  <div style="margin: 30px 150px;">  
+	  <div style="display: grid; grid-template-columns: 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr; text-align: center;">
+	  	 <c:forEach var="product" items="${list}">
+		 	<div style="width: 200px; height: 200px; margin: 20px 20px; padding: 10px; border: 1px solid rgb(235, 235, 235);  border-radius: 5%; ">
+	 			<img style="width: 90px; height: 90px; border: 1px solid rgb(146, 146, 146);" src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="제품메인사진">
+			 	<div style="text-align: left;">		 	
+				 	<p style="margin: 5px;">카테고리 : ${product.product_category}</p>
+				 	<p style="margin: 5px;"><a style="width: 200px;" href="/project/product_detail?product_id=${product.product_id}"> ${product.product_name} </a></p>
+				 	<p style="margin: 5px;">${product.product_price}</p>
+			 	</div>
+		 	</div>
+		 </c:forEach>
+	  </div>
+  </div>
 
 
 </body>

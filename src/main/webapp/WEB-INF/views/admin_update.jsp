@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title> (관리자) 제품 수정 </title>
+<title> 관리자 글 작성 </title>
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device=width, initial-scale=1.0">
@@ -19,27 +19,7 @@
 <script
    src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-<style>
-th, td {
-   padding: 5px;
-   text-align: left;
-}
 
-#title {
-   text-align: center;
-   background-color: #49516b;
-   color: white;
-}
-
-div {
-   text-align: center;
-   margin-top: 20px;
-}
-
-table {
-   margin: 0 auto;
-}
-</style>
 
 <script>
    function join() {
@@ -96,14 +76,14 @@ table {
 </head>
 
 <body>
-
+<%@ include file="header.jsp" %>
    <div>
-      <h1>제품 수정</h1>
+      <h3>제품 수정</h3>
    </div>
 
-   <form method="post" action="/project/product_update">
+   <form method="post" action="/project/product_register">
 
-      <table>
+      <table class="table">
          <thead>
           
          </thead>
@@ -142,13 +122,35 @@ table {
             
          </tbody>
       </table>
-
       <div>
          <button type="reset"> 다시 작성 </button>
-         <button type="submit"> 수정완료 </button>
+         <button type="submit"> 작성완료 </button>
       </div>
 
    </form>
+<style>
+th, td {
+   padding: 5px;
+   text-align: left;
+}
 
+th {
+	width: 10%;
+}
+#title {
+   text-align: center;
+   background-color: #49516b;
+   color: white;
+}
+
+div {
+   text-align: center;
+   margin-top: 20px;
+}
+
+table {
+   margin: 0 auto;
+}
+</style>
 </body>
 </html>

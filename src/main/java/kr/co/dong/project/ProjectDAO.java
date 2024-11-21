@@ -27,6 +27,10 @@ public interface ProjectDAO {
 	public List<ProductVO> listProduct();
 	public List<AddressVO> listAddress(String user_id);
 	public List<CartVO> listCart(String user_id);
+	public List<BuyVO> listBuy(String userid);
+	public List<BuydetailVO> listBuydetail(int[] buyno);
+	
+	public List<ProductVO> mypageDetailProduct(String[] productno);
 	
 	
 	
@@ -51,7 +55,7 @@ public interface ProjectDAO {
 	public int cartUpdate(String user_id, String product_id, int amount);
 	public int findCart(String product_id);
 	
-	public int buyRegister(BuyVO buyVO, int totalRecord, String user_id);
+	public int buyRegister(String buy_address, String buy_receive, int totalRecord, String user_id);
 	public int buyDetailRegister(List<CartVO> list, int u);
 	public int cartDelete(String user_id);
 	public int findBuyno();

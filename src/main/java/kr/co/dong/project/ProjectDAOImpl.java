@@ -101,8 +101,22 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(nameSpace+".listCart", user_id);
 	}
+	@Override
+	public List<BuyVO> listBuy(String userid) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".listBuy", userid);
+	}
+	@Override
+	public List<BuydetailVO> listBuydetail(int[] buyno) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".listBuydetail", buyno);
+	}
 	
-	
+	@Override
+	public List<ProductVO> mypageDetailProduct(String[] productno) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".mypageDetailProduct", productno);
+	}
 	
 	
 
@@ -189,10 +203,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 	
 	
 	@Override
-	public int buyRegister(BuyVO buyVO, int totalRecord, String user_id) {
+	public int buyRegister(String buy_address, String buy_receive, int totalRecord, String user_id) {
 			// TODO Auto-generated method stub
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("buy", buyVO);
+			map.put("buy_address", buy_address);
+			map.put("buy_receive", buy_receive);
 			map.put("totalRecord", totalRecord);
 			map.put("user_id", user_id);
 			return sqlSession.insert(nameSpace + ".buyRegister", map);

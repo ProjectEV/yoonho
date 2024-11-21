@@ -89,6 +89,23 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.listCart(user_id);
 	}
+	@Override
+	public List<BuyVO> listBuy(String userid) {
+		// TODO Auto-generated method stub
+		return projectDAO.listBuy(userid);
+	}
+	@Override
+	public List<BuydetailVO> listBuydetail(int[] buyno) {
+		// TODO Auto-generated method stub
+		return projectDAO.listBuydetail(buyno);
+	}
+	
+	@Override
+	public List<ProductVO> mypageDetailProduct(String[] productno) {
+		// TODO Auto-generated method stub
+		return projectDAO.mypageDetailProduct(productno);
+	}
+	
 	
 	
 
@@ -162,9 +179,9 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	
 	@Override
-	public int buyRegister(BuyVO buyVO, int totalRecord, String user_id) {
+	public int buyRegister(String buy_address, String buy_receive, int totalRecord, String user_id) {
 			// TODO Auto-generated method stub
-			return projectDAO.buyRegister(buyVO, totalRecord, user_id);
+			return projectDAO.buyRegister(buy_address, buy_receive, totalRecord, user_id);
 		}
 	@Override
 	public int buyDetailRegister(List<CartVO> list, int u) {

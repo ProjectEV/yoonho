@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import kr.co.dong.project.AddressVO;
 import kr.co.dong.project.BoardsVO;
 import kr.co.dong.project.BuyVO;
+import kr.co.dong.project.BuydetailVO;
 import kr.co.dong.project.CartVO;
 import kr.co.dong.project.ProductVO;
 import kr.co.dong.project.ProjectService;
@@ -75,7 +76,12 @@ public class ProjectController {
 		}
 	}
 	
-	
+	@RequestMapping(value = "project/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session, RedirectAttributes rttr) {
+		session.invalidate();
+		rttr.addFlashAttribute("msg", "로그아웃되었습니다");
+		return "redirect:/";
+	}	
 	
 	
 	
@@ -258,7 +264,8 @@ public class ProjectController {
 	
 	
 	@RequestMapping(value="project/pay", method= RequestMethod.POST)
-	public String pay(BuyVO buyVO, HttpSession session, HttpServletRequest request,  HttpServletResponse response,
+	public String pay(@RequestParam("buy_address") String buy_address,@RequestParam("buy_receive") String buy_receive,
+			HttpSession session, HttpServletRequest request,  HttpServletResponse response,
 			 			RedirectAttributes rttr) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		logger.info("내용");
@@ -270,7 +277,7 @@ public class ProjectController {
 		int totalRecord = projectService.cart_totalRecord(user_id);
 		
 		
-		int r = projectService.buyRegister(buyVO, totalRecord, user_id);
+		int r = projectService.buyRegister(buy_address, buy_receive, totalRecord, user_id);
 		int u = projectService.findBuyno();
 		int s = projectService.buyDetailRegister(list, u);
 		int t = projectService.cartDelete(user_id);
@@ -322,7 +329,7 @@ public class ProjectController {
 	// public static int pageListNUM = 1;
 	
 	// 마이페이지로 이동
-	@RequestMapping(value = "project/mypage" , method = RequestMethod.GET)
+	@RequestMapping(value = "project/mypage1" , method = RequestMethod.GET)
 	public ModelAndView mypage(@RequestParam(value="mypage_pageNUM", defaultValue="1")int mypage_pageNUM,
 							@RequestParam(value="mypage_pageListNUM", defaultValue="1") int mypage_pageListNUM,
 							HttpSession session, HttpServletRequest request, HttpServletResponse response
@@ -359,6 +366,57 @@ public class ProjectController {
 		return mav;
 			
 	}
+	
+	
+	
+	//마이페이지
+		@RequestMapping(value="project/mypage", method=RequestMethod.GET)
+		public String ProductMypage(Model model, HttpSession session) {
+			//아이디 가져오기
+//			String userid = session.getId();
+//			String userid = "yoonho";
+			
+			Map<String, Object> user = (Map)session.getAttribute("user");
+			String userid = (String)user.get("user_id");
+			
+			//결제건 데이터 가져오기
+			List<BuyVO> VO = projectService.listBuy(userid);
+			model.addAttribute("buy_list", VO);
+			
+			int[] buyno = new int[100];
+			
+			//결제건 데이터에서 buy_no 뽑기
+			for(int i=0; i<VO.size(); i++) {
+				BuyVO buyVO = VO.get(i);
+				buyno[i] = buyVO.getBuy_no();
+			}
+				
+			//결제상세건 데이터 가져오기
+			List<BuydetailVO> detailVO = projectService.listBuydetail(buyno);
+			model.addAttribute("buy_detail_list", detailVO);
+			
+			String[] productno = new String[100];
+			
+			//결제상세건 데이터에서 buydetail_productid 뽑기
+			for(int i=0; i<detailVO.size(); i++) {
+				BuydetailVO buyDetailVO = detailVO.get(i);
+				productno[i] = buyDetailVO.getBuydetail_productid();
+			}
+			
+			//결제상세건 데이터에서 제품 데이터 가져오기
+			List<ProductVO> productVO = projectService.mypageDetailProduct(productno);
+			model.addAttribute("buy_detail_product_list", productVO);
+
+			return "mypage";
+		}
+	
+	
+	
+	
+		
+		
+		
+		
 	
 	
 	
@@ -426,9 +484,11 @@ public class ProjectController {
 		
 		int totalRecord = projectService.cart_totalRecord(user_id);
 		List<CartVO> list = projectService.listCart(user_id);
+		
+		
 		mav.addObject("list", list);
 		mav.addObject("totalRecord",totalRecord);
-		mav.setViewName("cart");
+		mav.setViewName("cart2");
 		return mav;
 	}
 	

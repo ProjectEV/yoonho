@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<%@ include file="header.jsp" %>
 	
    <div>
       <h1>${product.product_name }</h1>

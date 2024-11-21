@@ -48,7 +48,7 @@ table {
 </head>
 
 <body>
-
+<%@ include file="header.jsp" %>
 	
 
 
@@ -57,7 +57,7 @@ table {
       <h1>장바구니</h1>
    </div>
 
-      <table>
+      <table class="table">
          <tr>
 		  	<td>번호</td>
 		  	<td>제품코드</td>
@@ -83,11 +83,8 @@ table {
 		 
 		<tr>
 			<td colspan="5" align="center">
+				<input type="button" onclick="location.href='/project/pay'" value="구매"/>
 				<input class="btn btn-success" type="button" value="메인으로"	id="main" />
-				
-				<a href="/project/pay"> 장바구니에 있는 제품들 구매 </a>
-				
-				
 				
 			</td>
 		</tr>

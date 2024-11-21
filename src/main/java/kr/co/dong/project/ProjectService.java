@@ -23,6 +23,12 @@ public interface ProjectService {
 	public List<ProductVO> listProduct();
 	public List<AddressVO> listAddress(String user_id);
 	public List<CartVO> listCart(String user_id);
+	public List<BuyVO> listBuy(String userid);
+	public List<BuydetailVO> listBuydetail(int[] buyno);
+	
+	public List<ProductVO> mypageDetailProduct(String[] productno);
+	
+	
 	
 	
 	public Map<String, Object> projectLogin(Map<String, Object> map);
@@ -50,7 +56,7 @@ public interface ProjectService {
 	public int findCart(String product_id);
 	
 	
-	public int buyRegister(BuyVO buyVO, int totalRecord, String user_id);
+	public int buyRegister(String buy_address, String buy_receive, int totalRecord, String user_id);
 	public int buyDetailRegister(List<CartVO> list, int u);
 	public int cartDelete(String user_id);
 	public int findBuyno();

@@ -47,15 +47,24 @@
   <header style="padding: 0;" id="header" class="header d-flex align-items-center sticky-top">
     <div style="margin: 0 auto">
     	<div style="padding: 10px 10px">
-	    	<a href="index.html" style="display: inline;">
+	    	<a href="/" style="display: inline;">
 		    	<img style="width: 200px; height: 70px;" src="${pageContext.request.contextPath}/resources/images/logo.png" alt="전자마을">
 		    </a>
 	      
 	        <input id="keyword" name="searchKeyword" style="width: 500px; margin: 0 0 0 100px; display: inline;" class="form-control me-2" type="text" placeholder="검색" aria-label="검색"/>
 	        <button id="my-button" class="searchBtn">검색</button>
-	
-	        <button id="nav-btn" onclick="location.href='/product/login'">로그인</button>
-	        <button id="nav-btn" onclick="location.href='/product/mypage'">마이페이지</button>
+			
+			<c:if test="${user==null}">
+				<button id="nav-btn" onclick="location.href='/project/login'">로그인</button>
+			</c:if>
+			<c:if test="${user!=null }">
+				<button id="nav-btn" onclick="location.href='/project/logout'">로그아웃</button>
+			</c:if>
+			
+	        <button id="nav-btn" onclick="location.href='/project/mypage'">마이페이지</button><br>
+	        <c:if test="${user!=null }">
+				${user.user_name }님 환영합니다. <br />
+			</c:if>
     	</div>
     	
         <!-- 카테고리 선택 -->

@@ -6,6 +6,15 @@ public class CartVO {
 	private String cart_productid;
 	private String cart_productname;
 	private int cart_amount;
+	private String product_price;
+	
+	
+	public String getProduct_price() {
+		return product_price;
+	}
+	public void setProduct_price(String product_price) {
+		this.product_price = product_price;
+	}
 	public int getCart_no() {
 		return cart_no;
 	}
@@ -39,7 +48,8 @@ public class CartVO {
 	@Override
 	public String toString() {
 		return "CartVO [cart_no=" + cart_no + ", cart_userid=" + cart_userid + ", cart_productid=" + cart_productid
-				+ ", cart_productname=" + cart_productname + ", cart_amount=" + cart_amount + "]";
+				+ ", cart_productname=" + cart_productname + ", cart_amount=" + cart_amount + ", product_price="
+				+ product_price + "]";
 	}
 	
 	
