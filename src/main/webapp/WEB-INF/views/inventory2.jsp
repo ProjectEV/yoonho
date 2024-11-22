@@ -141,8 +141,8 @@
                                 <tr>
                                     <th>Product</th>
                                     <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
+                                    <th>&nbsp;&nbsp;Remain</th>
+                                    <th>Sales</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -153,12 +153,13 @@
                             
                             
                             
-                            <c:forEach var="cart" items="${list }" varStatus="status">
+                            <c:forEach var="product" items="${list }" varStatus="status">
 		 						<tr>
                                     <td class="cart__product__item">
-                                        <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-1.jpg" alt="">
+                                    	<a href="product_detail?product_id=${product.product_id}"> <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-1.jpg" alt=""> </a>
                                         <div class="cart__product__item__title">
-                                            <h6><a href="product_detail?product_id=${cart.cart_productid}">${cart.cart_productname}</a></h6>
+                                            <h6><a href="inventory_detail?product_id=${product.product_id}">${product.product_name}</a></h6>
+                                            <div>${product.product_id}</div>
                                             <div class="rating">
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
@@ -168,116 +169,18 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="cart__price">&#8361; <fmt:formatNumber value="${cart.product_price}" pattern="#,###" /></td>
+                                    <td class="cart__price">&#8361; <fmt:formatNumber value="${product.product_price}" pattern="#,###" /></td>
                                     <td class="cart__quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="${cart.cart_amount}">
-                                        </div>
+                                        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${product.product_remain}</div>
                                     </td>
-                                    <td class="cart__total">&#8361; <fmt:formatNumber value="${cart.product_price * cart.cart_amount}" pattern="#,###" /></td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
+                                    <td class="cart__quantity">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <fmt:formatNumber value="${product.product_sales}" pattern="#,###" /></td>
                                 </tr>
                                 
                                 
-                                <c:set var= "total" value="${total + cart.product_price * cart.cart_amount}"/>
+                                <c:set var= "total" value="${total + product.product_price * product.product_remain}"/>
                                 
                                 
 							</c:forEach>
-                            
-                            
-                            <!--  <tr>
-                                    <td class="cart__product__item">
-                                        <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-1.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Chain bucket bag</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 150.0</td>
-                                    <td class="cart__quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="cart__total">$ 300.0</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr>
-                                
-                                <tr>
-                                    <td class="cart__product__item">
-                                        <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-2.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Zip-pockets pebbled tote briefcase</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 170.0</td>
-                                    <td class="cart__quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="cart__total">$ 170.0</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr>
-                                <tr>
-                                    <td class="cart__product__item">
-                                        <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-3.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Black jean</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 85.0</td>
-                                    <td class="cart__quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="cart__total">$ 170.0</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr>
-                                <tr>
-                                    <td class="cart__product__item">
-                                        <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-4.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Cotton Shirt</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 55.0</td>
-                                    <td class="cart__quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="cart__total">$ 110.0</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr> -->
                             
                             
                             
@@ -290,7 +193,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="cart__btn">
-                        <a href="/project/product">Continue Shopping</a>
+                        <a href="/project/product_register"> Upload New Product </a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">

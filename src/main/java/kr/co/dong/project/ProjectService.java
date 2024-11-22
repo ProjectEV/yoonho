@@ -61,6 +61,8 @@ public interface ProjectService {
 	public int cartDelete(String user_id);
 	public int findBuyno();
 	
+	public AddressVO findMainAddress(String user_id);
+	
 	
 	
 }

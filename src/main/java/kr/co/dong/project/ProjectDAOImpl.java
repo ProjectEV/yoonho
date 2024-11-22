@@ -152,7 +152,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 	@Override
 	public int productDelete(String product_id) {
 		// TODO Auto-generated method stub
-		return sqlSession.delete(nameSpace + ".productDelete", product_id);
+		return sqlSession.update(nameSpace + ".productDelete", product_id);
 	}
 	@Override
 	public int productRemainPlus(int product_plus, String product_id) {
@@ -230,6 +230,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 			// TODO Auto-generated method stub
 			return sqlSession.selectOne(nameSpace + ".findBuyno");
 		}
+	@Override
+	public AddressVO findMainAddress(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".findMainAddress", user_id);
+	}
 	
 
 	

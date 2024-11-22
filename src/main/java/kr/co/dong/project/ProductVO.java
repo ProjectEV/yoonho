@@ -8,8 +8,14 @@ public class ProductVO {
 	private String product_category;
 	private int product_remain;
 	private int product_sales;
+	private int del;
 	
-	
+	public int getDel() {
+		return del;
+	}
+	public void setDel(int del) {
+		this.del = del;
+	}
 	public String getProduct_id() {
 		return product_id;
 	}
@@ -56,7 +62,7 @@ public class ProductVO {
 	public String toString() {
 		return "ProductVO [product_id=" + product_id + ", product_price=" + product_price + ", product_name="
 				+ product_name + ", product_content=" + product_content + ", product_category=" + product_category
-				+ ", product_remain=" + product_remain + ", product_sales=" + product_sales + "]";
+				+ ", product_remain=" + product_remain + ", product_sales=" + product_sales + ", del=" + del + "]";
 	}
 	
 	

@@ -8,25 +8,7 @@
 <title>전자마을</title>
 
 <style>
-th, td {
-   padding: 5px;
-   text-align: left;
-}
 
-#title {
-   text-align: center;
-   background-color: #49516b;
-   color: white;
-}
-
-div {
-   text-align: center;
-   margin-top: 20px;
-}
-
-table {
-   margin: 0 auto;
-}
 </style>
 
 

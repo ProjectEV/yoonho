@@ -198,6 +198,11 @@ public class ProjectServiceImpl implements ProjectService {
 			// TODO Auto-generated method stub
 			return projectDAO.findBuyno();
 		}
+	@Override
+	public AddressVO findMainAddress(String user_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.findMainAddress(user_id);
+	}
 	
 	
 

@@ -6,6 +6,7 @@
   
   <select id="product_totalRecord" resultType="int">
 		select count(*) from product
+		where del = 0
   </select>
   
   <select id="mypage_totalRecord" parameterType="String" resultType="int">
@@ -49,6 +50,7 @@
   <select id="listProduct" parameterType="map" resultType="ProductVO">
 	  SELECT *
       FROM product
+      where del = 0
       order by product_id
       LIMIT #{start}, #{pageSIZE}
   </select>
@@ -56,8 +58,8 @@
   <select id="listMypage" parameterType="map" resultType="BuyVO">
 	  SELECT *
       FROM buy
-      order by buy_no desc
       where buy_userid = #{user_id}
+      order by buy_no desc
       LIMIT #{start}, #{pageSIZE}
   </select>
   
@@ -90,6 +92,7 @@
   <select id="listProductVoid" resultType="ProductVO">
 	  SELECT *
       FROM product
+      where del = 0
       order by product_id
   </select>
   
@@ -170,8 +173,8 @@
   </insert>
   
   <delete id="productDelete" parameterType="String">
-  		delete from 
-  		product
+  		update product
+  		set del = 1
   		where product_id = #{product_id} 
   </delete>
   
@@ -241,6 +244,13 @@
  <select id="findBuyno" resultType="int">
   		select max(buy_no) from buy
  </select>
+  
+  <select id="findMainAddress" parameterType="String" resultType="AddressVO">
+  		select *
+  		from address
+  		where address_userid = #{user_id} and address_main = 1
+  </select>
+  
   
   
   

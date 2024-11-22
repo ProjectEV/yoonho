@@ -1,5 +1,6 @@
 package kr.co.dong.controller;
 
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +46,7 @@ public class ProjectController {
 		List<ProductVO> list = projectService.listProduct();
 		mav.addObject("list", list);
 		mav.addObject("totalRecord",totalRecord);
-		mav.setViewName("inventory");
+		mav.setViewName("inventory2");
 		return mav;
 	}
 	
@@ -158,7 +159,7 @@ public class ProjectController {
 		model.addAttribute("product", productVO);
 		
 		
-		return "inventory_detail";
+		return "inventory_detail2";
 	}
 	
 	
@@ -166,7 +167,7 @@ public class ProjectController {
 	@RequestMapping(value="project/product_register", method= RequestMethod.GET)
 	public String productRegister() {
 		logger.info("관리자 글 작성 이동");
-		return "admin_post";
+		return "admin_post2";
 	}
 	
 	// 신규 product 등록
@@ -249,17 +250,30 @@ public class ProjectController {
 		
 		List<CartVO> list = projectService.listCart(user_id);
 		
+		AddressVO address = projectService.findMainAddress(user_id);
+		
 		int totalRecord = projectService.cart_totalRecord(user_id);
 		
+		mav.addObject("address",address);
 		mav.addObject("list", list);
 		mav.addObject("totalRecord",totalRecord);
-		mav.setViewName("pay");
+		mav.setViewName("pay2");
 		return mav;
 	}
 	
 	
 	
-	
+//	public static void alert(HttpServletResponse response, String msg) {
+//	    try {
+//			response.setContentType("text/html; charset=utf-8");
+//			PrintWriter w = response.getWriter();
+//			w.write("<script>alert('"+msg+"');</script>");
+//			w.flush();
+//			w.close();
+//	    } catch(Exception e) {
+//			e.printStackTrace();
+//	    }
+//	}
 	
 	
 	
@@ -277,6 +291,8 @@ public class ProjectController {
 		int totalRecord = projectService.cart_totalRecord(user_id);
 		
 		
+		
+		
 		int r = projectService.buyRegister(buy_address, buy_receive, totalRecord, user_id);
 		int u = projectService.findBuyno();
 		int s = projectService.buyDetailRegister(list, u);
@@ -287,8 +303,8 @@ public class ProjectController {
 			rttr.addFlashAttribute("msg","추가에 성공하였습니다.");	//세션저장
 		}
 		
-		return "redirect:mypage";
-}
+		return "redirect:/";
+	}
 	
 	
 	
