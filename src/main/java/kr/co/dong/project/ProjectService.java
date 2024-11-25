@@ -48,6 +48,9 @@ public interface ProjectService {
 	public int productDelete(String product_id);
 	public int productRemainPlus(int product_plus, String product_id);
 	
+	public int productAdd(String product_id, int product_add);
+	
+	
 	
 	public int productUpdate(ProductVO productVO);
 	

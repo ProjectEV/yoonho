@@ -172,6 +172,16 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return sqlSession.update(nameSpace + ".productUpdate", productVO);
 	}
 	
+	@Override
+	public int productAdd(String product_id, int product_add) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("product_id", product_id);
+		map.put("product_add", product_add);
+		return sqlSession.update(nameSpace+".productAdd", map);
+	}
+	
+	
 	
 	@Override
 	public int cartRegister(String user_id, String product_id, String product_name, int amount) {
@@ -234,6 +244,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(nameSpace + ".findMainAddress", user_id);
 	}
+	
 	
 
 	

@@ -49,7 +49,7 @@ public interface ProjectDAO {
 	
 	
 	public int productUpdate(ProductVO productVO);
-	
+	public int productAdd(String product_id, int product_add);
 	
 	public int cartRegister(String user_id, String product_id, String product_name, int amount);
 	// public int cartUpdate(String user_id, String productId, int amount);

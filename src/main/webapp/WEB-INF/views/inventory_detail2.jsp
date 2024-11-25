@@ -1,11 +1,61 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="zxx">
 <meta charset="UTF-8">
 <title>TechNova</title>
 <head>
+
+<script>
+	function windowOpen2() { 
+		var url = "product_update?product_id=${product.product_id}"
+		window.open(url, "a", "width=1000, height=800, left=100, top=50"); 
+		}
+</script>
+<style>
+.product_add_input {
+  margin-bottom: 30px;
+
+  h6 {
+    color: $heading-color;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+  }
+
+  form {
+    position: relative;
+    margin-bottom: 30px;
+    margin-left: 280px;
+
+    input {
+      height: 52px;
+      width: 250px;
+      border: 1px solid #e1e1e1;
+      border-radius: 50px;
+      padding-left: 30px;
+      font-size: 14px;
+      color: #666666;
+      
+
+      &::placeholder {
+        color: #666666;
+      }
+    }
+
+    button {
+      position: absolute;
+      right: 60px;
+      top: 4px;
+      background-color: navy;
+    }
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -71,27 +121,48 @@
                             <i class="fa fa-star"></i>
                             <span>( 138 reviews )</span>
                         </div>
-                        <div class="product__details__price">${product.product_price}<span>$ 83.0</span></div>
+                        <div class="product__details__price">&#8361; <fmt:formatNumber value="${product.product_price}" pattern="#,###" /></div>
                         <p>${product.product_content}</p>
                         <div class="product__details__button">
                         
                         
                         
                         
-                            <a href="product_delete?product_id=${product.product_id}" class="cart-btn"><span class="icon_bag_alt"></span> 제품 삭제 </a>
-                            <a href="/product/buy" class="cart-btn"><span class="icon_bag_alt"></span> 수량 추가 </a>
+                            <a href="product_delete?product_id=${product.product_id}" class="cart-btn" ><span class="icon_bag_alt"></span> 제품 삭제 </a>
+                            <a href="product_update?product_id=${product.product_id}" class="cart-btn" ><span class="icon_bag_alt"></span> 제품 수정 </a>
+                            
+                            
+			                    <div class="product_add_input">
+			                        <form action="/project/product_add" method="post">
+			                            <input type="number" class="quantity-input pro-qty" name="product_add"  value="1" min="1" size="30">
+			                            <input type="hidden" name="product_id" value="${product.product_id}" />
+			                            <button type="submit" class="site-btn">수량 추가</button>
+			                        </form>
+			                        
+			                    </div>
                             
                             
                             
                             
-                            <ul>
-                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>
-                            </ul>
+                            
                         </div>
                         <div class="product__details__widget">
                             <ul>
+                            	<li>
+                                    <span>제품 코드:</span>
+                                    <p>${product.product_id }</p>
+                                </li>
+                            	<li>
+                                    <span>재고:</span>
+                                    <p>${product.product_remain }</p>
+                                </li>
                                 <li>
+                                    <span>누적판매량:</span>
+                                    <p>${product.product_sales }</p>
+                                </li>
+                                
+                            <!-- 
+                              <li>
                                     <span>Availability:</span>
                                     <div class="stock__checkbox">
                                         <label for="stockin">
@@ -143,6 +214,8 @@
                                     <span>Promotions:</span>
                                     <p>Free shipping</p>
                                 </li>
+                             -->
+                              
                             </ul>
                         </div>
                     </div>

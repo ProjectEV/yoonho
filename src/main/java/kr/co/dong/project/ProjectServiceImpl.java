@@ -158,6 +158,12 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectDAO.productUpdate(productVO);
 	}
 	
+	@Override
+	public int productAdd(String product_id, int product_add) {
+		// TODO Auto-generated method stub
+		return projectDAO.productAdd(product_id, product_add);
+	}
+	
 	
 	@Override
 	public int cartRegister(String user_id, String product_id, String product_name, int amount) {
@@ -214,6 +220,7 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.findMainAddress(user_id);
 	}
+	
 	
 	
 

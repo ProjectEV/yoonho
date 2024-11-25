@@ -55,25 +55,6 @@
                     return;
                 }
                 
-                $.ajax({
-                    url: "/project/cart_update", // Spring Controller로 요청
-                    method: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify({
-                        cart_productid: productId,
-                        cart_amount: quantity
-                    }),
-                    success: function (response) {
-                        if (response.success) {
-                            alert("수량이 업데이트되었습니다.");
-                        } else {
-                            alert(response.message || "수량 업데이트에 실패했습니다.");
-                        }
-                    },
-                    error: function () {
-                        alert("서버와 통신 중 오류가 발생했습니다.");
-                    }
-                });
                 
                 // 개별 상품의 총 가격 업데이트
                 const totalPrice = quantity * price;
@@ -140,7 +121,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                        <a href="/"><i class="fa fa-home"></i> Home</a>
                         <span>Shopping cart</span>
                     </div>
                 </div>

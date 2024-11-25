@@ -191,9 +191,16 @@
 		update product
 		set
 		product_name=#{product_name} , product_price=#{product_price} , product_category=#{product_category},
-		product_content=#{product_content}
+		product_content=#{product_content}, product_remain = #{product_remain}
 		where product_id = #{product_id}
 	</update>
+  
+   <update id="productAdd" parameterType="map">
+  		update product
+  		set product_remain = product_remain + #{product_add}
+  		where product_id = #{product_id}
+   </update>
+  
   
   
   

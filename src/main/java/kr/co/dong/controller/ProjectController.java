@@ -187,12 +187,25 @@ public class ProjectController {
 	
 	// 기존에 있던 product 수량만 추가
 	@RequestMapping(value="project/productRemainPlus", method= RequestMethod.POST)
-	public String productRemainPlus(@RequestParam("product_plus") int product_plus,
+	public String productRemainPlus(@RequestParam("product_add") int product_add,
 						@RequestParam("product_id") String product_id) {
-		int r = projectService.productRemainPlus(product_plus, product_id);
+		int r = projectService.productRemainPlus(product_add, product_id);
 		
 		return "redirect:inventory";
 	}
+	
+	@RequestMapping(value="project/product_add", method= RequestMethod.POST)
+	public String productAdd(@RequestParam("product_add") int product_add, @RequestParam("product_id") String product_id) {
+		int r = projectService.productAdd(product_id, product_add);
+		
+		return "redirect:inventory_detail?product_id=" + product_id;
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	@RequestMapping(value="project/product_update", method= RequestMethod.GET)
@@ -201,6 +214,8 @@ public class ProjectController {
 		model.addAttribute("product", productVO);
 		return "admin_update";
 	}
+	
+	
 	
 	@RequestMapping(value="project/product_update", method = RequestMethod.POST)
 	public String productUpdate(ProductVO productVO, RedirectAttributes attr,HttpServletRequest request) throws Exception {
