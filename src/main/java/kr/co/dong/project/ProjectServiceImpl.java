@@ -164,11 +164,22 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.cartRegister(user_id, product_id, product_name, amount);
 	}
+//	@Override
+//	public int cartUpdate(String user_id, String productId, int amount) {
+//		// TODO Auto-generated method stub
+//		return projectDAO.cartUpdate(user_id, productId, amount);
+//	}
+//	@Override
+//	public int cartUpdate(String user_id, List<CartVO> updateList) {
+//		// TODO Auto-generated method stub
+//		return projectDAO.cartUpdate(user_id, updateList);
+//	}
 	@Override
-	public int cartUpdate(String user_id, String product_id, int amount) {
+	public int cartUpdate(String user_id, CartVO cartVO) {
 		// TODO Auto-generated method stub
-		return projectDAO.cartUpdate(user_id, product_id, amount);
+		return projectDAO.cartUpdate(user_id, cartVO);
 	}
+	
 	@Override
 	public int findCart(String product_id) {
 		// TODO Auto-generated method stub

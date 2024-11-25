@@ -148,7 +148,7 @@
                     here to enter your code.</h6>
                 </div>
             </div>
-            <form action="/project/pay" method="post" class="checkout__form">
+            <form action="/project/product_register" method="post" class="checkout__form">
                 <div class="row">
                     <div class="col-lg-8">
                         <h5>Upload New Product</h5>

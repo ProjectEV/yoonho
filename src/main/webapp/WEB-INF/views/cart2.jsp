@@ -29,6 +29,77 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
+    
+    
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 수량 변경 이벤트 핸들러
+            $(".quantity-input").on("input", function () {
+                const quantity = $(this).val(); // 입력된 수량
+                const row = $(this).closest(".cart-row"); // 현재 상품의 행
+                const productId = row.data("product-id"); // 상품 ID
+                const price = row.data("product-price"); // 상품 단가
+                const remain = row.data("product-remain");
+                
+
+                if (quantity < 0 || isNaN(quantity)) {
+                    alert("수량은 0 이상의 숫자만 가능합니다.");
+                    $(this).val(0); // 잘못된 입력은 0으로 리셋
+                    return;
+                }
+                if (quantity > remain) {
+                    alert("재고가 부족합니다.");
+                    $(this).val(remain);
+                    return;
+                }
+                
+                $.ajax({
+                    url: "/project/cart_update", // Spring Controller로 요청
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        cart_productid: productId,
+                        cart_amount: quantity
+                    }),
+                    success: function (response) {
+                        if (response.success) {
+                            alert("수량이 업데이트되었습니다.");
+                        } else {
+                            alert(response.message || "수량 업데이트에 실패했습니다.");
+                        }
+                    },
+                    error: function () {
+                        alert("서버와 통신 중 오류가 발생했습니다.");
+                    }
+                });
+                
+                // 개별 상품의 총 가격 업데이트
+                const totalPrice = quantity * price;
+                row.find(".product-total").text("₩ "+totalPrice.toLocaleString());
+				
+                // 서버에 Ajax 요청으로 총합 계산 요청
+                updateCartTotal();
+            });
+
+            // 장바구니 전체 합계 업데이트
+            function updateCartTotal() {
+                let total = 0;
+                $(".cart-row").each(function () {
+                    const quantity = $(this).find(".quantity-input").val();
+                    const price = $(this).data("product-price");
+                    total += quantity * price;
+                });
+
+                // 합계 표시
+                $("#cart-total").text("₩ "+total.toLocaleString());
+            }
+        });
+    </script>
+    
+   
+    
 </head>
 
 <body>
@@ -61,59 +132,7 @@
     </div>
     <!-- Offcanvas Menu End -->
 
-    <!-- Header Section Begin -->
-    <header class="header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xl-3 col-lg-2">
-                    <div class="header__logo">
-                        <a href="/"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-7">
-                    <nav class="header__menu">
-                        <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
-                            <li><a href="#">Women’s</a></li>
-                            <li><a href="#">Men’s</a></li>
-                            <li><a href="./shop.html">Shop</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="./product-details.html">Product Details</a></li>
-                                    <li><a href="./shop-cart.html">Shop Cart</a></li>
-                                    <li><a href="./checkout.html">Checkout</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3">
-                    <div class="header__right">
-                        <div class="header__right__auth">
-                            <a href="#">Login</a>
-                            <a href="#">Register</a>
-                        </div>
-                        <ul class="header__right__widget">
-                            <li><span class="icon_search search-switch"></span></li>
-                            <li><a href="#"><span class="icon_heart_alt"></span>
-                                <div class="tip">2</div>
-                            </a></li>
-                            <li><a href="#"><span class="icon_bag_alt"></span>
-                                <div class="tip">2</div>
-                            </a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="canvas__open">
-                <i class="fa fa-bars"></i>
-            </div>
-        </div>
-    </header>
-    <!-- Header Section End -->
+    <%@ include file="header.jsp" %>
 
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
@@ -136,6 +155,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shop__cart__table">
+                    
+                    <form action="/project/cart_update" method="post" id="cartInfo" name="cartInfo">
+                    
                         <table>
                             <thead>
                                 <tr>
@@ -154,7 +176,7 @@
                             
                             
                             <c:forEach var="cart" items="${list }" varStatus="status">
-		 						<tr>
+		 						<tr class="cart-row" data-product-id="${cart.cart_productid}" data-product-price="${cart.product_price}" data-product-remain="${cart.product_remain }">
                                     <td class="cart__product__item">
                                         <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-1.jpg" alt="">
                                         <div class="cart__product__item__title">
@@ -169,12 +191,18 @@
                                         </div>
                                     </td>
                                     <td class="cart__price">&#8361; <fmt:formatNumber value="${cart.product_price}" pattern="#,###" /></td>
-                                    <td class="cart__quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="${cart.cart_amount}">
-                                        </div>
+                                    <td>
+                                    
+                                    <!-- <div class="pro-qty">
+                                            <input type="number" class="quantity-input" value="${cart.cart_amount}" min="0">
+                                        </div> -->
+                                        <input type="hidden" name="updateList[${status.index}].cart_productid" value="${cart.cart_productid}" />
+                                        <input type="number" class="quantity-input pro-qty" name="updateList[${status.index}].cart_amount"  value="${cart.cart_amount}" min="1">
+                                        
+                                        
+                                        
                                     </td>
-                                    <td class="cart__total">&#8361; <fmt:formatNumber value="${cart.product_price * cart.cart_amount}" pattern="#,###" /></td>
+                                    <td class="product-total">&#8361; <fmt:formatNumber value="${cart.product_price * cart.cart_amount}" pattern="#,###" /></td>
                                     <td class="cart__close"><span class="icon_close"></span></td>
                                 </tr>
                                 
@@ -185,105 +213,10 @@
 							</c:forEach>
                             
                             
-                            <!--  <tr>
-                                    <td class="cart__product__item">
-                                        <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-1.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Chain bucket bag</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 150.0</td>
-                                    <td class="cart__quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="cart__total">$ 300.0</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr>
-                                
-                                <tr>
-                                    <td class="cart__product__item">
-                                        <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-2.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Zip-pockets pebbled tote briefcase</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 170.0</td>
-                                    <td class="cart__quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="cart__total">$ 170.0</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr>
-                                <tr>
-                                    <td class="cart__product__item">
-                                        <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-3.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Black jean</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 85.0</td>
-                                    <td class="cart__quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="cart__total">$ 170.0</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr>
-                                <tr>
-                                    <td class="cart__product__item">
-                                        <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-4.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Cotton Shirt</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 55.0</td>
-                                    <td class="cart__quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="cart__total">$ 110.0</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr> -->
-                            
-                            
-                            
                                
                             </tbody>
                         </table>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -294,8 +227,8 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="cart__btn update__btn">
-                        <a href="#"><span class="icon_loading"></span> Update cart</a>
+                    <div class="cart__btn" align="right">
+                        <a href="javascript:document.cartInfo.submit();"> Update cart</a>
                     </div>
                 </div>
             </div>
@@ -317,10 +250,12 @@
                         
                         
                         <ul>
-                            <li>Subtotal <span>&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
-                            <li>Total <span>&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
+                            <li>Total <span id="cart-total">&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
                         </ul>
+                        
+                        <!-- <button type="submit" form="cartInfo" class="site-btn">&nbsp;&nbsp;&nbsp;&nbsp;Proceed to checkout&nbsp;&nbsp;&nbsp;&nbsp;</button> -->
                         <a href="/project/pay" class="primary-btn">Proceed to checkout</a>
+                        
                     </div>
                 </div>
             </div>

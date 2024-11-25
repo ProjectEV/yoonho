@@ -184,12 +184,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return sqlSession.insert(nameSpace + ".cartRegister", map);
 	}
 	@Override
-	public int cartUpdate(String user_id, String product_id, int amount) {
+	public int cartUpdate(String user_id, CartVO cartVO) {
 		// TODO Auto-generated method stub
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("user_id", user_id);
-		map.put("product_id", product_id);
-		map.put("amount", amount);
+		map.put("cart", cartVO);
 		return sqlSession.update(nameSpace + ".cartUpdate", map);
 	}
 	@Override

@@ -7,8 +7,14 @@ public class CartVO {
 	private String cart_productname;
 	private int cart_amount;
 	private String product_price;
+	private String product_remain;
 	
-	
+	public String getProduct_remain() {
+		return product_remain;
+	}
+	public void setProduct_remain(String product_remain) {
+		this.product_remain = product_remain;
+	}
 	public String getProduct_price() {
 		return product_price;
 	}
@@ -49,7 +55,7 @@ public class CartVO {
 	public String toString() {
 		return "CartVO [cart_no=" + cart_no + ", cart_userid=" + cart_userid + ", cart_productid=" + cart_productid
 				+ ", cart_productname=" + cart_productname + ", cart_amount=" + cart_amount + ", product_price="
-				+ product_price + "]";
+				+ product_price + ", product_remain=" + product_remain + "]";
 	}
 	
 	

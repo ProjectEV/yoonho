@@ -206,9 +206,22 @@
   <update id="cartUpdate" parameterType="map">
 		update cart
 		set
-		cart_amount=#{amount}
-		where cart_productid = #{product_id} and cart_userid=#{user_id}
+		cart_amount=#{cart_amount}
+		where cart_productid = #{cart_productid} and cart_userid=#{user_id}
   </update>
+  
+  
+  <update id="cartUpdate123" parameterType="map">
+        <foreach collection="list" item="item" separator=";">
+        UPDATE 
+            cart
+        SET
+            cart_amount = #{item.cart_amount}
+        WHERE
+            cart_userid = #{user_id} and cart_productid = #{item.cart_productid}
+        </foreach>
+    </update>
+  
   
   <select id="findCart" parameterType="String" resultType="int">
   		select count(*) from cart

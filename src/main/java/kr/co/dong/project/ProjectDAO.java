@@ -52,7 +52,9 @@ public interface ProjectDAO {
 	
 	
 	public int cartRegister(String user_id, String product_id, String product_name, int amount);
-	public int cartUpdate(String user_id, String product_id, int amount);
+	// public int cartUpdate(String user_id, String productId, int amount);
+	// public int cartUpdate(String user_id, List<CartVO> updateList);
+	public int cartUpdate(String user_id, CartVO cartVO);
 	public int findCart(String product_id);
 	
 	public int buyRegister(String buy_address, String buy_receive, int totalRecord, String user_id);

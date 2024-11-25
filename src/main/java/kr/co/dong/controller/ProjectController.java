@@ -1,6 +1,6 @@
 package kr.co.dong.controller;
 
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -243,10 +244,14 @@ public class ProjectController {
 	@RequestMapping(value="project/pay", method= RequestMethod.GET)
 	public ModelAndView pay(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		logger.info("pay 이동");
-		ModelAndView mav = new ModelAndView();
 		
 		Map<String, Object> user = (Map)session.getAttribute("user");
 		String user_id = (String)user.get("user_id");
+	    
+		
+		ModelAndView mav = new ModelAndView();
+		
+		
 		
 		List<CartVO> list = projectService.listCart(user_id);
 		
@@ -531,18 +536,20 @@ public class ProjectController {
 		return "redirect:product";
 	}
 		
+	@ResponseBody
 	@RequestMapping(value="/project/cart_update", method= RequestMethod.POST)
-	public String cartUpdate(@RequestParam("product_id")String product_id, 
-			@RequestParam("amount")int amount, HttpServletRequest request,
+	public String cartUpdate(CartVO cartVO, HttpServletRequest request,
 			RedirectAttributes rttr, HttpSession session, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		
 		Map<String, Object> user = (Map)session.getAttribute("user");
 		String user_id = (String)user.get("user_id");
 		
-		int r = projectService.cartUpdate(user_id, product_id, amount);
 		
-		return "redirect:cart";
+		
+		int r = projectService.cartUpdate(user_id, cartVO);
+		
+		return "redirect:cart2";
 	}
 	
 		
