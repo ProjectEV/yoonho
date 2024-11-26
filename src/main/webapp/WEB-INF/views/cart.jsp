@@ -1,116 +1,275 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <!DOCTYPE html>
-<html>
+<html lang="zxx">
+
 <head>
-<meta charset="UTF-8">
-<title> 장바구니 </title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ashion | Template</title>
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device=width, initial-scale=1.0">
-<link rel="stylesheet" href="https://showcases.yalco.kr/html-css/01-06/table.css">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+	
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
+    
+    
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 수량 변경 이벤트 핸들러
+            $(".quantity-input").on("input", function () {
+                const quantity = $(this).val(); // 입력된 수량
+                const row = $(this).closest(".cart-row"); // 현재 상품의 행
+                const productId = row.data("product-id"); // 상품 ID
+                const price = row.data("product-price"); // 상품 단가
+                const remain = row.data("product-remain");
+                
 
-<script src="https://code.jquery.com/jquery-3.7.1.js"
-   integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-   crossorigin="anonymous"></script>
-<link rel="stylesheet"
-   href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script
-   src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+                if (quantity < 0 || isNaN(quantity)) {
+                    alert("수량은 0 이상의 숫자만 가능합니다.");
+                    $(this).val(0); // 잘못된 입력은 0으로 리셋
+                    return;
+                }
+                if (quantity > remain) {
+                    alert("재고가 부족합니다.");
+                    $(this).val(remain);
+                    return;
+                }
+                
+                
+                // 개별 상품의 총 가격 업데이트
+                const totalPrice = quantity * price;
+                row.find(".product-total").text("₩ "+totalPrice.toLocaleString());
+				
+                // 서버에 Ajax 요청으로 총합 계산 요청
+                updateCartTotal();
+            });
 
-<style>
-th, td {
-   padding: 5px;
-   text-align: left;
-}
+            // 장바구니 전체 합계 업데이트
+            function updateCartTotal() {
+                let total = 0;
+                $(".cart-row").each(function () {
+                    const quantity = $(this).find(".quantity-input").val();
+                    const price = $(this).data("product-price");
+                    total += quantity * price;
+                });
 
-#title {
-   text-align: center;
-   background-color: #49516b;
-   color: white;
-}
-
-div {
-   text-align: center;
-   margin-top: 20px;
-}
-
-table {
-   margin: 0 auto;
-}
-</style>
-
-
-
-
-
+                // 합계 표시
+                $("#cart-total").text("₩ "+total.toLocaleString());
+            }
+        });
+    </script>
+    
+   
+    
 </head>
 
 <body>
-<%@ include file="header.jsp" %>
-	
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
 
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__close">+</div>
+        <ul class="offcanvas__widget">
+            <li><span class="icon_search search-switch"></span></li>
+            <li><a href="#"><span class="icon_heart_alt"></span>
+                <div class="tip">2</div>
+            </a></li>
+            <li><a href="#"><span class="icon_bag_alt"></span>
+                <div class="tip">2</div>
+            </a></li>
+        </ul>
+        <div class="offcanvas__logo">
+            <a href="./index.html"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt=""></a>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__auth">
+            <a href="#">Login</a>
+            <a href="#">Register</a>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
 
+    <%@ include file="header.jsp" %>
 
-   <div>
-      <h1>장바구니</h1>
-   </div>
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/"><i class="fa fa-home"></i> Home</a>
+                        <span>Shopping cart</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
 
-      <table class="table">
-         <tr>
-		  	<td>번호</td>
-		  	<td>제품코드</td>
-		  	<td>제품명</td>
-		  	<td>수량</td>
-		  </tr>
-		  
-		 <c:forEach var="cart" items="${list }" varStatus="status">
-		 
-		 <form action="/project/cart_update" method="post" name="cart${totalRecord - status.index}">
-		 	<tr>
-		 
-		 	<td>${totalRecord - status.index}</td>
-		 	<td><a href="inventory_detail?product_id=${cart.cart_productid}">${cart.cart_productid}</a></td>
-		 	<td>${cart.cart_productname}</td>
-		 	<td> ${cart.cart_amount} <input type="hidden" id="cartbtn" value="전송"></td>
-		 	
-		 	</tr>
-		 	
-		 </form>
-		 
-		 </c:forEach>
-		 
-		<tr>
-			<td colspan="5" align="center">
-				<input type="button" onclick="location.href='/project/pay'" value="구매"/>
-				<input class="btn btn-success" type="button" value="메인으로"	id="main" />
-				
-			</td>
-		</tr>
-      </table>
-      
-	<script>
-		$(function(){
-			//메인 버튼을 눌렀을 때 처리
-			$(".btn-success").click(function(){
-				location.href="../";
-			});
-			$(".btn-success").click(function(){
-				location.href="../";
-			});
-		})
-		
-		function cartBuy() {
-			var i;
-			for (i=${totalRecord}; i>=1; i--) {
-				var name = (String)("cart"+i);
-				document.cart3.submit();
-			}
-		}
-		
-		
-	</script>
+    <!-- Shop Cart Section Begin -->
+    <section class="shop-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shop__cart__table">
+                    
+                    <form action="/project/cart_update" method="post" id="cartInfo" name="cartInfo">
+                    
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                            
+                            <c:set var = "total" value = "0" />
+                            
+                            
+                            
+                            <c:forEach var="cart" items="${list }" varStatus="status">
+		 						<tr class="cart-row" data-product-id="${cart.cart_productid}" data-product-price="${cart.product_price}" data-product-remain="${cart.product_remain }">
+                                    <td class="cart__product__item">
+                                        <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-1.jpg" alt="">
+                                        <div class="cart__product__item__title">
+                                            <h6><a href="product_detail?product_id=${cart.cart_productid}">${cart.cart_productname}</a></h6>
+                                            <div class="rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="cart__price">&#8361; <fmt:formatNumber value="${cart.product_price}" pattern="#,###" /></td>
+                                    <td>
+                                    
+                                    <!-- <div class="pro-qty">
+                                            <input type="number" class="quantity-input" value="${cart.cart_amount}" min="0">
+                                        </div> -->
+                                        <input type="hidden" name="updateList[${status.index}].cart_productid" value="${cart.cart_productid}" />
+                                        <input type="number" class="quantity-input pro-qty" name="updateList[${status.index}].cart_amount"  value="${cart.cart_amount}" min="1">
+                                        
+                                        
+                                        
+                                    </td>
+                                    <td class="product-total">&#8361; <fmt:formatNumber value="${cart.product_price * cart.cart_amount}" pattern="#,###" /></td>
+                                    <td class="cart__close"><span class="icon_close"></span></td>
+                                </tr>
+                                
+                                
+                                <c:set var= "total" value="${total + cart.product_price * cart.cart_amount}"/>
+                                
+                                
+							</c:forEach>
+                            
+                            
+                               
+                            </tbody>
+                        </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="cart__btn">
+                        <a href="/project/product">Continue Shopping</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="cart__btn" align="right">
+                        <a href="javascript:document.cartInfo.submit();"> Update cart</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="discount__content">
+                        <h6>Discount codes</h6>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your coupon code">
+                            <button type="submit" class="site-btn">Apply</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4 offset-lg-2">
+                    <div class="cart__total__procced">
+                        <h6>Cart total</h6>
+                        
+                       
+                        
+                        
+                        <ul>
+                            <li>Total <span id="cart-total">&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
+                        </ul>
+                        
+                        <!-- <button type="submit" form="cartInfo" class="site-btn">&nbsp;&nbsp;&nbsp;&nbsp;Proceed to checkout&nbsp;&nbsp;&nbsp;&nbsp;</button> -->
+                        <a href="/project/pay" class="primary-btn">Proceed to checkout</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shop Cart Section End -->
 
+    <%@ include file="instagram.jsp" %>
+
+    <%@ include file="footer.jsp" %>
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+    <!-- Js Plugins -->
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.magnific-popup.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/mixitup.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.countdown.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.slicknav.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/owl.carousel.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 </body>
+
 </html>

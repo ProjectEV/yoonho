@@ -1,158 +1,115 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
-<%@ include file="include/head.jsp" %>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ashion | Template</title>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-  <!-- Main Header -->
-  
-  <%@ include file="include/main_header.jsp" %>
-  
-  <!-- Left side column. contains the logo and sidebar -->
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_APP_KEY&libraries=services"></script>
+<script type="text/javascript" src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+    
+    
+ 
+     
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
-  <%@ include file="include/left_column.jsp" %>
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Page Header
-        <small>Optional description</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
-    </section>
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
+    	
+    		
+     <style>
+        /* 페이지 전체를 Flexbox로 설정 */
+        body {
+            margin: 0;
+            height: 100vh; /* 화면 전체 높이 */
+            display: flex; /* Flexbox 사용 */
+            justify-content: center; /* 가로 중앙 정렬 */
+            align-items: center; /* 세로 중앙 정렬 */
+            background-color: #f8f9fa; /* 선택적 배경색 */
+        }
+
+        /* .contact__form의 크기 고정 */
+        .contact__form {
+            text-align: center; /* 텍스트 가운데 정렬 */
+        }
+        
+        /* 메인화면 버튼을 텍스트처럼 보이게 만들기 */
+        .link-button {
+            all: unset; /* 모든 기본 스타일 제거 */
+            color: black; /* 텍스트 색상 */
+            cursor: pointer; /* 클릭 가능한 커서 표시 */	
+             text-decoration: none; /* 처음부터 밑줄 제거 */
+        }
+
+    
+        
+    </style>
+    		
+    		
+    	
+    </head>
+
+ 
+<body>
+
+	 <div class="contact__form">
+                            <h5>로그인</h5>
+                            <form method="post" action="/project/login">
+                                <input type="text" id="user_id" name="user_id" style="width: 300px;" placeholder="아이디"> <br>
+                                <input type="password"  id="user_password" name="user_password" style="width: 300px;" placeholder="비밀번호"><br>
+								<button type="submit" class="site-btn">로그인</button>&nbsp;&nbsp;&nbsp;
+								<button type="button" class="site-btn" onclick="location.href='/project/join'" >회원가입</button>                             
+                            </form>
+                            
+                            
+                            <br>   
+                            <button class="link-button" onclick="location.href='/'" >메인화면</button>   
+                            
+                        </div>
 
 
-    <!-- Main content -->
-    <section class="content container-fluid">
-	<form method="post">
-		아이디:<input type="text" name="id" /> <br />
-		비밀번호:<input type="password" name="password" /> <br />
-		<input type="submit" value="로그인" />
-		<input type="button" value="메인으로"  id="main" onclick="location.href='../'"/>
-	</form>
-	<hr>
-	root/root<br>
-	system/system<br>
-	user00/user00<br>
-	3개로 연결하여 확인하기
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
 
-  <!-- Main Footer -->
-  <%@ include file="include/main_footer.jsp" %>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Create the tabs -->
-    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-      <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-    </ul>
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <!-- Home tab content -->
-      <div class="tab-pane active" id="control-sidebar-home-tab">
-        <h3 class="control-sidebar-heading">Recent Activity</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript:;">
-              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
 
-                <p>Will be 23 on April 24th</p>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
 
-        <h3 class="control-sidebar-heading">Tasks Progress</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript:;">
-              <h4 class="control-sidebar-subheading">
-                Custom Template Design
-                <span class="pull-right-container">
-                    <span class="label label-danger pull-right">70%</span>
-                  </span>
-              </h4>
 
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
 
-      </div>
-      <!-- /.tab-pane -->
-      <!-- Stats tab content -->
-      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-      <!-- /.tab-pane -->
-      <!-- Settings tab content -->
-      <div class="tab-pane" id="control-sidebar-settings-tab">
-        <form method="post">
-          <h3 class="control-sidebar-heading">General Settings</h3>
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Report panel usage
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Some information about this general settings option
-            </p>
-          </div>
-          <!-- /.form-group -->
-        </form>
-      </div>
-      <!-- /.tab-pane -->
-    </div>
-  </aside>
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-  immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
-</div>
-<!-- ./wrapper -->
-<%@ include file="include/plugin_js.jsp" %>
+<!-- Js Plugins -->
+        <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/jquery.magnific-popup.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/mixitup.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/jquery.countdown.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/jquery.slicknav.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/owl.carousel.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+        
 </body>
 </html>

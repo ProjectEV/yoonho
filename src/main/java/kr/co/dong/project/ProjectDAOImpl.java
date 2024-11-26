@@ -41,6 +41,13 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(nameSpace + ".cart_totalRecord", user_id);
 	}
+	@Override
+	public int totalReview(String product_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".totalReview", product_id);
+	}
+	
+	
 	
 
 	@Override
@@ -240,10 +247,25 @@ public class ProjectDAOImpl implements ProjectDAO {
 			return sqlSession.selectOne(nameSpace + ".findBuyno");
 		}
 	@Override
+	public int salesUpdate(List<CartVO> list) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(nameSpace + ".salesUpdate", list);
+	}
+	
+	
+	
+	
+	@Override
 	public AddressVO findMainAddress(String user_id) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(nameSpace + ".findMainAddress", user_id);
 	}
+	@Override
+	public int findProductNo(String product_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".findProductNo", product_id);
+	}
+	
 	
 	
 

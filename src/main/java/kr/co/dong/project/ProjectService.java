@@ -10,6 +10,7 @@ public interface ProjectService {
 	public int mypage_totalRecord(String user_id);
 	public int address_totalRecord(String user_id);
 	public int cart_totalRecord(String user_id);
+	public int totalReview(String product_id);
 	
 	public int boardsReadCnt(int boards_no);
 	public List<BoardsVO> reviewlist(String product_id);
@@ -65,9 +66,10 @@ public interface ProjectService {
 	public int buyDetailRegister(List<CartVO> list, int u);
 	public int cartDelete(String user_id);
 	public int findBuyno();
+	public int salesUpdate(List<CartVO> list);
 	
 	public AddressVO findMainAddress(String user_id);
 	
-	
+	public int findProductNo(String product_id);
 	
 }

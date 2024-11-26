@@ -35,7 +35,11 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.cart_totalRecord(user_id);
 	}
-	
+	@Override
+	public int totalReview(String product_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.totalReview(product_id);
+	}
 	
 
 	@Override
@@ -216,10 +220,26 @@ public class ProjectServiceImpl implements ProjectService {
 			return projectDAO.findBuyno();
 		}
 	@Override
+	public int salesUpdate(List<CartVO> list) {
+		// TODO Auto-generated method stub
+		return projectDAO.salesUpdate(list);
+	}
+	
+	
+	
+	
+	
+	@Override
 	public AddressVO findMainAddress(String user_id) {
 		// TODO Auto-generated method stub
 		return projectDAO.findMainAddress(user_id);
 	}
+	@Override
+	public int findProductNo(String product_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.findProductNo(product_id);
+	}
+	
 	
 	
 	

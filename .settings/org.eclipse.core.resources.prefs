@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
-encoding//src/main/webapp/WEB-INF/views/cart2.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/cart.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/home.jsp=UTF-8
-encoding//src/main/webapp/WEB-INF/views/main.jsp=UTF-8
-encoding//src/main/webapp/WEB-INF/views/pay2.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/notice.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/pay.jsp=UTF-8

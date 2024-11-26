@@ -56,6 +56,12 @@
                <td> <a href="/project/cart"> cart.jsp </a> </td>
             </tr>
             
+            <tr>
+               <th> 공지사항 </th>
+               <td> <a href="/project/notice"> notice.jsp </a> </td>
+            </tr>
+            
+            
          </tbody>
       </table>
 

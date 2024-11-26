@@ -1,128 +1,307 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
-<html>
+<html lang="zxx">
+
 <head>
-<meta charset="UTF-8">
-<title>주문/결제</title>
-<link rel="stylesheet" href="https://showcases.yalco.kr/html-css/01-06/table.css">
-  <style>
-   th{
-      padding: 5px;
-      text-align: center;
-      width: 150px;
-   	  background-color: #ECECEC; 
-   }
-   
-   td {
-   	  padding: 5px 5px 5px 20px;
-      text-align: left;
-   }
-   
-   tr {
-   	height: 50px;
-   }
- 
-   table {
-     margin: 0 auto;
-     width: 700px;
-     height: 40px;
-   }
-   
-   #btn1, #btn2 {
-	  width: 120px;
-	  margin: 0 100px;
-	  color: rgb(0, 64, 110);
-	  background: rgb(199, 232, 255);
-	  font-size: 10px;
-	  padding: 5px 10px;
-	  margin: 0;
-	  transition: 0.3s;
-	  border-width: thin;
-	}
-	
-	#btn1:hover,
-	#btn1:focus:hover {
-	  color: white;
-	  background:  rgb(0, 64, 110);
-	}
-	
-	#btn2:hover,
-	#btn2:focus:hover {
-	  color: white;
-	  background:  rgb(0, 64, 110);
-	}
-	
-	p {
-		margin: 30px 0 10px 0;
-	}
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ashion | Template</title>
 
-</style>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
+    
+    
 <script>
 	function windowOpen() { 
 		var url = "/project/address_select"
 		window.open(url, "a", "width=1000, height=800, left=100, top=50"); 
 		}
-</script>
+</script>  
+    
+    
 </head>
-<body>
 
-<h2 style="text-align: center;">주문결제</h2>
-	<form action="/project/pay" method="post" name="frm">
-	<div style="">
-		<div style="margin: 0 auto; width: 700px;">
-			<p>구매자 정보</p>
-		 	<table>
-			 	<tr>
-			 		<th>이름</th>
-		 			<td>${user.user_name}</td>	
-			 	</tr>
-			 	<tr>
-			 		<th>휴대폰 번호</th>
-		 			<td>${user.user_phone}</td>	
-			 	</tr>
-		 	</table>
-		 	
-		 	<p>받는 사람 정보</p>
-		 	<table>
-			 	<tr>
-			 		<th>이름</th>
-		 			<td><input type="text" id="buy_receive" name="buy_receive" value="${user.user_name}"></td>	
-			 	</tr>
-			 	<tr>
-			 		<th>배송 주소</th>
-		 			<td>
-		 			<input type="text" id="buy_address" name="buy_address" size="40" value="${main_address}" readonly>
-		 			<button type="button" onclick="windowOpen()">배송지 선택</button>
-		 			
-		 			</td>
-			 	</tr>
-		 	</table>
-		 	
-		 	<p>결제 정보</p>
-		 	<c:forEach var="cart" items="${list }" varStatus="status">
-		 		<table>
-			 		<tr>
-			 			<th>제품명</th>
-		 				<td>${cart.cart_productname}</td>	
-			 		</tr>
-			 		<tr>
-			 			<th>가격</th>
-		 				<td>원</td>	
-			 		</tr>
-			 		<tr>
-			 			<th>수량</th>
-		 				<td>${cart.cart_amount } </td>	
-			 		</tr>
-		 		</table>
-			</c:forEach>
-			
-				<button style="margin: 30px 300px;" type="submit">주문완료</button>
-			
-		</div>	
-	</div>
-	</form>
-</body>
-</html>
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__close">+</div>
+        <ul class="offcanvas__widget">
+            <li><span class="icon_search search-switch"></span></li>
+            <li><a href="#"><span class="icon_heart_alt"></span>
+                <div class="tip">2</div>
+            </a></li>
+            <li><a href="#"><span class="icon_bag_alt"></span>
+                <div class="tip">2</div>
+            </a></li>
+        </ul>
+        <div class="offcanvas__logo">
+            <a href="./index.html"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt=""></a>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__auth">
+            <a href="#">Login</a>
+            <a href="#">Register</a>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-lg-2">
+                    <div class="header__logo">
+                        <a href="/"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-7">
+                    <nav class="header__menu">
+                        <ul>
+                            <li><a href="./index.html">Home</a></li>
+                            <li><a href="#">Women’s</a></li>
+                            <li><a href="#">Men’s</a></li>
+                            <li class="active"><a href="./shop.html">Shop</a></li>
+                            <li><a href="#">Pages</a>
+                                <ul class="dropdown">
+                                    <li><a href="./product-details.html">Product Details</a></li>
+                                    <li><a href="./shop-cart.html">Shop Cart</a></li>
+                                    <li><a href="./checkout.html">Checkout</a></li>
+                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="./blog.html">Blog</a></li>
+                            <li><a href="./contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__right">
+                        <div class="header__right__auth">
+                            <a href="#">Login</a>
+                            <a href="#">Register</a>
+                        </div>
+                        <ul class="header__right__widget">
+                            <li><span class="icon_search search-switch"></span></li>
+                            <li><a href="#"><span class="icon_heart_alt"></span>
+                                <div class="tip">2</div>
+                            </a></li>
+                            <li><a href="#"><span class="icon_bag_alt"></span>
+                                <div class="tip">2</div>
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                        <span>Shopping cart</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h6 class="coupon__link"><span class="icon_tag_alt"></span> <a href="#">Have a coupon?</a> Click
+                    here to enter your code.</h6>
+                </div>
+            </div>
+            <form action="/project/pay" method="post" class="checkout__form">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h5>Billing detail</h5>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="checkout__form__input">
+                                    <p>Name <span>*</span></p>
+                                    <input type="text" value="${user.user_name}" readonly>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="col-lg-12">
+                                <div class="checkout__form__input">
+                                    <p>Phone <span>*</span></p>
+                                    <input type="text" value="${user.user_phone }" readonly>
+                                </div>
+                                <div class="checkout__form__input">
+                                    <p>Email <span>*</span></p>
+                                    <input type="text" value="${user.user_email }">
+                                </div>
+                                <div class="checkout__form__input">
+                                    <p> Receiver <span>*</span></p>
+                                    <input type="text" id="buy_receive" name="buy_receive" value="${user.user_name}">
+                                </div>
+                                
+                                <div class="checkout__form__input">
+                                    <p>Address <span>*</span></p>
+                                    <input type="text" id="buy_address" name="buy_address" placeholder="Street Address" value="${address.address_content }" readonly>
+                                    <button type="button" style="padding: 7px 15px;" class="site-btn" onclick="windowOpen()">배송지 선택</button>
+                                </div><br><br><br>
+                            </div>
+                            
+                            
+                            <div class="col-lg-12">
+                                <div class="checkout__form__checkbox">
+                                    <label for="acc">
+                                        Create an acount?
+                                        <input type="checkbox" id="acc">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <p>Create am acount by entering the information below. If you are a returing
+                                        customer login at the <br />top of the page</p>
+                                    </div>
+                                    <div class="checkout__form__input">
+                                        <p>Account Password <span>*</span></p>
+                                        <input type="text">
+                                    </div>
+                                    <div class="checkout__form__checkbox">
+                                        <label for="note">
+                                            Note about your order, e.g, special noe for delivery
+                                            <input type="checkbox" id="note">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkout__form__input">
+                                        <p>Oder notes <span>*</span></p>
+                                        <input type="text"
+                                        placeholder="Note about your order, e.g, special noe for delivery">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="checkout__order">
+                                <h5>Your order</h5>
+                                <div class="checkout__order__product">
+                                    <ul>
+                                        <li>
+                                            <span class="top__text">Product</span>
+                                            <span class="top__text__right">Total</span>
+                                        </li>
+                                        
+                                        <!-- 
+                                        <li>01. Chain buck bag <span>$ 300.0</span></li>
+                                        <li>02. Zip-pockets pebbled<br /> tote briefcase <span>$ 170.0</span></li>
+                                        <li>03. Black jean <span>$ 170.0</span></li>
+                                        <li>04. Cotton shirt <span>$ 110.0</span></li>
+                                         -->
+                                        
+                                        
+                                        <c:set var = "total" value = "0" />
+                                        
+                                        <c:forEach var="cart" items="${list }" varStatus="status">
+                                        <li>${status.index+1}. ${cart.cart_productname} <span>&#8361; <fmt:formatNumber value="${cart.product_price * cart.cart_amount}" pattern="#,###" /></span></li>
+                                        
+                                        <c:set var= "total" value="${total + cart.product_price * cart.cart_amount}"/>
+                                        
+                                        </c:forEach>
+                                        
+                                        
+                                    </ul>
+                                </div>
+                                <div class="checkout__order__total">
+                                    <ul>
+                                        <li>Subtotal <span>&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
+                                        <li>Total <span>&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
+                                    </ul>
+                                </div>
+                                <div class="checkout__order__widget">
+                                    <label for="o-acc">
+                                        Create an acount?
+                                        <input type="checkbox" id="o-acc">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <p>Create am acount by entering the information below. If you are a returing customer
+                                    login at the top of the page.</p>
+                                    <label for="check-payment">
+                                        Cheque payment
+                                        <input type="checkbox" id="check-payment">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label for="paypal">
+                                        PayPal
+                                        <input type="checkbox" id="paypal">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <button type="submit" class="site-btn">구매</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- Checkout Section End -->
+
+        <%@ include file="instagram.jsp" %>
+
+        <%@ include file="footer.jsp" %>
+
+        <!-- Search Begin -->
+        <div class="search-model">
+            <div class="h-100 d-flex align-items-center justify-content-center">
+                <div class="search-close-switch">+</div>
+                <form class="search-model-form">
+                    <input type="text" id="search-input" placeholder="Search here.....">
+                </form>
+            </div>
+        </div>
+        <!-- Search End -->
+
+        <!-- Js Plugins -->
+        <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/jquery.magnific-popup.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/jquery-ui.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/mixitup.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/jquery.countdown.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/jquery.slicknav.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/owl.carousel.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+    </body>
+
+    </html>

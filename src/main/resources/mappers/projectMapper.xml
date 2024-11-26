@@ -24,6 +24,10 @@
 		where cart_userid = #{user_id}
   </select>
   
+  <select id="totalReview" parameterType="String" resultType="int">
+		select count(*) from boards
+		where boards_category = 1 and boards_productid = #{product_id}
+  </select>
   
   
   
@@ -227,7 +231,7 @@
         WHERE
             cart_userid = #{user_id} and cart_productid = #{item.cart_productid}
         </foreach>
-    </update>
+  </update>
   
   
   <select id="findCart" parameterType="String" resultType="int">
@@ -264,6 +268,16 @@
  <select id="findBuyno" resultType="int">
   		select max(buy_no) from buy
  </select>
+ 
+ <update id="salesUpdate" parameterType="list">
+        <foreach collection="list" item="item" separator=";">
+        update product
+        set product_sales = product_sales + #{item.cart_amount}, product_remain = product_remain - #{item.cart_amount}
+        where product_id = #{item.cart_productid}
+        </foreach>
+  </update>
+ 
+ 
   
   <select id="findMainAddress" parameterType="String" resultType="AddressVO">
   		select *
@@ -271,7 +285,11 @@
   		where address_userid = #{user_id} and address_main = 1
   </select>
   
-  
+  <select id="findProductNo" parameterType="String" resultType="int">
+		select number from 
+		(select product_id, row_number() over (order by product_id) as number from product where del = 0)a 
+		where product_id = #{product_id};
+  </select>
   
   
   </mapper>
