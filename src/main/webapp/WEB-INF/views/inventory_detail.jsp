@@ -119,7 +119,7 @@
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
-                            <span>( 138 reviews )</span>
+                            <span>( ${totalReview} reviews )</span>
                         </div>
                         <div class="product__details__price">&#8361; <fmt:formatNumber value="${product.product_price}" pattern="#,###" /></div>
                         <p>${product.product_content}</p>
@@ -161,7 +161,7 @@
                                     <p>${product.product_sales }</p>
                                 </li>
                                 <li>
-                                    <span> 목록으로 </span>
+                                    <span> 목록으로: </span>
                                     <a href="/project/backToList?product_id=${product.product_id }"> backToList </a>
                                 </li>
                                 

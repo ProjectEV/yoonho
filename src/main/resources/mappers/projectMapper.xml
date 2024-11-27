@@ -218,7 +218,7 @@
 		update cart
 		set
 		cart_amount=#{cart_amount}
-		where cart_productid = #{cart_productid} and cart_userid=#{user_id}
+		where cart_productid = #{product_id} and cart_userid=#{user_id}
   </update>
   
   
@@ -241,8 +241,18 @@
   
   
   
-  
-  
+  <!-- 
+   <select id="remainCheck" parameterType="list" resultType="int">
+  	select count(*) from {
+  		select (product.product_remain - cart.cart_amount)sub from { 
+	  		<foreach collection="list" item="cart" separator=",">
+	  			
+	  		</foreach>
+  		}
+  	}
+  </select>
+   -->
+ 
   
   <insert id="buyRegister" parameterType="buyVO">
 		insert into 
@@ -263,6 +273,12 @@
   		delete from 
   		cart
   		where cart_userid = #{user_id} 
+ </delete>
+ 
+ <delete id="cartDeleteOne" parameterType="map">
+  		delete from 
+  		cart
+  		where cart_userid = #{user_id} and cart_productid = #{product_id}
  </delete>
   
  <select id="findBuyno" resultType="int">

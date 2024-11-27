@@ -1,6 +1,5 @@
 package kr.co.dong.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,12 +10,14 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -183,9 +184,19 @@ public class ProjectController {
 	// 제품 목록 화면에서 제품을 클릭했을 때 출력될 상세페이지 (product_detail.jsp)
 	@RequestMapping(value = "project/product_detail", method = RequestMethod.GET)
 	public String productDetail(@RequestParam("product_id") String product_id, Model model) {
+		
 		ProductVO productVO = projectService.productDetail(product_id);
 		int totalReview = projectService.totalReview(product_id);
+		int category = productVO.getProduct_category();
 		
+//		List<ProductVO> sameCategoryList = projectService.findSameCategory(category);
+//		
+//		int i = 0;
+//		int[] intArray = new int[5];
+//		
+//		for (ProductVO list : sameCategoryList) {
+//            
+//        }
 		
 		model.addAttribute("totalReview", totalReview);
 		model.addAttribute("product", productVO);
@@ -200,7 +211,10 @@ public class ProjectController {
 	@RequestMapping(value = "project/inventory_detail", method = RequestMethod.GET)
 	public String inventoryDetail(@RequestParam("product_id") String product_id, Model model) {
 		ProductVO productVO = projectService.productDetail(product_id);
+		int totalReview = projectService.totalReview(product_id);
 		
+		
+		model.addAttribute("totalReview", totalReview);
 		model.addAttribute("product", productVO);
 		
 		
@@ -283,8 +297,8 @@ public class ProjectController {
 		
 		int no = projectService.findProductNo(product_id);
 		
-		int pageSize = 10;
-		int pageListSize = 10;
+		int pageSize = 10;		// 해당 게시판을 호출할 때 사용한 pageSize
+		int pageListSize = 10;	// 해당 게시판을 호출할 때 사용한 pageListSize
 		
 		int pageNUM = (no/pageSize) + 1;
 		int pageListNUM = (no/(pageSize*pageListSize)) + 1;
@@ -297,19 +311,29 @@ public class ProjectController {
 
 	// 주문/결제 페이지로 이동
 	@RequestMapping(value = "project/pay", method = RequestMethod.GET)
-	public ModelAndView pay(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView pay(@RequestParam Map<String, Object> map, HttpSession session, HttpServletRequest request,
+			HttpServletResponse response, Model model) {
 		logger.info("pay 이동");
 
 		Map<String, Object> user = (Map) session.getAttribute("user");
 		String user_id = (String) user.get("user_id");
-
+		
+		int totalRecord = projectService.cart_totalRecord(user_id);
+		
 		ModelAndView mav = new ModelAndView();
-
+		
+		for (int i = 0; i < totalRecord; i++) {
+			String a = "update[" + i + "].cart_productid";
+			String b = "update[" + i + "].cart_amount";
+			String product_id = (String)(map.get(a));
+			int cart_amount = Integer.parseInt((String)map.get(b));
+			int r = projectService.cartUpdate(user_id, product_id, cart_amount);
+		}
+		
+		
 		List<CartVO> list = projectService.listCart(user_id);
 
 		AddressVO address = projectService.findMainAddress(user_id);
-
-		int totalRecord = projectService.cart_totalRecord(user_id);
 
 		mav.addObject("address", address);
 		mav.addObject("list", list);
@@ -342,7 +366,15 @@ public class ProjectController {
 
 		List<CartVO> list = projectService.listCart(user_id);
 		int totalRecord = projectService.cart_totalRecord(user_id);
-
+		
+//		int w = projectService.remainCheck(list);
+		
+		for (CartVO cart : list) {
+	            if (cart.getCart_amount() > cart.getProduct_remain()) {
+	                return "redirect:cart";
+	            }
+	        }
+		
 		int r = projectService.buyRegister(buy_address, buy_receive, totalRecord, user_id);
 		int v = projectService.salesUpdate(list);
 		int u = projectService.findBuyno();
@@ -540,18 +572,49 @@ public class ProjectController {
 		return "redirect:product";
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "/project/cart_update", method = RequestMethod.POST)
-	public String cartUpdate(CartVO cartVO, HttpServletRequest request, RedirectAttributes rttr, HttpSession session,
-			HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("UTF-8");
+//	@ResponseBody
+//	@RequestMapping(value = "/project/cart_update", method = RequestMethod.POST)
+//	public String cartUpdate(CartVO cartVO, HttpServletRequest request, RedirectAttributes rttr, HttpSession session,
+//			HttpServletResponse response) throws Exception {
+//		request.setCharacterEncoding("UTF-8");
+//
+//		Map<String, Object> user = (Map) session.getAttribute("user");
+//		String user_id = (String) user.get("user_id");
+//
+//		int r = projectService.cartUpdate(user_id, cartVO);
+//
+//		return "redirect:cart2";
+//	}
 
+	
+	
+	@RequestMapping(value = "/project/cartRecord", method = RequestMethod.GET)
+	public ResponseEntity<Integer> getCartRecord(HttpSession session) {
 		Map<String, Object> user = (Map) session.getAttribute("user");
 		String user_id = (String) user.get("user_id");
+		
+		if (user_id == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // 로그인되지 않은 경우
+        }
 
-		int r = projectService.cartUpdate(user_id, cartVO);
-
-		return "redirect:cart2";
+		int itemCount = projectService.cart_totalRecord(user_id);
+		
+        return ResponseEntity.ok(itemCount);
 	}
+	
+	@RequestMapping(value = "project/cart_delete", method = RequestMethod.GET)
+	public String cartDelete(@RequestParam("product_id") String product_id, RedirectAttributes rttr, HttpSession session) {
+		
+		Map<String, Object> user = (Map) session.getAttribute("user");
+		String user_id = (String) user.get("user_id");
+		
+		int r = projectService.cartDelete(user_id, product_id);
 
+		return "redirect:cart";
+	}
+	
+	
+	
+	
+	
 }

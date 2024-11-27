@@ -25,6 +25,23 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+	    $(document).ready(function() {
+	        $.ajax({
+	            url: '/project/cartRecord',
+	            method: 'GET',
+	            success: function(count) {
+	                $('#cartItemCount').text(count);
+	            },
+	            error: function() {
+	                $('#cartItemCount').text('0'); // 오류 시 0으로 표시
+	            }
+	        });
+	    });
+	</script>
+    
 </head>
 
 <body>
@@ -40,10 +57,10 @@
 	            <div class="col-xl-6 col-lg-7">
 	                <nav class="header__menu">
 	                    <ul>
-	                        <li><a href="./index.html">Home</a></li>
+	                        <li><a href="/">Home</a></li>
 	                        <li><a href="#">Women’s</a></li>
 	                        <li><a href="#">Men’s</a></li>
-	                        <li class="active"><a href="./shop.html">Shop</a></li>
+	                        <li><a href="/project/product">PRODUCT</a></li>
 	                        <li><a href="#">Pages</a>
 	                            <ul class="dropdown">
 	                                <li><a href="./product-details.html">Product Details</a></li>
@@ -52,7 +69,7 @@
 	                                <li><a href="./blog-details.html">Blog Details</a></li>
 	                            </ul>
 	                        </li>
-	                        <li><a href="./blog.html">Blog</a></li>
+	                        <li><a href="/project/notice">공지사항</a></li>
 	                        <li><a href="./contact.html">Contact</a></li>
 	                    </ul>
 	                </nav>
@@ -60,15 +77,21 @@
 	            <div class="col-lg-3">
 	                <div class="header__right">
 	                    <div class="header__right__auth">
-	                        <a href="#">Login</a>
-	                        <a href="#">Register</a>
+		                    	<c:if test="${user==null }">
+									로그인이 필요합니다. <a href="/project/login">Login</a>
+								</c:if>
+								<c:if test="${user!=null }">
+									${user.user_name }님 환영합니다. <a href="/project/logout">Logout</a>
+								</c:if>
+	                        
+	                        <a href="/project/join">Register</a>
 	                    </div>
 	                    <ul class="header__right__widget">
 	                        <li><span class="icon_search search-switch"></span></li>
 	                        <li><a href="/product/mypage"><span class="icon_heart_alt"></span>
 	                        </a></li>
-	                        <li><a href="#"><span class="icon_bag_alt"></span>
-	                            <div class="tip">2</div>
+	                        <li><a href="/project/cart"><span class="icon_bag_alt"></span>
+	                            <div class="tip" id="cartItemCount"></div>
 	                        </a></li>
 	                    </ul>
 	                </div>

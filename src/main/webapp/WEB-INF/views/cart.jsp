@@ -137,7 +137,7 @@
                 <div class="col-lg-12">
                     <div class="shop__cart__table">
                     
-                    <form action="/project/cart_update" method="post" id="cartInfo" name="cartInfo">
+                    <form action="/project/pay" method="get" id="cartInfo" name="cartInfo">
                     
                         <table>
                             <thead>
@@ -177,14 +177,14 @@
                                     <!-- <div class="pro-qty">
                                             <input type="number" class="quantity-input" value="${cart.cart_amount}" min="0">
                                         </div> -->
-                                        <input type="hidden" name="updateList[${status.index}].cart_productid" value="${cart.cart_productid}" />
-                                        <input type="number" class="quantity-input pro-qty" name="updateList[${status.index}].cart_amount"  value="${cart.cart_amount}" min="1">
+                                        <input type="hidden" name="update[${status.index}].cart_productid" value="${cart.cart_productid}" />
+                                        <input type="number" class="quantity-input pro-qty" name="update[${status.index}].cart_amount"  value="${cart.cart_amount}" min="1">
                                         
                                         
                                         
                                     </td>
                                     <td class="product-total">&#8361; <fmt:formatNumber value="${cart.product_price * cart.cart_amount}" pattern="#,###" /></td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
+                                    <td class="cart__close"><a href="cart_delete?product_id=${cart.cart_productid}&user_id=${user.user_id}"><span class="icon_close"></span></a></td>
                                 </tr>
                                 
                                 
@@ -235,7 +235,7 @@
                         </ul>
                         
                         <!-- <button type="submit" form="cartInfo" class="site-btn">&nbsp;&nbsp;&nbsp;&nbsp;Proceed to checkout&nbsp;&nbsp;&nbsp;&nbsp;</button> -->
-                        <a href="/project/pay" class="primary-btn">Proceed to checkout</a>
+                        <a href="javascript:document.cartInfo.submit();" class="primary-btn"> 구매하기 </a>
                         
                     </div>
                 </div>

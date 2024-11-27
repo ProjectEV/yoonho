@@ -6,19 +6,22 @@ public class CartVO {
 	private String cart_productid;
 	private String cart_productname;
 	private int cart_amount;
-	private String product_price;
-	private String product_remain;
+	private int product_price;
+	private int product_remain;
 	
-	public String getProduct_remain() {
+	
+	
+	
+	public int getProduct_remain() {
 		return product_remain;
 	}
-	public void setProduct_remain(String product_remain) {
+	public void setProduct_remain(int product_remain) {
 		this.product_remain = product_remain;
 	}
-	public String getProduct_price() {
+	public int getProduct_price() {
 		return product_price;
 	}
-	public void setProduct_price(String product_price) {
+	public void setProduct_price(int product_price) {
 		this.product_price = product_price;
 	}
 	public int getCart_no() {

@@ -5,7 +5,7 @@ public class ProductVO {
 	private int product_price;
 	private String product_name;
 	private String product_content;
-	private String product_category;
+	private int product_category;
 	private int product_remain;
 	private int product_sales;
 	private int del;
@@ -40,10 +40,10 @@ public class ProductVO {
 	public void setProduct_content(String product_content) {
 		this.product_content = product_content;
 	}
-	public String getProduct_category() {
+	public int getProduct_category() {
 		return product_category;
 	}
-	public void setProduct_category(String product_category) {
+	public void setProduct_category(int product_category) {
 		this.product_category = product_category;
 	}
 	public int getProduct_remain() {

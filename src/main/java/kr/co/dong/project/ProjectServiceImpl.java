@@ -185,9 +185,9 @@ public class ProjectServiceImpl implements ProjectService {
 //		return projectDAO.cartUpdate(user_id, updateList);
 //	}
 	@Override
-	public int cartUpdate(String user_id, CartVO cartVO) {
+	public int cartUpdate(String user_id, String product_id, int cart_amount) {
 		// TODO Auto-generated method stub
-		return projectDAO.cartUpdate(user_id, cartVO);
+		return projectDAO.cartUpdate(user_id, product_id, cart_amount);
 	}
 	
 	@Override
@@ -198,7 +198,11 @@ public class ProjectServiceImpl implements ProjectService {
 
 	
 	
-	
+	@Override
+	public int remainCheck(List<CartVO> list) {
+		// TODO Auto-generated method stub
+		return projectDAO.remainCheck(list);
+	}
 	@Override
 	public int buyRegister(String buy_address, String buy_receive, int totalRecord, String user_id) {
 			// TODO Auto-generated method stub
@@ -213,6 +217,11 @@ public class ProjectServiceImpl implements ProjectService {
 	public int cartDelete(String user_id) {
 			// TODO Auto-generated method stub
 			return projectDAO.cartDelete(user_id);
+		}
+	@Override
+	public int cartDelete(String user_id, String product_id) {
+			// TODO Auto-generated method stub
+			return projectDAO.cartDelete(user_id, product_id);
 		}
 	@Override
 	public int findBuyno() {
@@ -239,6 +248,7 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.findProductNo(product_id);
 	}
+	
 	
 	
 	

@@ -15,7 +15,7 @@
 	font-size: 18px;
 }
 
-.shop__cart__table {
+.shop__cart__table1 {
     margin-bottom: 30px;
 
     table {
@@ -40,28 +40,10 @@
             border-bottom: 1px solid #f2f2f2;
 			
             td {
-                padding: 30px 0;
+                padding: 10px 0;
             }
-
-            .cart__product__item {
-                overflow: hidden;
-                width: 585px;
-
-                img {
-                    float: left;
-                    margin-right: 25px;
-                }
-
-                .cart__product__item__title {
-                    overflow: hidden;
-                    padding-top: 23px;
-
-                    h6 {
-                        color: $heading-color;
-                        font-weight: 600;
-                    }
-
-                    .rating {
+            
+			.rating {
 
                         i {
                             font-size: 10px;
@@ -69,6 +51,28 @@
                             margin-right: -4px;
                         }
                     }
+                    
+            .cart__product__item1 {
+                overflow: hidden;
+                width: 340px;
+                
+
+                img {
+                    float: left;
+                    margin-right: 50px;
+                }
+
+                .cart__product__item__title {
+                    overflow: hidden;
+                    padding-top: 23px;
+                    
+
+                    h6 {
+                        color: $heading-color;
+                        font-weight: 600;
+                    }
+
+                    
                 }
             }
 
@@ -171,7 +175,7 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
                         <a href="/"><i class="fa fa-home"></i> 홈</a>
-                        <span>장바구니</span>
+                        <span> 재고관리 </span>
                     </div>
                 </div>
             </div>
@@ -184,11 +188,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="shop__cart__table">
+                    <div class="shop__cart__table1">
                         <table>
                             <thead>
                                 <tr>
                                     <th>Product</th>
+                                    <th>Review</th>
                                     <th>Price</th>
                                     <th>&nbsp;&nbsp;Remain</th>
                                     <th>Sales</th>
@@ -203,23 +208,37 @@
                            
                             <c:forEach var="product" items="${list }" varStatus="status">
 		 						<tr>
-                                    <td class="cart__product__item">
+                                    <td class="cart__product__item1">
                                     	<a href="product_detail?product_id=${product.product_id}"> <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-1.jpg" alt="" > </a>
                                         <div class="cart__product__item__title">
                                             <h6><a href="inventory_detail?product_id=${product.product_id}">${product.product_name}</a></h6>
                                             <div>${product.product_id}</div>
-                                            <div class="rating">
+                                            
+                                        </div>
+                                    </td>
+                                    	
+                                    <td>
+                                    	<div class="rating">
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
                                             </div>
-                                        </div>
                                     </td>
-                                    <td class="cart__price">&#8361; <fmt:formatNumber value="${product.product_price}" pattern="#,###" /></td>
-                                    <td class="cart__quantity">
-                                        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${product.product_remain}</div>
+                                    
+                                    <td class="cart__price" style="color: #ca1515;">&#8361; <fmt:formatNumber value="${product.product_price}" pattern="#,###" /></td>
+                                    <td class="cart__quantity" style="text-align: left;">
+                                        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        	<c:choose>
+	                                        	<c:when test="${product.product_remain == 0}">
+	                                        	매진
+	                                        	</c:when>
+	                                        	<c:otherwise>
+	                                        	${product.product_remain}
+	                                        	</c:otherwise>
+                                        	</c:choose>
+                                        </div>
                                     </td>
                                     <td class="cart__quantity">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <fmt:formatNumber value="${product.product_sales}" pattern="#,###" /></td>
                                 </tr>
