@@ -239,6 +239,11 @@
 		where cart_productid = #{product_id}
   </select>
   
+  <select id="findProductPrice" parameterType="String" resultType="int">
+  		select product_price from product
+		where product_id = #{product_id}
+  </select>
+  
   
   
   <!-- 
@@ -256,8 +261,8 @@
   
   <insert id="buyRegister" parameterType="buyVO">
 		insert into 
-		buy (buy_userid, buy_regdate, buy_amount, buy_address, buy_receive)
-		values (#{user_id}, curdate(), #{totalRecord}, #{buy_address}, #{buy_receive})
+		buy (buy_userid, buy_regdate, buy_amount, buy_address, buy_receive, buy_totalPrice)
+		values (#{user_id}, curdate(), #{totalRecord}, #{buy_address}, #{buy_receive}, #{totalPrice})
  </insert>
   
  <insert id="buyDetailRegister" parameterType="list">
@@ -307,5 +312,54 @@
 		where product_id = #{product_id};
   </select>
   
+  <select id="findSameCategory" parameterType="map" resultType="ProductVO">
+	  SELECT *
+      FROM product
+      where product_category = #{category} and del = 0 and not product_id = #{product_id}
+      order by product_id
+  </select>
   
+  
+  
+	<select id="buyDetail" parameterType="int" resultType="buyVO">
+		select *
+		from buy
+		where buy_no = #{buy_no}
+	</select>
+	
+	<select id="buydetailDetail" parameterType="int" resultType="buydetailVO">
+		select *
+		from buydetail
+		where buydetail_no = #{buydetail_no}
+	</select>
+	
+	<update id="cancelUpdateBuy" parameterType="map">
+		update buy
+		set
+		buy_amount = buy_amount - 1, buy_totalPrice = buy_totalPrice - #{buydetailPrice}
+		where buy_no = #{buy_no}
+	</update>
+	
+	<update id="cancelUpdateProduct" parameterType="map">
+		update product
+		set
+		product_remain = product_remain + #{amount}, product_sales = product_sales - #{amount}
+		where product_id = #{product_id}
+	</update>
+	
+	<delete id="deleteBuydetail" parameterType="int">
+  		delete from 
+  		buydetail
+  		where buydetail_no = #{buydetail_no} 
+	</delete>
+	
+	<delete id="deleteBuy" parameterType="int">
+  		delete from 
+  		buy
+  		where buy_no = #{buy_no} 
+	</delete>
+
+
+
+
   </mapper>

@@ -216,7 +216,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(nameSpace + ".findCart", product_id);
 	}
-	
+	@Override
+	public int findProductPrice(String product_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".findProductPrice", product_id);
+	}
 	
 	
 	
@@ -227,12 +231,13 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return sqlSession.selectOne(nameSpace + ".remainCheck", list);
 	}
 	@Override
-	public int buyRegister(String buy_address, String buy_receive, int totalRecord, String user_id) {
+	public int buyRegister(String buy_address, String buy_receive, int totalRecord, String user_id, int totalPrice) {
 			// TODO Auto-generated method stub
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("buy_address", buy_address);
 			map.put("buy_receive", buy_receive);
 			map.put("totalRecord", totalRecord);
+			map.put("totalPrice", totalPrice);
 			map.put("user_id", user_id);
 			return sqlSession.insert(nameSpace + ".buyRegister", map);
 		}
@@ -281,6 +286,56 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(nameSpace + ".findProductNo", product_id);
 	}
+	@Override
+	public List<ProductVO> findSameCategory(int category, String product_id) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("category", category);
+		map.put("product_id", product_id);
+		return sqlSession.selectList(nameSpace + ".findSameCategory", map);
+	}
+	
+	
+	
+	
+	@Override
+	public BuydetailVO buydetailDetail(int buydetail_no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".buydetailDetail", buydetail_no);
+	}
+	@Override
+	public BuyVO buyDetail(int buy_no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".buyDetail", buy_no);
+	}
+	@Override
+	public int cancelUpdateBuy(int buy_no, int buydetailPrice) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("buy_no", buy_no);
+		map.put("buydetailPrice", buydetailPrice);
+		return sqlSession.update(nameSpace + ".cancelUpdateBuy", map);
+	}
+	@Override
+	public int cancelUpdateProduct(String product_id, int amount) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("product_id", product_id);
+		map.put("amount", amount);
+		return sqlSession.update(nameSpace + ".cancelUpdateProduct", map);
+	}
+	@Override
+	public int deleteBuydetail(int buydetail_no) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(nameSpace + ".deleteBuydetail", buydetail_no);
+	}
+	@Override
+	public int deleteBuy(int buy_no) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(nameSpace + ".deleteBuy", buy_no);
+	}
+	
+	
 	
 	
 	

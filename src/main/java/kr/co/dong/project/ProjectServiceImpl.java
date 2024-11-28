@@ -195,6 +195,12 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.findCart(product_id);
 	}
+	@Override
+	public int findProductPrice(String product_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.findProductPrice(product_id);
+	}
+	
 
 	
 	
@@ -204,9 +210,9 @@ public class ProjectServiceImpl implements ProjectService {
 		return projectDAO.remainCheck(list);
 	}
 	@Override
-	public int buyRegister(String buy_address, String buy_receive, int totalRecord, String user_id) {
+	public int buyRegister(String buy_address, String buy_receive, int totalRecord, String user_id, int totalPrice) {
 			// TODO Auto-generated method stub
-			return projectDAO.buyRegister(buy_address, buy_receive, totalRecord, user_id);
+			return projectDAO.buyRegister(buy_address, buy_receive, totalRecord, user_id, totalPrice);
 		}
 	@Override
 	public int buyDetailRegister(List<CartVO> list, int u) {
@@ -248,6 +254,48 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.findProductNo(product_id);
 	}
+	@Override
+	public List<ProductVO> findSameCategory(int category, String product_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.findSameCategory(category, product_id);
+	}
+	
+	
+	
+	
+	
+	@Override
+	public BuydetailVO buydetailDetail(int buydetail_no) {
+		// TODO Auto-generated method stub
+		return projectDAO.buydetailDetail(buydetail_no);
+	}
+	@Override
+	public BuyVO buyDetail(int buy_no) {
+		// TODO Auto-generated method stub
+		return projectDAO.buyDetail(buy_no);
+	}
+	@Override
+	public int cancelUpdateBuy(int buy_no, int buydetailPrice) {
+		// TODO Auto-generated method stub
+		return projectDAO.cancelUpdateBuy(buy_no, buydetailPrice);
+	}
+	@Override
+	public int cancelUpdateProduct(String product_id, int amount) {
+		// TODO Auto-generated method stub
+		return projectDAO.cancelUpdateProduct(product_id, amount);
+	}
+	@Override
+	public int deleteBuydetail(int buydetail_no) {
+		// TODO Auto-generated method stub
+		return projectDAO.deleteBuydetail(buydetail_no);
+	}
+	@Override
+	public int deleteBuy(int buy_no) {
+		// TODO Auto-generated method stub
+		return projectDAO.deleteBuy(buy_no);
+	}
+	
+	
 	
 	
 	

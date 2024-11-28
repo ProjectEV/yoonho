@@ -7,8 +7,15 @@ public class BuyVO {
 	private int buy_amount;
 	private String buy_address;
 	private String buy_receive;
+	private int buy_totalPrice;
 	
 	
+	public int getBuy_totalPrice() {
+		return buy_totalPrice;
+	}
+	public void setBuy_totalPrice(int buy_totalPrice) {
+		this.buy_totalPrice = buy_totalPrice;
+	}
 	public int getBuy_no() {
 		return buy_no;
 	}
@@ -48,7 +55,8 @@ public class BuyVO {
 	@Override
 	public String toString() {
 		return "BuyVO [buy_no=" + buy_no + ", buy_userid=" + buy_userid + ", buy_regdate=" + buy_regdate
-				+ ", buy_amount=" + buy_amount + ", buy_address=" + buy_address + ", buy_receive=" + buy_receive + "]";
+				+ ", buy_amount=" + buy_amount + ", buy_address=" + buy_address + ", buy_receive=" + buy_receive
+				+ ", buy_totalPrice=" + buy_totalPrice + "]";
 	}
 	
 	

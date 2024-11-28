@@ -14,10 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -187,20 +187,47 @@ public class ProjectController {
 		
 		ProductVO productVO = projectService.productDetail(product_id);
 		int totalReview = projectService.totalReview(product_id);
-		int category = productVO.getProduct_category();
-		
-//		List<ProductVO> sameCategoryList = projectService.findSameCategory(category);
-//		
-//		int i = 0;
-//		int[] intArray = new int[5];
-//		
-//		for (ProductVO list : sameCategoryList) {
-//            
-//        }
-		
 		model.addAttribute("totalReview", totalReview);
 		model.addAttribute("product", productVO);
-
+		
+		int category = productVO.getProduct_category();
+		List<ProductVO> sameCategoryList = projectService.findSameCategory(category, product_id);
+		
+		int size = sameCategoryList.size();
+		model.addAttribute("size", size);
+		
+		if (size > 0) {
+			int t = 0;
+			String[] productArray = new String[size];
+			
+			for (ProductVO list : sameCategoryList) {
+	            productArray[t] = list.getProduct_id();
+	            t++;
+	        }
+			
+			int[] original = new int[size];
+			for(int i=0;i<size;i++) {
+				original[i] = i;
+			}
+			int cup = 0;
+			for(int i=0;i<size;i++) {
+				cup = original[size-i-1];
+				int random = (int)((size-i)*(Math.random()));
+				original[size-i-1] = original[random];
+				original[random] = cup;
+			}
+			
+			String[] productno = new String[size];
+			if(size > 4) {
+				size = 4;
+			}
+			for(int i=0;i<size;i++) {
+				productno[i] = productArray[original[i]];
+			}
+			List<ProductVO> list = projectService.mypageDetailProduct(productno);
+			model.addAttribute("randomProductList", list);
+		}
+		
 		// 해당 제품에 대한 리뷰 조회
 		List<BoardsVO> reviewlist = projectService.reviewlist(product_id);
 		model.addAttribute("list", reviewlist);
@@ -369,13 +396,20 @@ public class ProjectController {
 		
 //		int w = projectService.remainCheck(list);
 		
+		int totalPrice = 0;
+		
 		for (CartVO cart : list) {
 	            if (cart.getCart_amount() > cart.getProduct_remain()) {
 	                return "redirect:cart";
 	            }
+	            int price = projectService.findProductPrice(cart.getCart_productid());
+	            int amount = cart.getCart_amount();
+	            totalPrice += price * amount;
 	        }
 		
-		int r = projectService.buyRegister(buy_address, buy_receive, totalRecord, user_id);
+		
+		
+		int r = projectService.buyRegister(buy_address, buy_receive, totalRecord, user_id, totalPrice);
 		int v = projectService.salesUpdate(list);
 		int u = projectService.findBuyno();
 		int s = projectService.buyDetailRegister(list, u);
@@ -588,7 +622,7 @@ public class ProjectController {
 
 	
 	
-	@RequestMapping(value = "/project/cartRecord", method = RequestMethod.GET)
+	@RequestMapping(value = "project/cartRecord", method = RequestMethod.GET)
 	public ResponseEntity<Integer> getCartRecord(HttpSession session) {
 		Map<String, Object> user = (Map) session.getAttribute("user");
 		String user_id = (String) user.get("user_id");
@@ -614,6 +648,38 @@ public class ProjectController {
 	}
 	
 	
+	
+	@RequestMapping(value = "project/buyCancel", method = RequestMethod.GET)
+	public String buyCancel(@RequestParam("buydetail_no") int buydetail_no, RedirectAttributes rttr, HttpSession session) {
+		
+		Map<String, Object> user = (Map) session.getAttribute("user");
+		String user_id = (String) user.get("user_id");
+		
+		BuydetailVO buydetailVO = projectService.buydetailDetail(buydetail_no);
+		int buy_no = 0;
+		buy_no = buydetailVO.getBuydetail_buyno();
+		
+		BuyVO buyVO = projectService.buyDetail(buy_no);
+		
+		int amount = buydetailVO.getBuydetail_amount();
+		String product_id = buydetailVO.getBuydetail_productid();
+		
+		int price = projectService.findProductPrice(product_id);
+		int buydetailPrice = amount * price;
+		
+		int s = projectService.cancelUpdateProduct(product_id, amount);
+		int v = projectService.deleteBuydetail(buydetail_no);
+		int r = projectService.cancelUpdateBuy(buy_no, buydetailPrice);
+		
+		BuyVO buyVO2 = projectService.buyDetail(buy_no);
+		int buy_amount = buyVO2.getBuy_amount();
+		
+		if (buy_amount == 0) {
+			int t = projectService.deleteBuy(buy_no);
+		}
+		
+		return "redirect:mypage";
+	}
 	
 	
 	

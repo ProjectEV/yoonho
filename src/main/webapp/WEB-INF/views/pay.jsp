@@ -36,39 +36,20 @@
 		window.open(url, "a", "width=1000, height=800, left=100, top=50"); 
 		}
 </script>  
-    
+
+<style>
+	.top__text__center {
+        font-size: 16px;
+        color: $heading-color;
+        font-weight: 600;
+        float: center;
+      }
+</style>
     
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
-    <!-- Offcanvas Menu Begin -->
-    <div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__close">+</div>
-        <ul class="offcanvas__widget">
-            <li><span class="icon_search search-switch"></span></li>
-            <li><a href="#"><span class="icon_heart_alt"></span>
-                <div class="tip">2</div>
-            </a></li>
-            <li><a href="#"><span class="icon_bag_alt"></span>
-                <div class="tip">2</div>
-            </a></li>
-        </ul>
-        <div class="offcanvas__logo">
-            <a href="./index.html"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt=""></a>
-        </div>
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__auth">
-            <a href="#">Login</a>
-            <a href="#">Register</a>
-        </div>
-    </div>
-    <!-- Offcanvas Menu End -->
+    
 
     <%@ include file="header.jsp" %>
 
@@ -181,7 +162,10 @@
                                         <c:set var = "total" value = "0" />
                                         
                                         <c:forEach var="cart" items="${list }" varStatus="status">
-                                        <li>${status.index+1}. ${cart.cart_productname} <span>&#8361; <fmt:formatNumber value="${cart.product_price * cart.cart_amount}" pattern="#,###" /></span></li>
+                                        <li>
+                                        	${cart.cart_productname} &nbsp;&nbsp;/&nbsp;&nbsp; ${cart.cart_amount }개
+                                        	<span>&#8361; <fmt:formatNumber value="${cart.product_price * cart.cart_amount}" pattern="#,###" /></span>
+                                        </li>
                                         
                                         <c:set var= "total" value="${total + cart.product_price * cart.cart_amount}"/>
                                         
@@ -193,7 +177,8 @@
                                 <div class="checkout__order__total">
                                     <ul>
                                         <li>Subtotal <span>&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
-                                        <li>Total <span>&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
+                                        <li>Discount <span style="color: gray;">- &#8361; <fmt:formatNumber value="1200" pattern="#,###" /></span></li>
+                                        <li>Total <span>&#8361; <fmt:formatNumber value="${total-1200}" pattern="#,###" /></span></li>
                                     </ul>
                                 </div>
                                 <div class="checkout__order__widget">
@@ -250,6 +235,7 @@
         <script src="${pageContext.request.contextPath}/resources/js/owl.carousel.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/jquery.nicescroll.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+        
     </body>
 
     </html>

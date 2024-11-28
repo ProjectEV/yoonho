@@ -66,7 +66,8 @@
 					                                    <td class="cart__price">${buydetailProduct.product_price}</td>
 					                                    <td class="cart__quantity">${buydetail.buydetail_amount}개</td>
 					                                    <td class="cart__total" style="text-align: center;"> 합계 <br> ${buydetailProduct.product_price * buydetail.buydetail_amount}</td>
-					                                    <td class="cart__close"><span class="icon_close">취소</span></td>
+					                                    <td class="cart__close"><a href="buyCancel?buydetail_no=${buydetail.buydetail_no }"><span class="icon_close">취소</span></a></td>
+					                                    
 					                                </tr>
 					                             </tbody>
 				  							 </c:if>					  	
