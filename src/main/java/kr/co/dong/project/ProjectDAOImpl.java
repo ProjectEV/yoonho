@@ -70,7 +70,11 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(nameSpace+".productDetail", product_id);
 	}
-	
+	@Override
+	public GradeVO gradeDetail(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace+".gradeDetail", user_id);
+	}
 	
 	
 	
@@ -148,6 +152,43 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.insert(nameSpace+".review", boardsVO);
 	}
+	@Override
+	public int grade(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(nameSpace + ".grade", userVO);
+	}
+	@Override
+	public int grade(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(nameSpace + ".grade2", user_id);
+	}
+	@Override
+	public int findGradeUser(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".findGradeUser", user_id);
+	}
+	@Override
+	public int findGradeTotalPrice(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".findGradeTotalPrice", user_id);
+	}
+	@Override
+	public int updateGrade(String user_id, int totalPrice, int grade, int discount, String gradename) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user_id);
+		map.put("totalPrice", totalPrice);
+		map.put("grade", grade);
+		map.put("discount", discount);
+		map.put("gradename", gradename);
+		return sqlSession.update(nameSpace + ".updateGrade", map);
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -334,6 +375,10 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.delete(nameSpace + ".deleteBuy", buy_no);
 	}
+	
+	
+	
+	
 	
 	
 	

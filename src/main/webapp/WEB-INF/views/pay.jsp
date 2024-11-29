@@ -177,11 +177,12 @@
                                 <div class="checkout__order__total">
                                     <ul>
                                         <li>Subtotal <span>&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
-                                        <li>Discount <span style="color: gray;">- &#8361; <fmt:formatNumber value="1200" pattern="#,###" /></span></li>
-                                        <li>Total <span>&#8361; <fmt:formatNumber value="${total-1200}" pattern="#,###" /></span></li>
+                                        <li>Discount ( ${grade.grade_discount}&#37; ) <span style="color: gray;">- &#8361; <fmt:formatNumber value="${(grade.grade_discount*total)/100 }" pattern="#,###" /></span></li>
+                                        <li>Total <span>&#8361; <fmt:formatNumber value="${total-(grade.grade_discount*total)/100}" pattern="#,###" /></span></li>
                                     </ul>
                                 </div>
                                 <div class="checkout__order__widget">
+                                	<p> 회원등급 ${grade.grade_name }로 ${grade.grade_discount }&#37; 할인 혜택을 받았습니다.</p><br>
                                     <label for="o-acc">
                                         Create an acount?
                                         <input type="checkbox" id="o-acc">

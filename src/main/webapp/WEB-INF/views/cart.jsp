@@ -43,7 +43,7 @@
                 const productId = row.data("product-id"); // 상품 ID
                 const price = row.data("product-price"); // 상품 단가
                 const remain = row.data("product-remain");
-                
+                const discount = row.data("grade-discount");
 
                 if (quantity < 0 || isNaN(quantity)) {
                     alert("수량은 0 이상의 숫자만 가능합니다.");
@@ -62,25 +62,28 @@
                 row.find(".product-total").text("₩ "+totalPrice.toLocaleString());
 				
                 // 서버에 Ajax 요청으로 총합 계산 요청
-                updateCartTotal();
-            });
-
-            // 장바구니 전체 합계 업데이트
-            function updateCartTotal() {
-                let total = 0;
+				let total = 0;
+                
                 $(".cart-row").each(function () {
                     const quantity = $(this).find(".quantity-input").val();
                     const price = $(this).data("product-price");
                     total += quantity * price;
                 });
-
+				
                 // 합계 표시
                 $("#cart-total").text("₩ "+total.toLocaleString());
-            }
+                
+                const priceDiscount = Math.round(discount * total / 100);
+            	$("#price-discount").text("- ₩ "+priceDiscount.toLocaleString());
+            	
+            	var finalPrice = total - priceDiscount;
+            	$("#final-price").text("₩ "+finalPrice.toLocaleString());
+            });
+            
         });
     </script>
     
-   
+              
     
 </head>
 
@@ -131,7 +134,8 @@
                             
                             
                             <c:forEach var="cart" items="${list }" varStatus="status">
-		 						<tr class="cart-row" data-product-id="${cart.cart_productid}" data-product-price="${cart.product_price}" data-product-remain="${cart.product_remain }">
+		 						<tr class="cart-row" data-product-id="${cart.cart_productid}" data-product-price="${cart.product_price}" 
+		 						data-product-remain="${cart.product_remain }" data-grade-discount="${grade.grade_discount }">
                                     <td class="cart__product__item">
                                         <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-1.jpg" alt="">
                                         <div class="cart__product__item__title">
@@ -183,7 +187,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="cart__btn" align="right">
-                        <a href="javascript:document.cartInfo.submit();"> Update cart</a>
+                        <a href="#"> Update cart</a>
                     </div>
                 </div>
             </div>
@@ -205,7 +209,9 @@
                         
                         
                         <ul>
-                            <li>Total <span id="cart-total">&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
+                            <li>Subtotal <span id="cart-total">&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>
+                            <li>Discount ( ${grade.grade_discount}&#37; ) <span style="color: gray;" id="price-discount">- &#8361; <fmt:formatNumber value="${(grade.grade_discount*total)/100 }" pattern="#,###" /></span></li>
+                            <li>Total <span id="final-price">&#8361; <fmt:formatNumber value="${total-(grade.grade_discount*total)/100}" pattern="#,###" /></span></li>
                         </ul>
                         
                         <!-- <button type="submit" form="cartInfo" class="site-btn">&nbsp;&nbsp;&nbsp;&nbsp;Proceed to checkout&nbsp;&nbsp;&nbsp;&nbsp;</button> -->

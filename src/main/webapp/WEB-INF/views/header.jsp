@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -181,12 +182,14 @@
                <div class="col-sm-3" style="padding: 0 10px 0 0; margin: 0 0 0 125px;">
                    <div class="header__right">
                        <div class="header__right__auth">
-                             <c:if test="${user==null }">
-                           로그인이 필요합니다. <a style="padding: 0 0 0 10px;" href="/project/login">Login</a>
-                        </c:if>
-                        <c:if test="${user!=null }">
-                           ${user.user_name }님 환영합니다. <a style="padding: 0 0 0 10px;" href="/project/logout">Logout</a>
-                        </c:if>
+	                   <c:choose>
+		                   <c:when test="${user!=null }">
+		                   	${user.user_name }님 환영합니다. <a style="padding: 0 0 0 10px;" href="/project/logout">Logout</a>
+		                   </c:when>
+		                   <c:otherwise>
+		                   	로그인이 필요합니다. <a style="padding: 0 0 0 10px;" href="/project/login">Login</a>
+		                   </c:otherwise>
+                       </c:choose>
                            
                            <a href="/project/join">Register</a>
                        </div>
@@ -194,7 +197,15 @@
                            <li><a href="/project/mypage"><img style="width: 18px; height: 18px; padding: 0 0 2px 0;" src="${pageContext.request.contextPath}/resources/images/mypage.png" alt=""></span>
                            </a></li>
                            <li><a href="/project/cart"><span class="icon_bag_alt"></span>
-                               <div class="tip" id="cartItemCount"></div>
+                           	   <c:choose>
+				                   <c:when test="${user!=null }">
+				                   	<div class="tip" id="cartItemCount"></div>
+				                   </c:when>
+				                   <c:otherwise>
+				                   	
+				                   </c:otherwise>
+		                       </c:choose>
+                           
                            </a></li>
                        </ul>
                    </div>

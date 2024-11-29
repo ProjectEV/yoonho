@@ -32,6 +32,7 @@
 	
 	<!-- 인터셉터 설정 -->
 	<beans:bean class="kr.co.dong.common.AuthenticationInterceptor" id="auth" />
+	<beans:bean class="kr.co.dong.common.AdminInterceptor" id="admin" />
 	<!-- 인터셉터를 위한 매핑경로설정하여 Auth의 메소드를 수행하게한다. -->
 	<interceptors>
 		<interceptor>
@@ -40,6 +41,10 @@
 			<mapping path="/board/update" />
 			<mapping path="/board/delete" />
 			<beans:ref bean="auth" />
+		</interceptor>
+		<interceptor>
+			<mapping path="/project/inventory" />
+			<beans:ref bean="admin" />
 		</interceptor>
 	</interceptors>
 	

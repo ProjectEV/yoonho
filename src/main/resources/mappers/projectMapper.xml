@@ -39,13 +39,17 @@
   </update>
   
   
-  <select id="productDetail" parameterType="String" resultType="ProductVO">
+	<select id="productDetail" parameterType="String" resultType="ProductVO">
 		select *
 		from product
 		where product_id = #{product_id}
 	</select>
   
-  
+	<select id="gradeDetail" parameterType="String" resultType="GradeVO">
+		select *
+		from grade
+		where grade_userid = #{user_id}
+	</select>
   
   
   
@@ -167,6 +171,41 @@
 		boards (boards_title, boards_content, boards_userid, boards_regdate, boards_readcnt, boards_category, del)
 		values (#{boards_title}, #{boards_content}, #{boards_userid}, now(), 0, 3, 0)
   </insert>
+  
+  <insert id="grade" parameterType="UserVO">
+		insert into 
+		grade (grade_userid, grade_totalPurchase, grade, grade_discount)
+		values (#{user_id}, 0, 0, 1)
+  </insert>
+  
+  <insert id="grade2" parameterType="String">
+		insert into 
+		grade (grade_userid, grade_totalPurchase, grade, grade_discount)
+		values (#{user_id}, 0, 0, 1)
+  </insert>
+  
+  <select id="findGradeUser" parameterType="String" resultType="int">
+		select count(*) from grade
+		where grade_userid = #{user_id}
+  </select>
+  
+  <select id="findGradeTotalPrice" parameterType="String" resultType="int">
+		select sum(buy_totalPrice)
+		from buy
+		where buy_userid = #{user_id} and
+			datediff(curdate(),buy_regdate) &lt; 90
+  </select>
+  
+  <update id="updateGrade" parameterType="map">
+		update grade
+		set
+		grade_totalPurchase = #{totalPrice}, grade = #{grade}, grade_discount = #{discount}, grade_name = #{gradename}
+		where grade_userid = #{user_id}
+  </update>
+  
+  
+  
+  
   
   
   

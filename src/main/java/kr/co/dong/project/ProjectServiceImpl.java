@@ -62,7 +62,11 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.productDetail(product_id);
 	}
-	
+	@Override
+	public GradeVO gradeDetail(String user_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.gradeDetail(user_id);
+	}
 	
 	
 	
@@ -135,6 +139,34 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.review(boardsVO);
 	}
+	@Override
+	public int grade(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return projectDAO.grade(userVO);
+	}
+	@Override
+	public int grade(String user_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.grade(user_id);
+	}
+	@Override
+	public int findGradeUser(String user_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.findGradeUser(user_id);
+	}
+	@Override
+	public int findGradeTotalPrice(String user_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.findGradeTotalPrice(user_id);
+	}
+	@Override
+	public int updateGrade(String user_id, int totalPrice, int grade, int discount, String gradename) {
+		// TODO Auto-generated method stub
+		return projectDAO.updateGrade(user_id, totalPrice, grade, discount, gradename);
+	}
+	
+	
+	
 	
 	
 	
@@ -294,6 +326,10 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.deleteBuy(buy_no);
 	}
+	
+	
+	
+	
 	
 	
 	

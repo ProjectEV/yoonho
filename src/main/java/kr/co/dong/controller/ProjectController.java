@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,6 +25,7 @@ import kr.co.dong.project.BoardsVO;
 import kr.co.dong.project.BuyVO;
 import kr.co.dong.project.BuydetailVO;
 import kr.co.dong.project.CartVO;
+import kr.co.dong.project.GradeVO;
 import kr.co.dong.project.ProductVO;
 import kr.co.dong.project.ProjectService;
 import kr.co.dong.project.UserVO;
@@ -127,10 +127,46 @@ public class ProjectController {
 			return "redirect:login";
 		} else { // 로그인 성공
 			// 세션부여
+			
+			String user_id = (String) user.get("user_id");
+			int r = projectService.findGradeUser(user_id);
+			
+			if (r == 0) {
+				int s = projectService.grade(user_id);
+				updateUserGrade(user_id);
+			}
+			
 			session.setAttribute("user", user);
 			return "redirect:/";
 		}
 	}
+	
+	public void updateUserGrade(String user_id) {
+		
+		int totalPrice = projectService.findGradeTotalPrice(user_id);
+		int grade = 0;
+		String gradename = "Family";
+		int discount = 0;
+		if (totalPrice < 200000 ) {
+			discount = 1;
+		} else if (totalPrice < 500000) {
+			grade = 1;
+			gradename = "Silver";
+			discount = 2;
+		} else if (totalPrice < 1500000) {
+			grade = 2;
+			gradename = "Gold";
+			discount = 4;
+		} else {
+			grade = 3;
+			gradename = "VIP";
+			discount = 6;
+		}
+		int r = projectService.updateGrade(user_id, totalPrice, grade, discount, gradename);
+		
+	}
+	
+	
 
 	@RequestMapping(value = "project/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session, RedirectAttributes rttr) {
@@ -357,13 +393,14 @@ public class ProjectController {
 			int r = projectService.cartUpdate(user_id, product_id, cart_amount);
 		}
 		
-		
 		List<CartVO> list = projectService.listCart(user_id);
-
+		GradeVO grade = projectService.gradeDetail(user_id);
+		
 		AddressVO address = projectService.findMainAddress(user_id);
 
 		mav.addObject("address", address);
 		mav.addObject("list", list);
+		mav.addObject("grade", grade);
 		mav.addObject("totalRecord", totalRecord);
 		mav.setViewName("pay");
 		return mav;
@@ -407,8 +444,6 @@ public class ProjectController {
 	            totalPrice += price * amount;
 	        }
 		
-		
-		
 		int r = projectService.buyRegister(buy_address, buy_receive, totalRecord, user_id, totalPrice);
 		int v = projectService.salesUpdate(list);
 		int u = projectService.findBuyno();
@@ -418,7 +453,9 @@ public class ProjectController {
 		if (r > 0) {
 			rttr.addFlashAttribute("msg", "추가에 성공하였습니다."); // 세션저장
 		}
-
+		
+		updateUserGrade(user_id);
+		
 		return "redirect:/";
 	}
 
@@ -435,7 +472,8 @@ public class ProjectController {
 		request.setCharacterEncoding("UTF-8");
 		logger.info("내용" + userVO);
 		int r = projectService.join(userVO);
-
+		int s = projectService.grade(userVO);
+		
 		if (r > 0) {
 			rttr.addFlashAttribute("msg", "추가에 성공하였습니다."); // 세션저장
 		}
@@ -579,7 +617,11 @@ public class ProjectController {
 
 		int totalRecord = projectService.cart_totalRecord(user_id);
 		List<CartVO> list = projectService.listCart(user_id);
-
+		
+		updateUserGrade(user_id);
+		GradeVO grade = projectService.gradeDetail(user_id);
+		
+		mav.addObject("grade", grade);
 		mav.addObject("list", list);
 		mav.addObject("totalRecord", totalRecord);
 		mav.setViewName("cart");

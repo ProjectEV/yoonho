@@ -17,6 +17,8 @@ public interface ProjectService {
 	
 	
 	public ProductVO productDetail(String product_id);
+	public GradeVO gradeDetail(String user_id);
+	
 	
 	
 	public List<ProductVO> listProduct(int start, int pageSIZE);
@@ -39,9 +41,11 @@ public interface ProjectService {
 	public int join(UserVO userVO);
 	public int pay(BuyVO buyVO);
 	public int review(BoardsVO boardsVO);
-	
-	
-	
+	public int grade(UserVO userVO);
+	public int grade(String user_id);
+	public int findGradeUser(String user_id);
+	public int findGradeTotalPrice(String user_id);
+	public int updateGrade(String user_id, int totalPrice, int grade, int discount, String gradename);
 	
 	
 	
