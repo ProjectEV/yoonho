@@ -28,6 +28,7 @@ import kr.co.dong.project.CartVO;
 import kr.co.dong.project.GradeVO;
 import kr.co.dong.project.ProductVO;
 import kr.co.dong.project.ProjectService;
+import kr.co.dong.project.ScriptUtils;
 import kr.co.dong.project.UserVO;
 
 @Controller
@@ -609,7 +610,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "project/cart", method = RequestMethod.GET)
-	public ModelAndView cart(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView cart(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 
 		Map<String, Object> user = (Map) session.getAttribute("user");
@@ -625,6 +626,7 @@ public class ProjectController {
 		mav.addObject("list", list);
 		mav.addObject("totalRecord", totalRecord);
 		mav.setViewName("cart");
+		
 		return mav;
 	}
 
@@ -643,9 +645,13 @@ public class ProjectController {
 		int s = projectService.findCart(product_id);
 		if (s == 0) {
 			int r = projectService.cartRegister(user_id, product_id, product_name, amount);
+			ScriptUtils.alertAndMovePage(response, "제품을 장바구니에 담았습니다.", "product");
+		} else {
+			ScriptUtils.alertAndMovePage(response, "장바구니에 이미 동일한 제품이 있습니다.", "product");
 		}
 
 		return "redirect:product";
+		
 	}
 
 //	@ResponseBody
@@ -679,13 +685,16 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "project/cart_delete", method = RequestMethod.GET)
-	public String cartDelete(@RequestParam("product_id") String product_id, RedirectAttributes rttr, HttpSession session) {
+	public String cartDelete(@RequestParam("product_id") String product_id, RedirectAttributes rttr, HttpSession session,
+			HttpServletResponse response)  throws Exception {
 		
 		Map<String, Object> user = (Map) session.getAttribute("user");
 		String user_id = (String) user.get("user_id");
 		
 		int r = projectService.cartDelete(user_id, product_id);
 
+		ScriptUtils.alertAndMovePage(response, "제품을 장바구니에서 삭제했습니다.", "cart");
+		
 		return "redirect:cart";
 	}
 	
@@ -722,6 +731,13 @@ public class ProjectController {
 		
 		return "redirect:mypage";
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

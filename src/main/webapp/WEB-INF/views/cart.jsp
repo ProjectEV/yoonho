@@ -186,7 +186,9 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="cart__btn" align="right">
+                    <div class="cart__btn " align="right">
+                    	
+                    	<a href="${pageContext.request.contextPath}/resources/images/notebook2.jpg" class="image-popup"><span class="arrow_expand"></span></a>
                         <a href="#"> Update cart</a>
                     </div>
                 </div>
