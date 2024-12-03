@@ -15,6 +15,7 @@
  		<typeAlias alias="AddressVO" type="kr.co.dong.project.AddressVO"/>
  		<typeAlias alias="CartVO" type="kr.co.dong.project.CartVO"/>
  		<typeAlias alias="GradeVO" type="kr.co.dong.project.GradeVO"/>
+ 		<typeAlias alias="FileVO" type="kr.co.dong.project.FileVO"/>
  		
  		<typeAlias alias="int" type="java.lang.Integer"/>
  		<typeAlias alias="String" type="java.lang.String"/>

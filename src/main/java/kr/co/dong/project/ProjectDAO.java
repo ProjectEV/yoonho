@@ -88,4 +88,66 @@ public interface ProjectDAO {
 	public int deleteBuy(int buy_no);
 	
 	
+	//다중 이미지 저장
+	public int fileUpload(FileVO fileVO);
+		
+	//다중 이미지 조회
+	public List<String> fileSelect(String product_id);
+		
+	//제품 목록에서 대표 이미지 조회
+	public List<FileVO> listFileSelect(String[] productno);
+	
+	//보드 테이블 마지막 튜플의 번호 조회
+	public int boardsNoLast();
+	
+	
+	
+	
+	//아이디 중복체크 처리
+	public int id_check(String user_id);
+		
+	//아이디 찾기 처리
+	public String id_search(Map<String, Object> map);
+		
+	//비밀번호 찾기 처리
+	public String pwd_search(String user_id);
+		
+	//비밀번호 변경 처리
+	public int pwd_change(String user_id, String user_password);
+				
+	
+	
+	//주소지 관리 주소지 리스트 조회
+	public List<AddressVO> addressManageSelect1 (String userid);
+	
+	//주소지 관리 주소지 수정(get)
+	public AddressVO addressManageUpdate1(int address_no);
+	
+	//주소지 관리 주소지 수정(post)
+	public int addressManageUpdate2(AddressVO addressVO);
+	
+	//주소지 관리 주소지 추가(post)
+	public int addressManageAdd2(AddressVO addressVO);
+	
+	//주소지 관리 주소지 삭제(get)
+	public int addressManageDelete1(int address_no);
+	
+	//메인 주소 리셋
+	public int addressManageMainReset();
+	
+
+	
+	
+	
+	
+	//검색
+	public List<ProductVO> productSearch(String keyword);
+	
+	//카테고리 검색 
+	public List<ProductVO> categorySearch(Map<String, Object> codeMap);
+	
+	//정렬 검색 
+	public List<ProductVO> orderSearch(Map<String, Object> codeMap);
+	
+	
 }

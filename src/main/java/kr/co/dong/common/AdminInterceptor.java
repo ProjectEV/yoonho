@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.co.dong.project.ScriptUtils;
+
 public class AdminInterceptor implements HandlerInterceptor{
 //  Controller가 요청을 처리하기전에 호출하는 메소드
 	@Override
@@ -22,6 +24,7 @@ public class AdminInterceptor implements HandlerInterceptor{
 		int admin = Integer.parseInt(String.valueOf(user.get("user_admin")));
 		
 		if(admin == 0) {//관리자가 아니라면 메인 화면으로 이동시킴
+			ScriptUtils.alertAndMovePage(response, "접근 권한이 없습니다.", "/");
 			response.sendRedirect(request.getContextPath() + "/");
 			return false;
 		}

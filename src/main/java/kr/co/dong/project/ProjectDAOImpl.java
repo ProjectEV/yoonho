@@ -379,17 +379,123 @@ public class ProjectDAOImpl implements ProjectDAO {
 	
 	
 	
+	@Override
+	public int fileUpload(FileVO fileVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(nameSpace + ".fileUpload", fileVO);
+	}
+
+	@Override
+	public List<String> fileSelect(String product_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".fileSelect", product_id);
+	}
+
+	@Override
+	public List<FileVO> listFileSelect(String[] productno) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".listFileSelect", productno);
+	}
 	
-	
-	
+	@Override
+	public int boardsNoLast() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".boardsNoLast");
+	}
 	
 	
 	
 
 	
-
+	//아이디 중복체크 처리
+	@Override
+	public int id_check(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace+".id_check",user_id);
+	}
+	
+	@Override
+	public String id_search(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace+".id_search", map);
+	}
+	
+	@Override
+	public String pwd_search(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace+".pwd_search", user_id);
+	}
+	
+	@Override
+	public int pwd_change(String user_id, String user_password) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user_id);
+		map.put("user_password", user_password);
+		return sqlSession.update(nameSpace+".pwd_change", map);
+	}
 	
 
+	
+	@Override
+	public List<AddressVO> addressManageSelect1(String userid) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".addressManageSelect1", userid);
+	}
+
+	@Override
+	public AddressVO addressManageUpdate1(int address_no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".addressManageUpdate1", address_no);
+	}
+
+	@Override
+	public int addressManageUpdate2(AddressVO addressVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(nameSpace + ".addressManageUpdate2", addressVO);
+	}
+
+	@Override
+	public int addressManageAdd2(AddressVO addressVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(nameSpace + ".addressManageAdd2", addressVO);
+	}
+
+	@Override
+	public int addressManageDelete1(int address_no) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(nameSpace + ".addressManageDelete1", address_no);
+	}
+
+	@Override
+	public int addressManageMainReset() {
+		// TODO Auto-generated method stub
+		return sqlSession.update(nameSpace + ".addressManageMainReset");	
+	
+	}
+	
+	
+	
+	
+	@Override
+	public List<ProductVO> productSearch(String keyword) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".productSearch", keyword);
+	}
+	
+	@Override
+	public List<ProductVO> categorySearch(Map<String, Object> codeMap) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".categorySearch", codeMap);
+	}
+
+	@Override
+	public List<ProductVO> orderSearch(Map<String, Object> codeMap) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".orderSearch", codeMap);
+	}	
+	
+	
 	
 
 }

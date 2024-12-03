@@ -75,6 +75,7 @@
 	  SELECT *
       FROM buy
       where buy_userid = #{user_id}
+      order by buy_regdate desc
   </select>
   
    <select id="listBuydetail" parameterType="java.lang.Integer" resultType="BuydetailVO">
@@ -155,9 +156,9 @@
   </insert>
   
   <insert id="review" parameterType="BoardsVO">
-		insert into 
-		boards (boards_title, boards_content, boards_userid, boards_regdate, boards_readcnt, boards_category, del)
-		values (#{boards_title}, #{boards_content}, #{boards_userid}, now(), 0, 1, 0)
+		insert into boards(boards_title, boards_content, boards_userid, boards_regdate,
+        boards_readcnt, boards_category, del, boards_productid, boards_review_score)
+        values(#{boards_title}, #{boards_content}, #{boards_userid}, curdate(), 0,1,0, #{boards_productid}, #{boards_review_score})
   </insert>
   
   <insert id="faq" parameterType="BoardsVO">
@@ -211,8 +212,8 @@
   
   <insert id="productRegister" parameterType="ProductVO">
 		insert into 
-		product (product_id, product_name, product_price, product_content, product_category, product_remain, product_sales)
-		values (#{product_id}, #{product_name}, #{product_price}, #{product_content}, #{product_category}, #{product_remain}, 0)
+		product (product_id, product_name, product_price, product_content, product_category, product_remain, product_sales, register_date)
+		values (#{product_id}, #{product_name}, #{product_price}, #{product_content}, #{product_category}, #{product_remain}, 0, now())
   </insert>
   
   <delete id="productDelete" parameterType="String">
@@ -397,6 +398,167 @@
   		buy
   		where buy_no = #{buy_no} 
 	</delete>
+
+
+	<!-- 파일 업로드 -->
+	<insert id="fileUpload" parameterType="FileVO">
+		insert into 
+		file (file_name, file_path, file_connection_id)
+		values (#{file_name}, #{file_path}, #{file_connection_id})
+	</insert>
+  
+	<!-- 파일 조회 -->
+	<select id="fileSelect" parameterType="String" resultType="String">
+		select file_name
+		from file
+		where file_connection_id=#{product_id}
+	</select>
+  
+	<!-- 제품 목록에서 대표 이미지 조회 -->
+	<select id="listFileSelect" parameterType="String" resultType="FileVO">
+		WITH ranked_files AS (
+			SELECT 
+				file_name, 
+				file_connection_id, 
+				ROW_NUMBER() OVER (PARTITION BY file_connection_id ORDER BY file_name) AS rnk
+		    FROM file
+		    WHERE file_connection_id IN 	    
+		    <foreach collection="array" item="productno" open="(" separator="," close=")">
+	        	#{productno}
+	    	</foreach>
+		)
+		SELECT *
+		FROM ranked_files
+		WHERE rnk = 1;
+	</select>
+
+	<!-- 보드 테이블 마지막 튜플의 번호 조회 -->
+	<select id="boardsNoLast" resultType="int">
+		select boards_no
+		from boards
+		order by boards_no desc
+		limit 1;
+	</select>
+
+
+
+
+  	<!-- 아이디 중복체크 처리 -->
+  	<select id="id_check" parameterType="java.lang.String" resultType="java.lang.Integer">
+  		select count(*) from user
+  		where user_id = #{user_id};
+  	</select>
+  	
+  	<!-- 아이디 찾기 처리 -->
+  	<select id="id_search" parameterType="java.util.Map" resultType="java.lang.String">
+  		select user_id 
+  		from user
+  		where user_email = #{user_email} and user_name = #{user_name};
+  	</select>
+  	
+  	<!-- 비밀번호 찾기 처리 -->
+  	<select id="pwd_search" parameterType="java.lang.String" resultType="java.lang.String">
+  		select user_id
+  		from user
+  		where user_id = #{user_id};
+  	</select>
+  	
+  	<!-- 비밀번호 변경 처리 -->
+  	<update id="pwd_change" parameterType="java.util.Map">
+  		update user
+  		set user_password = #{user_password}
+  		where user_id = #{user_id}
+  	</update>
+
+
+
+
+	<!-- 주소지 조회(get) -->
+   <select id="addressManageSelect1" parameterType="java.lang.String" resultType="AddressVO">
+	  select *
+	  from address
+	  where address_userid = #{userid}
+   </select>
+   
+   	<!-- 주소지 수정(get) -->
+   <select id="addressManageUpdate1" parameterType="java.lang.Integer" resultType="AddressVO">
+	  select *
+	  from address
+	  where address_no = #{address_no}
+   </select>
+   
+   <!-- 주소지 수정(post) -->
+   <update id="addressManageUpdate2" parameterType="AddressVO">
+	  update address
+	  set address_name=#{address_name}, address_content=#{address_content}, address_main=#{address_main}
+	  where address_no=#{address_no}
+   </update>
+   
+   <!-- 주소지 추가(post) -->
+   <insert id="addressManageAdd2" parameterType="AddressVO">
+   		insert into address(address_userid, address_main, address_name, address_content)
+		values (#{address_userid}, #{address_main}, #{address_name}, #{address_content});
+   </insert>
+   
+   <!-- 메인 주소 초기화 -->
+   <update id="addressManageMainReset">
+		update address
+		set address_main=0
+		where address_main=1;
+   </update>
+   
+   <!-- 주소지 삭제(get) -->
+   <delete id="addressManageDelete1" parameterType="java.lang.Integer">
+   	  delete from address
+	  where address_no = #{address_no}
+   </delete>
+
+
+
+
+
+
+   <!-- 키워드 검색 -->
+   <select id="productSearch" parameterType="java.lang.String" resultType="ProductVO">
+	  select *
+	  from product
+	  where product_name like concat('%',#{keyword},'%') and del = 0
+	  order by product_id desc
+   </select>
+   
+   <!-- 카테고리 검색 -->
+   <select id="categorySearch" parameterType="java.util.Map" resultType="ProductVO">
+	  select *
+	  from product
+	  where del = 0 and
+	  	<choose>
+			<when test='category &lt; 10'>
+				product_category like concat(#{category},'%')
+			</when>
+			<otherwise>
+				product_category = #{category}	
+			</otherwise>
+		</choose>
+   </select>
+   
+   <!-- 정렬 검색 -->
+   <select id="orderSearch" parameterType="java.util.Map" resultType="ProductVO">
+	  select *
+	  from product
+	  where del = 0
+	  	<choose>
+			<when test='code==1'>
+				order by product_price asc		
+			</when>
+			<when test='code==2'>
+				order by product_price desc		
+			</when>
+			<otherwise>
+				order by product_sales desc		
+			</otherwise>
+		</choose>
+   </select>
+
 
 
 

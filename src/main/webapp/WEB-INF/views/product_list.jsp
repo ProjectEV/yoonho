@@ -1,13 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <!DOCTYPE html>
 <html lang="zxx">
 <meta charset="UTF-8">
 <title>TechNova</title>
 <head>
+<style>
+
+.order {
+	backgroud-color: black;
+	color: black;
+}
+
+.order:hover {
+	backgroud-color: blue;
+	text-decoration: none;
+}
+
+</style>
 </head>
 
 <body>
@@ -20,13 +31,16 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="/"><i class="fa fa-home"></i> 홈 </a>
+                        <a href="/"><i class="fa fa-home"></i> Home</a>
                         <span>제품목록</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    
+    
     <!-- Breadcrumb End -->
 
     <!-- Shop Section Begin -->
@@ -37,91 +51,91 @@
                     <div class="shop__sidebar">
                         <div class="sidebar__categories">
                             <div class="section-title">
-                                <h4>Categories</h4>
+                                <h4>카테고리</h4>
                             </div>
                             <div class="categories__accordion">
                                 <div class="accordion" id="accordionExample">
                                     <div class="card">
                                         <div class="card-heading active">
-                                            <a data-toggle="collapse" data-target="#collapseOne">Women</a>
+                                            <a data-toggle="collapse" data-target="#collapseOne">컴퓨터</a>
                                         </div>
                                         <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <ul>
-                                                    <li><a href="#">Coats</a></li>
-                                                    <li><a href="#">Jackets</a></li>
-                                                    <li><a href="#">Dresses</a></li>
-                                                    <li><a href="#">Shirts</a></li>
-                                                    <li><a href="#">T-shirts</a></li>
-                                                    <li><a href="#">Jeans</a></li>
+                                                    <li><a href="/product/list/category?category=1">전체</a></li>
+                                                    <li><a href="/product/list/category?category=11">Dell</a></li>
+                                                    <li><a href="/product/list/category?category=12">삼성전자</a></li>
+                                                    <li><a href="/product/list/category?category=13">LG전자</a></li>
+                                                    <li><a href="/product/list/category?category=14">HP</a></li>
+                                                    <li><a href="/product/list/category?category=15">Mac</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseTwo">Men</a>
+                                            <a data-toggle="collapse" data-target="#collapseTwo">노트북</a>
                                         </div>
                                         <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <ul>
-                                                    <li><a href="#">Coats</a></li>
-                                                    <li><a href="#">Jackets</a></li>
-                                                    <li><a href="#">Dresses</a></li>
-                                                    <li><a href="#">Shirts</a></li>
-                                                    <li><a href="#">T-shirts</a></li>
-                                                    <li><a href="#">Jeans</a></li>
+                                                    <li><a href="/product/list/category?category=2">전체</a></li>
+                                                    <li><a href="/product/list/category?category=21">MacBook</a></li>
+                                                    <li><a href="/product/list/category?category=22">그램</a></li>
+                                                    <li><a href="/product/list/category?category=23">갤럭시북</a></li>
+                                                    <li><a href="/product/list/category?category=24">레노버</a></li>
+                                                    <li><a href="/product/list/category?category=25">MSI</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseThree">Kids</a>
+                                            <a data-toggle="collapse" data-target="#collapseThree">핸드폰</a>
                                         </div>
                                         <div id="collapseThree" class="collapse" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <ul>
-                                                    <li><a href="#">Coats</a></li>
-                                                    <li><a href="#">Jackets</a></li>
-                                                    <li><a href="#">Dresses</a></li>
-                                                    <li><a href="#">Shirts</a></li>
-                                                    <li><a href="#">T-shirts</a></li>
-                                                    <li><a href="#">Jeans</a></li>
+                                                    <li><a href="/product/list/category?category=3">전체</a></li>
+                                                    <li><a href="/product/list/category?category=31">iPhone</a></li>
+                                                    <li><a href="/product/list/category?category=32">갤럭시 S</a></li>
+                                                    <li><a href="/product/list/category?category=33">LG</a></li>
+                                                    <li><a href="/product/list/category?category=34">갤럭시 A</a></li>
+                                                    <li><a href="/product/list/category?category=35">샤오미</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseFour">Accessories</a>
+                                            <a data-toggle="collapse" data-target="#collapseFour">컴퓨터부품</a>
                                         </div>
                                         <div id="collapseFour" class="collapse" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <ul>
-                                                    <li><a href="#">Coats</a></li>
-                                                    <li><a href="#">Jackets</a></li>
-                                                    <li><a href="#">Dresses</a></li>
-                                                    <li><a href="#">Shirts</a></li>
-                                                    <li><a href="#">T-shirts</a></li>
-                                                    <li><a href="#">Jeans</a></li>
+													<li><a href="/product/list/category?category=4">전체</a></li>	                                                
+                                                    <li><a href="/product/list/category?category=41">CPU</a></li>
+                                                    <li><a href="/product/list/category?category=42">RAM</a></li>
+                                                    <li><a href="/product/list/category?category=43">SSD</a></li>
+                                                    <li><a href="/product/list/category?category=44">HDD</a></li>
+                                                    <li><a href="/product/list/category?category=45">메인보드</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card">
                                         <div class="card-heading">
-                                            <a data-toggle="collapse" data-target="#collapseFive">Cosmetic</a>
+                                            <a data-toggle="collapse" data-target="#collapseFive">기타</a>
                                         </div>
                                         <div id="collapseFive" class="collapse" data-parent="#accordionExample">
                                             <div class="card-body">
                                                 <ul>
-                                                    <li><a href="#">Coats</a></li>
-                                                    <li><a href="#">Jackets</a></li>
-                                                    <li><a href="#">Dresses</a></li>
-                                                    <li><a href="#">Shirts</a></li>
-                                                    <li><a href="#">T-shirts</a></li>
-                                                    <li><a href="#">Jeans</a></li>
+                                                    <li><a href="/product/list/category?category=51">태블릿</a></li>
+                                                    <li><a href="/product/list/category?category=52">키보드</a></li>
+                                                    <li><a href="/product/list/category?category=53">마우스</a></li>
+                                                    <li><a href="/product/list/category?category=54">스피커</a></li>
+                                                    <li><a href="/product/list/category?category=55">모니터</a></li>
+                                                    <li><a href="/product/list/category?category=56">웹캠</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -129,115 +143,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="sidebar__filter">
-                            <div class="section-title">
-                                <h4>Shop by price</h4>
-                            </div>
-                            <div class="filter-range-wrap">
-                                <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                                data-min="33" data-max="99"></div>
-                                <div class="range-slider">
-                                    <div class="price-input">
-                                        <p>Price:</p>
-                                        <input type="text" id="minamount">
-                                        <input type="text" id="maxamount">
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">Filter</a>
-                        </div>
-                        <div class="sidebar__sizes">
-                            <div class="section-title">
-                                <h4>Shop by size</h4>
-                            </div>
-                            <div class="size__list">
-                                <label for="xxs">
-                                    xxs
-                                    <input type="checkbox" id="xxs">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label for="xs">
-                                    xs
-                                    <input type="checkbox" id="xs">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label for="xss">
-                                    xs-s
-                                    <input type="checkbox" id="xss">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label for="s">
-                                    s
-                                    <input type="checkbox" id="s">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label for="m">
-                                    m
-                                    <input type="checkbox" id="m">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label for="ml">
-                                    m-l
-                                    <input type="checkbox" id="ml">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label for="l">
-                                    l
-                                    <input type="checkbox" id="l">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label for="xl">
-                                    xl
-                                    <input type="checkbox" id="xl">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
+
                         <div class="sidebar__color">
                             <div class="section-title">
-                                <h4>Shop by size</h4>
+                                <h4>정렬</h4>
                             </div>
                             <div class="size__list color__list">
-                                <label for="black">
-                                    Blacks
-                                    <input type="checkbox" id="black">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label for="whites">
-                                    Whites
-                                    <input type="checkbox" id="whites">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label for="reds">
-                                    Reds
-                                    <input type="checkbox" id="reds">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label for="greys">
-                                    Greys
-                                    <input type="checkbox" id="greys">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label for="blues">
-                                    Blues
-                                    <input type="checkbox" id="blues">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label for="beige">
-                                    Beige Tones
-                                    <input type="checkbox" id="beige">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label for="greens">
-                                    Greens
-                                    <input type="checkbox" id="greens">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label for="yellows">
-                                    Yellows
-                                    <input type="checkbox" id="yellows">
-                                    <span class="checkmark"></span>
-                                </label>
+                              	<div style="margin: 7px 0;"><a class="order" href="/product/list/order?code=1" style="font-size: 14px;">가격낮은순</a></div>
+                              	<div style="margin: 7px 0;"><a class="order" href="/product/list/order?code=2" style="font-size: 14px;">가격높은순</a></div>
+                              	<div style="margin: 7px 0;"><a class="order" href="/product/list/order?code=3" style="font-size: 14px;">판매량순</a></div>
                             </div>
                         </div>
                     </div>
@@ -248,29 +162,33 @@
                   		<c:forEach var="product" items="${list}">
 							<div class="col-lg-4 col-md-6">
 	                            <div class="product__item">
-	                                <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/resources/images/notebook2.jpg">
-	                                    <!--  <div class="label new">New</div> -->
-	                                    <ul class="product__hover">
-	                                        <li><a href="${pageContext.request.contextPath}/resources/images/notebook2.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
-	                                        <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-	                                        <li><a href="#"><span class="icon_bag_alt"></span></a></li>
-	                                    </ul>
-	                                </div>
-	                                <div class="product__item__text">
-	                                    <h6><a href="/project/product_detail?product_id=${product.product_id}">${product.product_name}</a></h6>
-	                                    <div class="rating">
-	                                        <i class="fa fa-star"></i>
-	                                        <i class="fa fa-star"></i>
-	                                        <i class="fa fa-star"></i>
-	                                        <i class="fa fa-star"></i>
-	                                        <i class="fa fa-star"></i>
-	                                    </div>
-	                                    <div class="product__price">${product.product_price} 원</div>
-	                                </div>
+		                            <c:forEach var="imageList" items="${imageList}">
+                                     	<c:if test="${imageList.file_connection_id == product.product_id}">
+                                     			    <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/images/${imageList.file_name}">
+			                                    <!--  <div class="label new">New</div> -->
+			                                    <ul class="product__hover">
+			                                        <li><a href="#" class="image-popup"><span class="arrow_expand"></span></a></li>
+			                                        <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+			                                        <li><a href="cart_register?product_id=${product.product_id}&amount=1"><span class="icon_bag_alt"></span></a></li>
+			                                    </ul>
+			                                </div>
+			                                <div class="product__item__text">
+			                                    <h6><a href="product_detail?product_id=${product.product_id}">${product.product_name}</a></h6>
+			                                    <div class="rating">
+			                                        <i class="fa fa-star"></i>
+			                                        <i class="fa fa-star"></i>
+			                                        <i class="fa fa-star"></i>
+			                                        <i class="fa fa-star"></i>
+			                                        <i class="fa fa-star"></i>
+			                                    </div>
+			                                    <div class="product__price">${product.product_price} 원</div>
+			                                </div>
+                                     	</c:if>
+		                            </c:forEach>
 	                            </div>
 	                        </div>
  						</c:forEach>
-
+ 						
                         <div class="col-lg-12 text-center">
                         
                         
@@ -325,7 +243,7 @@
 
     <%@ include file="instagram.jsp" %>
 
-<%@ include file="footer.jsp" %>
+	<%@ include file="footer.jsp" %>
 
 </body>
 

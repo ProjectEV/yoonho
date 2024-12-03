@@ -37,8 +37,8 @@
             
         });
     </script>
-
-
+    
+    
 </head>
 
 <body>
@@ -51,9 +51,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
-                        <a href="#">카테고리</a>
-                        <a href="#">${product.product_category}</a>
+                        <a href="/"><i class="fa fa-home"></i> Home </a>
+                        <a href="/project/product"> 제품목록 </a>
+                        <span> 카테고리 : ${product.product_category} </span>
                     </div>
                 </div>
             </div>
@@ -67,30 +67,31 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="product__details__pic">
+                    
+                    
                         <div class="product__details__pic__left product__thumb nice-scroll">
-                            <a class="pt active" href="#product-1">
-                                <img src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
-                            </a>
-                            <a class="pt" href="#product-2">
-                                <img src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
-                            </a>
-                            <a class="pt" href="#product-3">
-                                <img src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
-                            </a>
-                            <a class="pt" href="#product-4">
-                                <img src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
-                            </a>
+                        	<c:forEach var="file_name" items="${file_name}" varStatus="status">
+                        		<a class="pt active" href="#product-${status.index + 1}">
+	                                <img src="${pageContext.request.contextPath}/images/${file_name}" alt="">
+	                            </a>
+                        	</c:forEach>
                         </div>
+                        
+                        
                         <div class="product__details__slider__content">
                             <div class="product__details__pic__slider owl-carousel">
-                                <img data-hash="product-1" class="product__big__img" src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
-                                <img data-hash="product-2" class="product__big__img" src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
-                                <img data-hash="product-3" class="product__big__img" src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
-                                <img data-hash="product-4" class="product__big__img" src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
+	                            <c:forEach var="file_name" items="${file_name}" varStatus="status">
+                                	<img data-hash="product-${status.index + 1}" class="product__big__img" src="${pageContext.request.contextPath}/images/${file_name}" alt="">
+	                        	</c:forEach>
                             </div>
                         </div>
+                        
+                        
                     </div>
                 </div>
+                
+                
+                
                 <div class="col-lg-6">
                     <div class="product__details__text">
                         <h3>${product.product_name} <span>SAMSUNG</span></h3>
@@ -107,17 +108,18 @@
                         <div class="product__details__price">&#8361; <fmt:formatNumber value="${product.product_price}" pattern="#,###" /></div>
                         <p>${product.product_content}</p>
                         <div class="product__details__button">
-                        	<form action="/project/cart_register" method="get" id="cart">
-	                            <div class="quantity">
-	                                <span>수량 :</span>
-	                                <div class="remain pro-qty" data-product-remain="${product.product_remain }">
-	                                	<input type="hidden" name="product_id" value="${product.product_id}" />
-	                                    <input type="number" class="quantity-input" name="amount" value="1">
-	                                </div>
-	                            </div>
-	                            
-	                            <a href="javascript:;" onclick="document.getElementById('cart').submit();" class="cart-btn"><span class="icon_bag_alt"></span> 장바구니</a>
+                            <form action="/project/cart_register" method="get" id="cart">
+                               <div class="quantity">
+                                   <span>수량 :</span>
+                                   <div class="remain pro-qty" data-product-remain="${product.product_remain }">
+                                      <input type="hidden" name="product_id" value="${product.product_id}" />
+                                       <input type="number" class="quantity-input" name="amount" value="1">
+                                   </div>
+                               </div>
+                               
+                               <a href="javascript:;" onclick="document.getElementById('cart').submit();" class="cart-btn"><span class="icon_bag_alt"></span> 장바구니</a>
                             </form>
+                            
                             <ul>
                                 <li><a href="#"><span class="icon_heart_alt"></span></a></li>
                                 <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>
@@ -223,8 +225,6 @@
                     </div>
                 </div>
                 
-                
-                
                 <c:forEach var="product" items="${randomProductList }" varStatus="status">
                 
                 	<div class="col-lg-3 col-md-4 col-sm-6">
@@ -266,7 +266,7 @@
 
     <%@ include file="instagram.jsp" %>
 
-<%@ include file="footer.jsp" %>
+	<%@ include file="footer.jsp" %>
 
 </body>
 

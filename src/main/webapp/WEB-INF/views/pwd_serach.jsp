@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,6 +84,13 @@
     		font-size: 16px;  /* 크기 조정 */
     		margin: 0 10px;   /* 버튼과 구분선 사이 여백 */
    		}
+   		
+   		input {
+        width: 100px; /* 입력 칸 너비 */
+        padding: 8px; /* 적당한 여백 */
+        box-sizing: border-box; /* 여백 포함 크기 계산 */
+    
+    }
         
         
      
@@ -95,48 +103,56 @@
  
 <body>
 
-	 					<div class="contact__form">
-                            <h5>로그인</h5>
-                            <form method="post" action="/project/login" name="login_form" >
-                                <input type="text" id="user_id" name="user_id" style="width: 300px;" placeholder="아이디"> <br>
-                                <input type="password"  id="user_password" name="user_password" style="width: 300px;" placeholder="비밀번호"><br>
-								<button type="submit" class="site-btn">로그인</button>&nbsp;&nbsp;&nbsp;
-								<button type="button" class="site-btn" onclick="location.href='/project/join'" >회원가입</button>                             
-                            </form>                            
-                            <br><br>
-                            
-                           <button type="button" onclick="idSearch()" class="text-button">아이디 찾기</button>
-                             <span class="separator">|</span>
-                            <button type="button" onclick="pwdSearch()"class="text-button">비밀번호 찾기</button>
-                            
-                            
-                            <br><br><br><br><br><br>
-                            
-                            
-                           <div style="display: flex; align-items: center;">
-   								<hr style="flex-grow: 1;">
-    							<span style="margin: 0 10px;font-size: 12px;">소셜 로그인</span>
-    							<hr style="flex-grow: 1;">
-							</div>
-                            <br>
-    						<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=UKU4azkZUS5fj9tK1XKf&state=STATE_STRING&redirect_uri=http://localhost:8090/project/naver_login">
-        						<img src="https://static.nid.naver.com/oauth/big_g.PNG" alt="네이버 로그인 버튼" style="width: 200px; height: auto; ">
-    						</a>
-                        </div>
+	<div class="contact__form">
+      	 <h5>비밀번호 찾기</h5>
+			<form method="post" action="/project/pwd_search">
+				<input type="text" name="user_id"  placeholder="아이디"  style="width: 300px; padding: 20px;"><br>
+				<button type="submit" class="site-btn">확인</button>
+			</form>
+			<br>
+
+
+		<c:if test="${id != null}">
+			<form method="post" action="/project/pwd_change" onsubmit="return change();">
+				<input type="hidden" name="user_id" id="user_id" value="${id}">
+				<p>변경 할 비밀번호를 적어주세요</p>
+				 <input type="password" name="user_password" id="user_password" placeholder="비밀번호"  style="width: 300px; padding: 20px;"><br>
+				 <input type="password" name="password_ch" id="password_ch" placeholder="비밀번호 확인"  style="width: 300px; padding: 20px;"><br>
+				<input type="submit" value="변경">
+			</form>
+		</c:if>
+		
+		 <!-- 메시지 출력 -->
+    	<c:if test="${msg != null}">
+       <!--  <p class="${msg.contains('성공') ? 'success' : 'error'}">${msg}</p> -->
+       ${msg}
+   		 </c:if>
+
+    </div>
        
        
        
        
        <script>
-       		function idSearch() {
-				var url = "/project/id_search";
-				window.open(url, "_blank_2","toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=450, height=400");
-			}
-       		
-       		function pwdSearch() {
-				var url = "/project/pwd_search";
-				window.open(url, "_blank_2","toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=450, height=400");
-			}	
+       		function change() {
+       			
+       			var idReg = /^[a-zA-Z0-9]{4,12}$/;
+       			
+       			var user_password = document.getElementById("user_password");
+       			var password_ch = document.getElementById("password_ch");
+       			
+       			if(!idReg.test(user_password.value)) {
+       				alert("비밀번호 형식을 확인하세요");
+       				return false;
+       			}
+       			
+       			if (user_password.value != password_ch.value) {
+       				alert("비밀번호가 일치하는지 확인하세요");
+       				return false;
+       			}
+       			
+       			return true;
+       		}
        			
        	
        

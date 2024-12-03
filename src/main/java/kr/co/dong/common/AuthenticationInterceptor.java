@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.co.dong.project.ScriptUtils;
+
 public class AuthenticationInterceptor implements HandlerInterceptor{
 //  Controller가 요청을 처리하기전에 호출하는 메소드
 	@Override
@@ -17,6 +19,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor{
 		HttpSession session = request.getSession();
 		
 		if(session.getAttribute("user")== null) {//로그인이 아니라면 로그인으로 이동시킴
+			ScriptUtils.alertAndMovePage(response, "로그인이 필요합니다.", "login");
 			response.sendRedirect(request.getContextPath() + "/board/login");
 			return false;
 		}

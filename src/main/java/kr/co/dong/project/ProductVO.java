@@ -9,7 +9,14 @@ public class ProductVO {
 	private int product_remain;
 	private int product_sales;
 	private int del;
+	private String register_date;
 	
+	public String getRegister_date() {
+		return register_date;
+	}
+	public void setRegister_date(String register_date) {
+		this.register_date = register_date;
+	}
 	public int getDel() {
 		return del;
 	}
@@ -62,7 +69,8 @@ public class ProductVO {
 	public String toString() {
 		return "ProductVO [product_id=" + product_id + ", product_price=" + product_price + ", product_name="
 				+ product_name + ", product_content=" + product_content + ", product_category=" + product_category
-				+ ", product_remain=" + product_remain + ", product_sales=" + product_sales + ", del=" + del + "]";
+				+ ", product_remain=" + product_remain + ", product_sales=" + product_sales + ", del=" + del
+				+ ", register_date=" + register_date + "]";
 	}
 	
 	

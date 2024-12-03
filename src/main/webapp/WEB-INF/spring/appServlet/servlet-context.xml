@@ -16,6 +16,7 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/images/**" location="file:///C:/uploads/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -40,10 +41,16 @@
 			<mapping path="/board/detail" />
 			<mapping path="/board/update" />
 			<mapping path="/board/delete" />
+			<mapping path="/project/cart" />
+			<mapping path="/project/cart_register" />
+			<mapping path="/project/mypage" />
 			<beans:ref bean="auth" />
 		</interceptor>
 		<interceptor>
 			<mapping path="/project/inventory" />
+			<mapping path="/project/product_register" />
+			<mapping path="/project/product_update" />
+			<mapping path="/project/product_delete" />
 			<beans:ref bean="admin" />
 		</interceptor>
 	</interceptors>
