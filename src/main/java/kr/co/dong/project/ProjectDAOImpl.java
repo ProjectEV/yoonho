@@ -482,6 +482,15 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(nameSpace + ".productSearch", keyword);
 	}
+	@Override
+	public List<ProductVO> productSearch(String keyword, int start, int plPageSIZE) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("keyword", keyword);
+		map.put("start", start);
+		map.put("plPageSIZE", plPageSIZE);
+		return sqlSession.selectList(nameSpace + ".productSearchKeyword", map);
+	}	
 	
 	@Override
 	public List<ProductVO> categorySearch(Map<String, Object> codeMap) {
@@ -493,8 +502,38 @@ public class ProjectDAOImpl implements ProjectDAO {
 	public List<ProductVO> orderSearch(Map<String, Object> codeMap) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(nameSpace + ".orderSearch", codeMap);
-	}	
+	}
+	@Override
+	public List<ProductVO> orderSearch(Map<String, Object> codeMap, int start, int ocPageSIZE) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("codeMap", codeMap);
+		map.put("start", start);
+		map.put("ocPageSIZE", ocPageSIZE);
+		return sqlSession.selectList(nameSpace + ".orderSearchCode", map);
+	}
+
 	
+	
+	
+	
+	
+	
+	@Override
+	public float findAvgScore(String product_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(nameSpace + ".findAvgScore", product_id);
+	}
+	@Override
+	public int updateAvgScore(String product_id, float productAvgScore) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("product_id", product_id);
+		map.put("productAvgScore", productAvgScore);
+		return sqlSession.update(nameSpace + ".updateAvgScore", map);
+	}
+
+
 	
 	
 

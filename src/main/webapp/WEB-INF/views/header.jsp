@@ -65,7 +65,7 @@
             </a></li>
         </ul>
         <div class="offcanvas__logo">
-            <a href="./index.html"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt=""></a>
+            <a href="/"><img src="${pageContext.request.contextPath}/resources/img/logo.png" alt=""></a>
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__auth">
@@ -174,13 +174,15 @@
 	                   <c:choose>
 		                   <c:when test="${user!=null }">
 		                   	${user.user_name }님 환영합니다. <a style="padding: 0 0 0 10px;" href="/project/logout">Logout</a>
+		                   	<a href="/project/mypage">Mypage</a>
 		                   </c:when>
 		                   <c:otherwise>
 		                   	로그인이 필요합니다. <a style="padding: 0 0 0 10px;" href="/project/login">Login</a>
+		                   	<a href="/project/join">Register</a>
 		                   </c:otherwise>
                        </c:choose>
                            
-                           <a href="/project/join">Register</a>
+                           
                        </div>
                        <ul class="header__right__widget">
                            <li><a href="/project/mypage"><img style="width: 18px; height: 18px; padding: 0 0 2px 0;" src="${pageContext.request.contextPath}/resources/images/mypage.png" alt=""></span>
@@ -212,7 +214,7 @@
            e.preventDefault();
             var keyword = document.getElementById("search-input").value;
            const code = e.code;
-           location.href = "/product/list?keyword="+keyword;
+           location.href = "/product/list/search?keyword="+keyword;
         }
     </script>
     

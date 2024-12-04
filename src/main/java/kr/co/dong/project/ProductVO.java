@@ -10,7 +10,14 @@ public class ProductVO {
 	private int product_sales;
 	private int del;
 	private String register_date;
+	private float avgScore;
 	
+	public float getAvgScore() {
+		return avgScore;
+	}
+	public void setAvgScore(float avgScore) {
+		this.avgScore = avgScore;
+	}
 	public String getRegister_date() {
 		return register_date;
 	}
@@ -70,7 +77,7 @@ public class ProductVO {
 		return "ProductVO [product_id=" + product_id + ", product_price=" + product_price + ", product_name="
 				+ product_name + ", product_content=" + product_content + ", product_category=" + product_category
 				+ ", product_remain=" + product_remain + ", product_sales=" + product_sales + ", del=" + del
-				+ ", register_date=" + register_date + "]";
+				+ ", register_date=" + register_date + ", avgScore=" + avgScore + "]";
 	}
 	
 	

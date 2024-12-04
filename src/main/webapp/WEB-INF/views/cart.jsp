@@ -150,7 +150,7 @@
 							</c:forEach>
                             
                             
-                               
+                            
                             </tbody>
                         </table>
                         </form>
@@ -186,9 +186,6 @@
                 <div class="col-lg-4 offset-lg-2">
                     <div class="cart__total__procced">
                         <h6>Cart total</h6>
-                        
-                       
-                        
                         
                         <ul>
                             <li>Subtotal <span id="cart-total">&#8361; <fmt:formatNumber value="${total}" pattern="#,###" /></span></li>

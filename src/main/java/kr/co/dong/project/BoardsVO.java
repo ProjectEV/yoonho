@@ -10,14 +10,7 @@ public class BoardsVO {
 	private int boards_category;
 	private int del;
 	private String boards_productid;
-	
-	
-	public String getBoards_productid() {
-		return boards_productid;
-	}
-	public void setBoards_productid(String boards_productid) {
-		this.boards_productid = boards_productid;
-	}
+	private float boards_review_score;
 	public int getBoards_no() {
 		return boards_no;
 	}
@@ -66,14 +59,26 @@ public class BoardsVO {
 	public void setDel(int del) {
 		this.del = del;
 	}
+	public String getBoards_productid() {
+		return boards_productid;
+	}
+	public void setBoards_productid(String boards_productid) {
+		this.boards_productid = boards_productid;
+	}
+	public float getBoards_review_score() {
+		return boards_review_score;
+	}
+	public void setBoards_review_score(float boards_review_score) {
+		this.boards_review_score = boards_review_score;
+	}
 	@Override
 	public String toString() {
 		return "BoardsVO [boards_no=" + boards_no + ", boards_title=" + boards_title + ", boards_content="
 				+ boards_content + ", boards_userid=" + boards_userid + ", boards_regdate=" + boards_regdate
 				+ ", boards_readcnt=" + boards_readcnt + ", boards_category=" + boards_category + ", del=" + del
-				+ ", boards_productid=" + boards_productid + "]";
+				+ ", boards_productid=" + boards_productid + ", boards_review_score=" + boards_review_score + "]";
 	}
 	
 	
 	
-}
+	}

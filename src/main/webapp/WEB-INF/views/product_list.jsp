@@ -167,19 +167,93 @@
                                      			    <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/images/${imageList.file_name}">
 			                                    <!--  <div class="label new">New</div> -->
 			                                    <ul class="product__hover">
-			                                        <li><a href="#" class="image-popup"><span class="arrow_expand"></span></a></li>
+			                                        <li><a href="${pageContext.request.contextPath}/images/${imageList.file_name}" class="image-popup"><span class="arrow_expand"></span></a></li>
 			                                        <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-			                                        <li><a href="cart_register?product_id=${product.product_id}&amount=1"><span class="icon_bag_alt"></span></a></li>
+			                                        <li><a href="/project/cart_register?product_id=${product.product_id}&amount=1"><span class="icon_bag_alt"></span></a></li>
 			                                    </ul>
 			                                </div>
 			                                <div class="product__item__text">
-			                                    <h6><a href="product_detail?product_id=${product.product_id}">${product.product_name}</a></h6>
+			                                    <h6><a href="/project/product_detail?product_id=${product.product_id}">${product.product_name}</a></h6>
 			                                    <div class="rating">
-			                                        <i class="fa fa-star"></i>
-			                                        <i class="fa fa-star"></i>
-			                                        <i class="fa fa-star"></i>
-			                                        <i class="fa fa-star"></i>
-			                                        <i class="fa fa-star"></i>
+			                                        <c:choose>
+                                    		<c:when test="${product.avgScore < 0.25}">
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 0.75}">
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 1.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 1.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 2.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 2.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 3.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 3.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 4.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 4.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    		</c:when>
+                                    		<c:otherwise>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    		</c:otherwise>
+                                    	</c:choose>
 			                                    </div>
 			                                    <div class="product__price">${product.product_price} 원</div>
 			                                </div>
@@ -191,46 +265,103 @@
  						
                         <div class="col-lg-12 text-center">
                         
-                        
-                            <div class="pagination__option paging">
-			            		<c:choose>
-			            			<c:when test="${pageListNUM>1}">
-										<a href="product?pageListNUM=${pageListNUM-1}&pageNUM=${pageListNUM*10-10}"> &lt; </a>
-									</c:when>
-									<c:otherwise>
-										<a style="color:lightgray;"> &lt; </a> 
-									</c:otherwise>
-			            		</c:choose>
-				                &nbsp;
-										  	
-								<c:forEach var="i" begin="${startPage }" end="${endPage }">
-								
-									<c:choose>
-										<c:when test="${i == 1 && param.pageNUM == null }">
-											<a href="product?pageListNUM=${pageListNUM }&pageNUM=${i }" style="color: #ca1515;"> ${i } </a>
-										</c:when>
-										<c:when test="${i == param.pageNUM }">
-											<a href="product?pageListNUM=${pageListNUM }&pageNUM=${i }" style="color: #ca1515;"> ${i } </a>
+                        <c:choose>
+                        	
+                        	
+                        	
+                        	
+                        	<c:when test="${method == null}"> 
+                        		<div class="pagination__option paging">
+				            		<c:choose>
+				            			<c:when test="${pageListNUM>1}">
+											<a href="product?pageListNUM=${pageListNUM-1}&pageNUM=${pageListNUM*10-10}"> &lt; </a>
 										</c:when>
 										<c:otherwise>
-											<a href="product?pageListNUM=${pageListNUM }&pageNUM=${i }" > ${i } </a>
+											<a style="color:lightgray;"> &lt; </a> 
 										</c:otherwise>
-									</c:choose>
-									&nbsp;
-								
-								</c:forEach>
-										  
-								<c:choose>
-			            			<c:when test="${pageListNUM<(totalPage/10)}">
-										<a href="product?pageListNUM=${pageListNUM+1}&pageNUM=${pageListNUM*10+1}"> &gt; </a>
-									</c:when>
-									<c:otherwise>
-										<a style="color:lightgray;"> &gt; </a> 
-									</c:otherwise>
-			            		</c:choose>		  
-								
-								
-			                </div>
+				            		</c:choose>
+					                &nbsp;
+											  	
+									<c:forEach var="i" begin="${startPage }" end="${endPage }">
+									
+										<c:choose>
+											<c:when test="${i == 1 && param.pageNUM == null }">
+												<a href="product?pageListNUM=${pageListNUM }&pageNUM=${i }" style="color: #ca1515;"> ${i } </a>
+											</c:when>
+											<c:when test="${i == param.pageNUM }">
+												<a href="product?pageListNUM=${pageListNUM }&pageNUM=${i }" style="color: #ca1515;"> ${i } </a>
+											</c:when>
+											<c:otherwise>
+												<a href="product?pageListNUM=${pageListNUM }&pageNUM=${i }" > ${i } </a>
+											</c:otherwise>
+										</c:choose>
+										&nbsp;
+									
+									</c:forEach>
+											  
+									<c:choose>
+				            			<c:when test="${pageListNUM<(totalPage/10)}">
+											<a href="product?pageListNUM=${pageListNUM+1}&pageNUM=${pageListNUM*10+1}"> &gt; </a>
+										</c:when>
+										<c:otherwise>
+											<a style="color:lightgray;"> &gt; </a> 
+										</c:otherwise>
+				            		</c:choose>		  
+			                	</div>
+                        	</c:when>
+                        	
+                        	
+                        	
+                        	
+                        	
+                        	
+                        	<c:otherwise>
+                        		<div class="pagination__option paging">
+				            		<c:choose>
+				            			<c:when test="${pageListNUM>1}">
+											<a href="${method}&pageListNUM=${pageListNUM-1}&pageNUM=${pageListNUM*10-10}"> &lt; </a>
+										</c:when>
+										<c:otherwise>
+											<a style="color:lightgray;"> &lt; </a> 
+										</c:otherwise>
+				            		</c:choose>
+					                &nbsp;
+											  	
+									<c:forEach var="i" begin="${startPage }" end="${endPage }">
+									
+										<c:choose>
+											<c:when test="${i == 1 && param.pageNUM == null }">
+												<a href="${method}&pageListNUM=${pageListNUM }&pageNUM=${i }" style="color: #ca1515;"> ${i } </a>
+											</c:when>
+											<c:when test="${i == param.pageNUM }">
+												<a href="${method}&pageListNUM=${pageListNUM }&pageNUM=${i }" style="color: #ca1515;"> ${i } </a>
+											</c:when>
+											<c:otherwise>
+												<a href="${method}&pageListNUM=${pageListNUM }&pageNUM=${i }" > ${i } </a>
+											</c:otherwise>
+										</c:choose>
+										&nbsp;
+									
+									</c:forEach>
+											  
+									<c:choose>
+				            			<c:when test="${pageListNUM<(totalPage/10)}">
+											<a href="${method}&pageListNUM=${pageListNUM+1}&pageNUM=${pageListNUM*10+1}"> &gt; </a>
+										</c:when>
+										<c:otherwise>
+											<a style="color:lightgray;"> &gt; </a> 
+										</c:otherwise>
+				            		</c:choose>		  
+			                	</div>
+                        	</c:otherwise>
+                        	
+                        	
+                        	
+                        	
+                        	
+                        </c:choose>
+                        
+                            
                         </div>
                     </div>
                 </div>

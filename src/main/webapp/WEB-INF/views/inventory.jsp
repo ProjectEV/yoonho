@@ -32,6 +32,10 @@
             text-transform: uppercase;
             padding-bottom: 20px;
         }
+        
+        th:not(.product_header) {
+        	text-align: center;
+        }
     }
 
     tbody {
@@ -60,16 +64,20 @@
                 img {
                     float: left;
                     margin-right: 50px;
+                    object-fit: cover;
                 }
 
                 .cart__product__item__title {
                     overflow: hidden;
-                    padding-top: 23px;
+                    padding-top: 16px;
                     
 
                     h6 {
                         color: $heading-color;
                         font-weight: 600;
+                        overflow : hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
                     }
 
                     
@@ -130,6 +138,10 @@
         }
     }
 }
+
+
+
+
 </style>
 
     
@@ -165,11 +177,11 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Product</th>
+                                    <th width="45%" class="product_header">Product</th>
                                     <th>Review</th>
-                                    <th>Price</th>
-                                    <th>&nbsp;&nbsp;Remain</th>
-                                    <th>Sales</th>
+                                    <th width="25%">Price</th>
+                                    <th width="10%">Remain</th>
+                                    <th width="10%">Sales</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -180,29 +192,106 @@
                             
                            
                             <c:forEach var="product" items="${list }" varStatus="status">
+                            <c:forEach var="imageList" items="${imageList}">
+                                     	<c:if test="${imageList.file_connection_id == product.product_id}">
 		 						<tr>
                                     <td class="cart__product__item1">
-                                    	<a href="product_detail?product_id=${product.product_id}"> <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-1.jpg" alt="" > </a>
+                                    
+                                    	<a href="product_detail?product_id=${product.product_id}"> <img src="${pageContext.request.contextPath}/images/${imageList.file_name}" alt="" height="70px" width="70px"> </a>
                                         <div class="cart__product__item__title">
-                                            <h6><a href="inventory_detail?product_id=${product.product_id}">${product.product_name}</a></h6>
+                                            <h6><a href="inventory_detail?product_id=${product.product_id}" class="product_name_ellipsis">${product.product_name}</a></h6>
                                             <div>${product.product_id}</div>
                                             
                                         </div>
                                     </td>
                                     	
                                     <td>
-                                    	<div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
+                                    	<div class="rating" align="center">
+                                    	<c:choose>
+                                    		<c:when test="${product.avgScore < 0.25}">
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 0.75}">
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 1.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 1.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 2.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 2.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 3.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 3.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 4.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 4.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    		</c:when>
+                                    		<c:otherwise>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    		</c:otherwise>
+                                    	</c:choose>
+                                        </div>
                                     </td>
                                     
-                                    <td class="cart__price" style="color: #ca1515;">&#8361; <fmt:formatNumber value="${product.product_price}" pattern="#,###" /></td>
-                                    <td class="cart__quantity" style="text-align: left;">
-                                        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <td class="cart__price" style="color: #ca1515;" align="center">&#8361; <fmt:formatNumber value="${product.product_price}" pattern="#,###" /></td>
+                                    <td class="cart__quantity" align="center">
+                                        <div>
                                         	<c:choose>
 	                                        	<c:when test="${product.product_remain == 0}">
 	                                        	매진
@@ -213,13 +302,14 @@
                                         	</c:choose>
                                         </div>
                                     </td>
-                                    <td class="cart__quantity">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <fmt:formatNumber value="${product.product_sales}" pattern="#,###" /></td>
+                                    <td class="cart__quantity" align="center"> <fmt:formatNumber value="${product.product_sales}" pattern="#,###" /></td>
                                 </tr>
                                 
                                 
                                 <c:set var= "total" value="${total + product.product_price * product.product_remain}"/>
                                 
-                                
+                            </c:if>
+                            </c:forEach>    
 							</c:forEach>
                             
                             

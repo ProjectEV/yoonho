@@ -141,12 +141,19 @@ public interface ProjectService {
 	
 	//검색
 	public List<ProductVO> productSearch(String keyword);
+	public List<ProductVO> productSearch(String keyword, int start, int plPageSIZE);
 	
 	//카테고리 검색 
 	public List<ProductVO> categorySearch(Map<String, Object> codeMap);
 	
 	//정렬 검색 
 	public List<ProductVO> orderSearch(Map<String, Object> codeMap);	
-			
+	public List<ProductVO> orderSearch(Map<String, Object> codeMap, int start, int ocPageSIZE);		
+	
+	
+	
+	
+	public float findAvgScore(String product_id);
+	public int updateAvgScore(String product_id, float productAvgScore);
 	
 }

@@ -37,7 +37,14 @@
             
         });
     </script>
-    
+
+
+<style>
+.review-item {
+	color: #e3c01c;
+	margin-right: -4px;
+}
+</style>    
     
 </head>
 
@@ -98,11 +105,85 @@
                         
                         <!-- 별점, 상품평 갯수 표시 -->
                         <div class="rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
+                            <c:choose>
+                                    		<c:when test="${product.avgScore < 0.25}">
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 0.75}">
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 1.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 1.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 2.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 2.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 3.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 3.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 4.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${product.avgScore < 4.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    		</c:when>
+                                    		<c:otherwise>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    		</c:otherwise>
+                                    	</c:choose>
                             <span>( ${totalReview} reviews )</span>
                         </div>
                         <div class="product__details__price">&#8361; <fmt:formatNumber value="${product.product_price}" pattern="#,###" /></div>
@@ -208,9 +289,26 @@
 
                             </div>
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
-                                <h6>상품평</h6>
                                 <div>
-                                
+	                                <c:forEach var="review_list" items="${review_list}">
+	        							<div class="review-item">
+	        								<c:forEach begin="1" end="${review_list.boards_review_score}">
+	                    						<i class="fa fa-star"></i>
+	                						</c:forEach>
+	                						<c:forEach begin="1" end="${5-review_list.boards_review_score}">
+	                    						<i class="fa fa-star-o"></i>
+	                						</c:forEach>
+	                						
+	                						
+	            							<p><strong>제목:</strong> ${review_list.boards_title}</p>
+	            							<p><strong>내용:</strong> ${review_list.boards_content}</p>
+	            							<p><strong>작성자:</strong> ${review_list.boards_userid}</p>
+	            						<div class="stars">
+	                						
+	            						</div>
+	         				 			 <hr>
+	        							</div>
+	  							  	</c:forEach>
                                 
                                 </div>
                             </div>

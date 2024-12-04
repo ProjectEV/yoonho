@@ -75,9 +75,6 @@ function addressChoose() {
 		  			  <label style="margin: 10px 0 0 0; font-size: 13px">${address.address_content}</label><br>
 			 	</div>
 		</c:forEach>
-		
-			<input type="submit" value="선택완료" class="cancel" onclick="addressChoose()">
-			
 			<button style="margin: 30px 300px;" id="btn1" onclick="addressChoose()">선택완료</button>
 		</form>
 

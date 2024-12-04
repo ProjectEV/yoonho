@@ -517,14 +517,26 @@
 
 
 
-
    <!-- 키워드 검색 -->
    <select id="productSearch" parameterType="java.lang.String" resultType="ProductVO">
 	  select *
 	  from product
 	  where product_name like concat('%',#{keyword},'%') and del = 0
-	  order by product_id desc
+	  order by product_id
    </select>
+
+   <!-- 키워드 검색 -->
+   <select id="productSearchKeyword" parameterType="map" resultType="ProductVO">
+	  select *
+	  from product
+	  where product_name like concat('%',#{keyword},'%') and del = 0
+	  order by product_id
+	  LIMIT #{start}, #{plPageSIZE}
+   </select>
+   
+
+   
+   
    
    <!-- 카테고리 검색 -->
    <select id="categorySearch" parameterType="java.util.Map" resultType="ProductVO">
@@ -559,7 +571,43 @@
 		</choose>
    </select>
 
+   <!-- 정렬 검색 -->
+   <select id="orderSearchCode" parameterType="java.util.Map" resultType="ProductVO">
+	  select *
+	  from product
+	  where del = 0
+	  	<choose>
+			<when test='code==1'>
+				order by product_price asc		
+			</when>
+			<when test='code==2'>
+				order by product_price desc		
+			</when>
+			<otherwise>
+				order by product_sales desc		
+			</otherwise>
+		</choose>
+	LIMIT #{start}, #{ocPageSIZE}
+   </select>
 
+
+
+
+
+
+
+
+  <select id="findAvgScore" parameterType="String" resultType="float">
+		select AVG(boards_review_score) from boards
+		where boards_productid = #{product_id}
+  </select>
+
+  <update id="updateAvgScore" parameterType="map">
+		update product
+		set
+		avgScore = #{productAvgScore}
+		where product_id = #{product_id}
+  </update>
 
 
 

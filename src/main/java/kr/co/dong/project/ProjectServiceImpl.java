@@ -427,6 +427,13 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.productSearch(keyword);
 	}	
+	@Override
+	public List<ProductVO> productSearch(String keyword, int start, int plPageSIZE) {
+		// TODO Auto-generated method stub
+		return projectDAO.productSearch(keyword, start, plPageSIZE);
+	}		
+	
+	
 	
 	@Override
 	public List<ProductVO> categorySearch(Map<String, Object> codeMap) {
@@ -439,5 +446,27 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return projectDAO.orderSearch(codeMap);
 	}
+	@Override
+	public List<ProductVO> orderSearch(Map<String, Object> codeMap, int start, int ocPageSIZE) {
+		// TODO Auto-generated method stub
+		return projectDAO.orderSearch(codeMap, start, ocPageSIZE);
+	}
+	
+
+	
+	
+	@Override
+	public float findAvgScore(String product_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.findAvgScore(product_id);
+	}
+	@Override
+	public int updateAvgScore(String product_id, float productAvgScore) {
+		// TODO Auto-generated method stub
+		return projectDAO.updateAvgScore(product_id, productAvgScore);
+	}
+
+
+	
 
 }
