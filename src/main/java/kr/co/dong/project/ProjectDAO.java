@@ -5,7 +5,12 @@ import java.util.Map;
 
 
 public interface ProjectDAO {
-
+	
+	
+	//홈 제품 목록
+	public List<ProductVO> homeList(Map<String, Object> codeMap);
+	
+	
 	public int product_totalRecord();
 	public int mypage_totalRecord(String user_id);
 	public int address_totalRecord(String user_id);
@@ -144,7 +149,8 @@ public interface ProjectDAO {
 	public List<ProductVO> productSearch(String keyword, int start, int plPageSIZE);
 	
 	//카테고리 검색 
-	public List<ProductVO> categorySearch(Map<String, Object> codeMap);
+	public List<ProductVO> categorySearch(Map<String, Object> categoryMap);
+	public List<ProductVO> categorySearch(Map<String, Object> categoryMap, int start, int lcPageSIZE);
 	
 	//정렬 검색 
 	public List<ProductVO> orderSearch(Map<String, Object> codeMap);
@@ -157,7 +163,7 @@ public interface ProjectDAO {
 	
 	
 	
-	
+	public List<ProductVO> listUserCartProduct(String user_id);
 	
 	
 	

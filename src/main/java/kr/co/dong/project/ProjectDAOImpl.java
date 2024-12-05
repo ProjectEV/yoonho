@@ -18,6 +18,13 @@ public class ProjectDAOImpl implements ProjectDAO {
 	private static final String nameSpace="kr.co.dong.projectMapper";
 	
 	
+
+	@Override
+	public List<ProductVO> homeList(Map<String, Object> codeMap) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".homeList", codeMap);
+	}	
+	
 	
 	
 	
@@ -493,11 +500,20 @@ public class ProjectDAOImpl implements ProjectDAO {
 	}	
 	
 	@Override
-	public List<ProductVO> categorySearch(Map<String, Object> codeMap) {
+	public List<ProductVO> categorySearch(Map<String, Object> categoryMap) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList(nameSpace + ".categorySearch", codeMap);
+		return sqlSession.selectList(nameSpace + ".categorySearch", categoryMap);
 	}
-
+	@Override
+	public List<ProductVO> categorySearch(Map<String, Object> categoryMap, int start, int lcPageSIZE) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int category = Integer.parseInt(String.valueOf(categoryMap.get("category")));
+		map.put("category", category);
+		map.put("start", start);
+		map.put("lcPageSIZE", lcPageSIZE);
+		return sqlSession.selectList(nameSpace + ".categorySearchCategory", map);
+	}
 	@Override
 	public List<ProductVO> orderSearch(Map<String, Object> codeMap) {
 		// TODO Auto-generated method stub
@@ -507,7 +523,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 	public List<ProductVO> orderSearch(Map<String, Object> codeMap, int start, int ocPageSIZE) {
 		// TODO Auto-generated method stub
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("codeMap", codeMap);
+		int code = Integer.parseInt(String.valueOf(codeMap.get("code")));
+		map.put("code", code);
 		map.put("start", start);
 		map.put("ocPageSIZE", ocPageSIZE);
 		return sqlSession.selectList(nameSpace + ".orderSearchCode", map);
@@ -531,6 +548,15 @@ public class ProjectDAOImpl implements ProjectDAO {
 		map.put("product_id", product_id);
 		map.put("productAvgScore", productAvgScore);
 		return sqlSession.update(nameSpace + ".updateAvgScore", map);
+	}
+
+
+
+
+	@Override
+	public List<ProductVO> listUserCartProduct(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".listUserCartProduct", user_id);
 	}
 
 

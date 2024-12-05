@@ -36,6 +36,17 @@
 
             
         });
+        
+        
+        $(function () {
+           
+            setInterval(function () {
+                $(".owl-next").click();
+            }, 5000);
+
+        });
+
+
     </script>
 
 

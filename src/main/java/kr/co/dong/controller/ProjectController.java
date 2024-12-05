@@ -48,8 +48,11 @@ public class ProjectController {
 	@Inject
 	AuthService authService;
 
-	// 기존에 있던 board/list 는 주석처리
-
+	
+	
+	
+	
+	
 	public static int ipageSIZE = 10; // 한 페이지에 담을 게시글의 개수
 	public static int itotalRecord = 0;
 	public static int itotalPage = 1;
@@ -148,27 +151,33 @@ public class ProjectController {
 	}
 
 	public void updateUserGrade(String user_id) {
-
-		int totalPrice = projectService.findGradeTotalPrice(user_id);
-		int grade = 0;
-		String gradename = "Family";
-		int discount = 0;
-		if (totalPrice < 200000) {
-			discount = 1;
-		} else if (totalPrice < 500000) {
-			grade = 1;
-			gradename = "Silver";
-			discount = 2;
-		} else if (totalPrice < 1500000) {
-			grade = 2;
-			gradename = "Gold";
-			discount = 4;
-		} else {
-			grade = 3;
-			gradename = "VIP";
-			discount = 6;
+		
+		int s = projectService.mypage_totalRecord(user_id);
+		
+		if (s != 0) {
+			int totalPrice = projectService.findGradeTotalPrice(user_id);
+			int grade = 0;
+			String gradename = "Family";
+			int discount = 0;
+			if (totalPrice < 200000) {
+				discount = 1;
+			} else if (totalPrice < 500000) {
+				grade = 1;
+				gradename = "Silver";
+				discount = 2;
+			} else if (totalPrice < 1500000) {
+				grade = 2;
+				gradename = "Gold";
+				discount = 4;
+			} else {
+				grade = 3;
+				gradename = "VIP";
+				discount = 6;
+			}
+			int r = projectService.updateGrade(user_id, totalPrice, grade, discount, gradename);
 		}
-		int r = projectService.updateGrade(user_id, totalPrice, grade, discount, gradename);
+		
+		
 
 	}
 
@@ -906,6 +915,7 @@ public class ProjectController {
 
 		mav.addObject("grade", grade);
 		mav.addObject("list", list);
+		mav.addObject("imageList", listSelect(projectService.listUserCartProduct(user_id)));
 		mav.addObject("totalRecord", totalRecord);
 		mav.setViewName("cart");
 
@@ -1029,7 +1039,7 @@ public class ProjectController {
 		return imageList;
 	}
 
-	
+
 	
 	
 	
@@ -1148,26 +1158,84 @@ public class ProjectController {
 	
 	
 	
-	// 카테고리 검색
+//	// 카테고리 검색
+//	@RequestMapping(value = "product/list/category", method = RequestMethod.GET)
+//	public String categorySearch(@RequestParam("category") int category, HttpServletRequest request, Model model,
+//			@RequestParam(value = "pageNUM", defaultValue = "1") int pageNUM,
+//			@RequestParam(value = "pageListNUM", defaultValue = "1") int pageListNUM) throws Exception {
+//		request.setCharacterEncoding("UTF-8");
+//
+//		Map<String, Object> categoryMap = new HashMap<>();
+//		categoryMap.put("category", category);
+//		
+//		
+//
+//		// 카테고리 검색
+//		List<ProductVO> list = projectService.categorySearch(categoryMap);
+//		model.addAttribute("list", list);
+//		model.addAttribute("imageList", listSelect(list));
+//
+//		return "product_list";
+//	}
+
+	
+	
+	public static int lcPageSIZE = 9; // 한 페이지에 담을 게시글의 개수
+	public static int lcTotalRecord = 0;
+	public static int lcTotalPage = 1;
+
+	public static int lcStartPage = 1;
+	public static int lcEndPage = 10;
+	public static int lcPageListSIZE = 10;
+	
+	// 키워드 검색
 	@RequestMapping(value = "product/list/category", method = RequestMethod.GET)
-	public String categorySearch(@RequestParam("category") int category, HttpServletRequest request, Model model,
+	public ModelAndView categorySearch(@RequestParam("category") int category, HttpServletRequest request, Model model,
 			@RequestParam(value = "pageNUM", defaultValue = "1") int pageNUM,
-			@RequestParam(value = "pageListNUM", defaultValue = "1") int pageListNUM) throws Exception {
+			@RequestParam(value = "pageListNUM", defaultValue = "1") int pageListNUM)
+			throws Exception {
 		request.setCharacterEncoding("UTF-8");
-
-		Map<String, Object> codeMap = new HashMap<>();
-		codeMap.put("category", category);
 		
 		
+		Map<String, Object> categoryMap = new HashMap<>();
+		categoryMap.put("category", category);
+		
+		List<ProductVO> templist = projectService.categorySearch(categoryMap);
+		lcTotalRecord = templist.size();
+		
+		lcTotalPage = lcTotalRecord / lcPageSIZE;
+		if (lcTotalRecord % lcPageSIZE != 0) {
+			lcTotalPage++;
+		} // 결국 totalRecord ÷ pageSIZE 를 올림처리한 것과 동일함
 
-		// 카테고리 검색
-		List<ProductVO> list = projectService.categorySearch(codeMap);
-		model.addAttribute("list", list);
-		model.addAttribute("imageList", listSelect(list));
+		int start = (pageNUM - 1) * lcPageSIZE;
 
-		return "product_list";
-	}
+		lcStartPage = (pageListNUM - 1) * lcPageListSIZE + 1;
+		lcEndPage = lcStartPage + lcPageListSIZE - 1;
+		if (lcEndPage > lcTotalPage) {
+			lcEndPage = lcTotalPage;
+		}
+		
+		String method = "category?category=" + category;
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", projectService.categorySearch(categoryMap, start, lcPageSIZE));
+		mav.addObject("imageList", listSelect(projectService.categorySearch(categoryMap, start, lcPageSIZE)));
+		
+		mav.addObject("method", method);
+		mav.addObject("totalPage", lcTotalPage);
+		mav.addObject("startPage", lcStartPage);
+		mav.addObject("pageListNUM", pageListNUM);
+		mav.addObject("endPage", lcEndPage);
+		mav.setViewName("product_list");
+		return mav;
+		// 검색어 가지고 리스트 검색
 
+	}		
+	
+	
+	
+	
 	
 	
 	

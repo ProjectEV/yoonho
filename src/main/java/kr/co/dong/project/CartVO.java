@@ -8,10 +8,17 @@ public class CartVO {
 	private int cart_amount;
 	private int product_price;
 	private int product_remain;
+	private float avgScore;
 	
 	
 	
 	
+	public float getAvgScore() {
+		return avgScore;
+	}
+	public void setAvgScore(float avgScore) {
+		this.avgScore = avgScore;
+	}
 	public int getProduct_remain() {
 		return product_remain;
 	}
@@ -58,7 +65,7 @@ public class CartVO {
 	public String toString() {
 		return "CartVO [cart_no=" + cart_no + ", cart_userid=" + cart_userid + ", cart_productid=" + cart_productid
 				+ ", cart_productname=" + cart_productname + ", cart_amount=" + cart_amount + ", product_price="
-				+ product_price + ", product_remain=" + product_remain + "]";
+				+ product_price + ", product_remain=" + product_remain + ", avgScore=" + avgScore + "]";
 	}
 	
 	

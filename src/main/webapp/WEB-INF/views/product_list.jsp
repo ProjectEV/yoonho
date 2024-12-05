@@ -154,6 +154,11 @@
                               	<div style="margin: 7px 0;"><a class="order" href="/product/list/order?code=3" style="font-size: 14px;">판매량순</a></div>
                             </div>
                         </div>
+                        
+                        <div class="cart__btn">
+                        	<a href="/project/inventory"> 재고 관리 </a>
+                    	</div>
+                        
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9">

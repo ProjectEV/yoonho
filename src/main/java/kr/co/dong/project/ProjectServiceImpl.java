@@ -14,6 +14,14 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProjectDAO projectDAO;
 	
 	
+	@Override
+	public List<ProductVO> homeList(Map<String, Object> codeMap) {
+		// TODO Auto-generated method stub
+		return projectDAO.homeList(codeMap);
+	}	
+	
+	
+	
 	
 	@Override
 	public int product_totalRecord() {
@@ -436,9 +444,14 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	
 	@Override
-	public List<ProductVO> categorySearch(Map<String, Object> codeMap) {
+	public List<ProductVO> categorySearch(Map<String, Object> categoryMap) {
 		// TODO Auto-generated method stub
-		return projectDAO.categorySearch(codeMap);
+		return projectDAO.categorySearch(categoryMap);
+	}
+	@Override
+	public List<ProductVO> categorySearch(Map<String, Object> categoryMap, int start, int lcPageSIZE) {
+		// TODO Auto-generated method stub
+		return projectDAO.categorySearch(categoryMap, start, lcPageSIZE);
 	}
 
 	@Override
@@ -464,6 +477,15 @@ public class ProjectServiceImpl implements ProjectService {
 	public int updateAvgScore(String product_id, float productAvgScore) {
 		// TODO Auto-generated method stub
 		return projectDAO.updateAvgScore(product_id, productAvgScore);
+	}
+
+
+
+
+	@Override
+	public List<ProductVO> listUserCartProduct(String user_id) {
+		// TODO Auto-generated method stub
+		return projectDAO.listUserCartProduct(user_id);
 	}
 
 

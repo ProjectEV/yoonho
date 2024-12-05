@@ -62,7 +62,13 @@
         });
     </script>
     
-              
+<style>
+.product_name_ellipsis {
+                        overflow : hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+}
+</style>              
     
 </head>
 
@@ -112,19 +118,95 @@
                             
                             
                             <c:forEach var="cart" items="${list }" varStatus="status">
+                            <c:forEach var="imageList" items="${imageList}">
+                                     	<c:if test="${imageList.file_connection_id == cart.cart_productid}">
 		 						<tr class="cart-row" data-product-id="${cart.cart_productid}" data-product-price="${cart.product_price}" 
 		 						data-product-remain="${cart.product_remain }" data-grade-discount="${grade.grade_discount }">
                                     <td class="cart__product__item">
-                                        <img src="${pageContext.request.contextPath}/resources/img/shop-cart/cp-1.jpg" alt="">
+                                        <img src="${pageContext.request.contextPath}/images/${imageList.file_name}" alt="" height="70px" width="70px">
                                         <div class="cart__product__item__title">
-                                            <h6><a href="product_detail?product_id=${cart.cart_productid}">${cart.cart_productname}</a></h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
+                                            <h6><a href="product_detail?product_id=${cart.cart_productid}" class="product_name_ellipsis">${cart.cart_productname}</a></h6>
+                                    	<div class="rating">
+                                    	<c:choose>
+                                    		<c:when test="${cart.avgScore < 0.25}">
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${cart.avgScore < 0.75}">
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${cart.avgScore < 1.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${cart.avgScore < 1.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${cart.avgScore < 2.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${cart.avgScore < 2.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${cart.avgScore < 3.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${cart.avgScore < 3.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${cart.avgScore < 4.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${cart.avgScore < 4.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    		</c:when>
+                                    		<c:otherwise>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    		</c:otherwise>
+                                    	</c:choose>
+                                        </div>
                                         </div>
                                     </td>
                                     <td class="cart__price">&#8361; <fmt:formatNumber value="${cart.product_price}" pattern="#,###" /></td>
@@ -146,7 +228,8 @@
                                 
                                 <c:set var= "total" value="${total + cart.product_price * cart.cart_amount}"/>
                                 
-                                
+                                </c:if>
+                            </c:forEach> 
 							</c:forEach>
                             
                             
