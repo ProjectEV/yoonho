@@ -31,6 +31,9 @@ public interface ProjectService {
 	public List<ProductVO> listProduct();
 	public List<AddressVO> listAddress(String user_id);
 	public List<CartVO> listCart(String user_id);
+	public List<BuydetailVO> listSales();
+	
+	
 	public List<BuyVO> listBuy(String userid);
 	public List<BuydetailVO> listBuydetail(int[] buyno);
 	
@@ -74,7 +77,7 @@ public interface ProjectService {
 	
 	public int remainCheck(List<CartVO> list);
 	public int buyRegister(String buy_address, String buy_receive, int totalRecord, String user_id, int totalPrice);
-	public int buyDetailRegister(List<CartVO> list, int u);
+	public int buyDetailRegister(List<CartVO> list, int u, int discount);
 	public int cartDelete(String user_id);
 	public int cartDelete(String user_id, String product_id);
 	public int findBuyno();
@@ -167,5 +170,5 @@ public interface ProjectService {
 	
 	public List<ProductVO> listUserCartProduct(String user_id);
 	
-	
+	public int updateBuydetailCode(int buydetail_no, String code);
 }

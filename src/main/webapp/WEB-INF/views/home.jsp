@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="zxx">
 <meta charset="UTF-8">
@@ -72,26 +73,110 @@
 		                	<c:forEach var="newList_image" items="${newList_image}">
 		                        <c:if test="${newList_image.file_connection_id == newList.product_id}">
 				                    <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/images/${newList_image.file_name}">
-				                        <div class="label new">New</div>
+				                    
+				                    	<c:choose>
+				                    		<c:when test="${newList.product_remain < 1}">
+				                    			<div class="label stockout">out of stock</div>
+				                    		</c:when>
+				                    		<c:otherwise>
+				                    			<div class="label new">New</div>
+				                    		</c:otherwise>
+				                    	</c:choose>
+				                    
+				                        
 				                        <ul class="product__hover">
 				                            <li><a href="${pageContext.request.contextPath}/images/${newList_image.file_name}" class="image-popup"><span class="arrow_expand"></span></a></li>
 				                            <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-				                            <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+				                            <li><a href="/project/cart_register?product_id=${newList.product_id}&amount=1"><span class="icon_bag_alt"></span></a></li>
 				                        </ul>
 				                    </div>
 		                    	</c:if>
 	                    	</c:forEach>
 	                    	
 		                    <div class="product__item__text">
-		                        <h6><a href="/product/detail?product_id=${newList.product_id}">${newList.product_name}</a></h6>
+		                        <h6><a href="/project/product_detail?product_id=${newList.product_id}">${newList.product_name}</a></h6>
 		                        <div class="rating">
-		                            <i class="fa fa-star"></i>
-		                            <i class="fa fa-star"></i>
-		                            <i class="fa fa-star"></i>
-		                            <i class="fa fa-star"></i>
-		                            <i class="fa fa-star"></i>
-		                        </div>
-		                        <div class="product__price">${newList.product_price}</div>
+                                    	<c:choose>
+                                    		<c:when test="${newList.avgScore < 0.25}">
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${newList.avgScore < 0.75}">
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${newList.avgScore < 1.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${newList.avgScore < 1.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${newList.avgScore < 2.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${newList.avgScore < 2.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${newList.avgScore < 3.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${newList.avgScore < 3.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${newList.avgScore < 4.25}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-o"></i>
+                                    		</c:when>
+                                    		<c:when test="${newList.avgScore < 4.75}">
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star-half-o"></i>
+                                    		</c:when>
+                                    		<c:otherwise>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    			<i class="fa fa-star"></i>
+                                    		</c:otherwise>
+                                    	</c:choose>
+                                        </div>
+		                        <div class="product__price">&#8361; <fmt:formatNumber value="${newList.product_price}" pattern="#,###" /></div>
 		                    </div>
 		                </div>
 		            </div>
@@ -139,14 +224,88 @@
 		                        </div>
 		                        <div class="trend__item__text">
 		                            <a href="/product/detail?product_id=${bestList.product_id}" style="text-decoration: none;"><h6>${bestList.product_name}</h6></a>
-		                            <div class="rating">
-		                                <i class="fa fa-star"></i>
-		                                <i class="fa fa-star"></i>
-		                                <i class="fa fa-star"></i>
-		                                <i class="fa fa-star"></i>
-		                                <i class="fa fa-star"></i>
-		                            </div>
-		                            <div class="product__price">${bestList.product_price}</div>
+										<div class="rating">
+	                                    	<c:choose>
+	                                    		<c:when test="${bestList.avgScore < 0.25}">
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    		</c:when>
+	                                    		<c:when test="${bestList.avgScore < 0.75}">
+	                                    			<i class="fa fa-star-half-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    		</c:when>
+	                                    		<c:when test="${bestList.avgScore < 1.25}">
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    		</c:when>
+	                                    		<c:when test="${bestList.avgScore < 1.75}">
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star-half-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    		</c:when>
+	                                    		<c:when test="${bestList.avgScore < 2.25}">
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    		</c:when>
+	                                    		<c:when test="${bestList.avgScore < 2.75}">
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star-half-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    		</c:when>
+	                                    		<c:when test="${bestList.avgScore < 3.25}">
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    		</c:when>
+	                                    		<c:when test="${bestList.avgScore < 3.75}">
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star-half-o"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    		</c:when>
+	                                    		<c:when test="${bestList.avgScore < 4.25}">
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star-o"></i>
+	                                    		</c:when>
+	                                    		<c:when test="${bestList.avgScore < 4.75}">
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star-half-o"></i>
+	                                    		</c:when>
+	                                    		<c:otherwise>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    			<i class="fa fa-star"></i>
+	                                    		</c:otherwise>
+	                                    	</c:choose>
+                                        </div>
+		                            <div class="product__price">&#8361; <fmt:formatNumber value="${bestList.product_price}" pattern="#,###" /></div>
 		                        </div>
 		                    </div>
 		        		</c:forEach>

@@ -120,6 +120,15 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return sqlSession.selectList(nameSpace+".listCart", user_id);
 	}
 	@Override
+	public List<BuydetailVO> listSales() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace+".listSales");
+	}	
+	
+	
+	
+	
+	@Override
 	public List<BuyVO> listBuy(String userid) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(nameSpace + ".listBuy", userid);
@@ -290,9 +299,10 @@ public class ProjectDAOImpl implements ProjectDAO {
 			return sqlSession.insert(nameSpace + ".buyRegister", map);
 		}
 	@Override
-	public int buyDetailRegister(List<CartVO> list, int u) {
+	public int buyDetailRegister(List<CartVO> list, int u, int discount) {
 			// TODO Auto-generated method stub
 			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("discount", discount);
 			map.put("list", list);
 			map.put("u", u);
 			return sqlSession.insert(nameSpace + ".buyDetailRegister", map);
@@ -558,6 +568,23 @@ public class ProjectDAOImpl implements ProjectDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(nameSpace + ".listUserCartProduct", user_id);
 	}
+
+
+
+
+	@Override
+	public int updateBuydetailCode(int buydetail_no, String code) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("buydetail_no", buydetail_no);
+		map.put("code", code);
+		return sqlSession.update(nameSpace + ".updateBuydetailCode", map);
+	}
+
+
+
+
+
 
 
 	

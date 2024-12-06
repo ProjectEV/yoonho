@@ -216,17 +216,39 @@
                                             <input type="number" class="quantity-input" value="${cart.cart_amount}" min="0">
                                         </div> -->
                                         <input type="hidden" name="update[${status.index}].cart_productid" value="${cart.cart_productid}" />
-                                        <input type="number" class="quantity-input pro-qty" name="update[${status.index}].cart_amount"  value="${cart.cart_amount}" min="1">
+                                        
+                                        <c:choose>
+                                        	<c:when test="${cart.product_remain < 1}">
+                                        		<h6> 매진 </h6>
+                                        		<input type="hidden" class="quantity-input pro-qty" name="update[${status.index}].cart_amount"  value="0">
+                                        	</c:when>
+                                        	<c:otherwise>
+                                        		<input type="number" class="quantity-input pro-qty" name="update[${status.index}].cart_amount"  value="${cart.cart_amount}" min="1">
+                                        	</c:otherwise>
+                                        </c:choose>
+                                        
                                         
                                         
                                         
                                     </td>
-                                    <td class="product-total">&#8361; <fmt:formatNumber value="${cart.product_price * cart.cart_amount}" pattern="#,###" /></td>
+                                    <td class="product-total">&#8361; 
+                                    	<c:choose>
+                                        	<c:when test="${cart.product_remain < 1}">
+                                        		<fmt:formatNumber value="0" pattern="#,###" />
+                                        	</c:when>
+                                        	<c:otherwise>
+                                        		<fmt:formatNumber value="${cart.product_price * cart.cart_amount}" pattern="#,###" />
+                                        	</c:otherwise>
+                                        </c:choose>
+                                    
+                                    </td>
                                     <td class="cart__close"><a href="cart_delete?product_id=${cart.cart_productid}&user_id=${user.user_id}"><span class="icon_close"></span></a></td>
                                 </tr>
                                 
+                                	<c:if test="${cart.product_remain > 0}">
+                                		<c:set var= "total" value="${total + cart.product_price * cart.cart_amount}"/>
+                                	</c:if>
                                 
-                                <c:set var= "total" value="${total + cart.product_price * cart.cart_amount}"/>
                                 
                                 </c:if>
                             </c:forEach> 

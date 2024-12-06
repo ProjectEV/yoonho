@@ -202,6 +202,8 @@
                                     </label>
                                 </div>
                                 <button type="submit" class="site-btn">구매</button>
+                                <br><br>
+                                <button type="button" onclick="location.href='/project/cart'" class="site-btn"> 돌아가기 </button>
                             </div>
                         </div>
                     </div>

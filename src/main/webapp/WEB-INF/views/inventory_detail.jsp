@@ -33,7 +33,7 @@
 
     input {
       height: 52px;
-      width: 250px;
+      width: 115px;
       border: 1px solid #e1e1e1;
       border-radius: 50px;
       padding-left: 30px;
@@ -48,8 +48,8 @@
 
     button {
       position: absolute;
-      right: 60px;
-      top: 4px;
+      height: 52px;
+      right: 30px;
       background-color: #49516b;
     }
   }
@@ -85,25 +85,19 @@
                 <div class="col-lg-6">
                     <div class="product__details__pic">
                         <div class="product__details__pic__left product__thumb nice-scroll">
-                            <a class="pt active" href="#product-1">
-                                <img src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
-                            </a>
-                            <a class="pt" href="#product-2">
-                                <img src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
-                            </a>
-                            <a class="pt" href="#product-3">
-                                <img src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
-                            </a>
-                            <a class="pt" href="#product-4">
-                                <img src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
-                            </a>
+                        	<c:forEach var="file_name" items="${file_name}" varStatus="status">
+                        		<a class="pt active" href="#product-${status.index + 1}">
+	                                <img src="${pageContext.request.contextPath}/images/${file_name}" alt="">
+	                            </a>
+                        	</c:forEach>
                         </div>
+                        
+                        
                         <div class="product__details__slider__content">
                             <div class="product__details__pic__slider owl-carousel">
-                                <img data-hash="product-1" class="product__big__img" src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
-                                <img data-hash="product-2" class="product__big__img" src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
-                                <img data-hash="product-3" class="product__big__img" src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
-                                <img data-hash="product-4" class="product__big__img" src="${pageContext.request.contextPath}/resources/images/notebook2.jpg" alt="">
+	                            <c:forEach var="file_name" items="${file_name}" varStatus="status">
+                                	<img data-hash="product-${status.index + 1}" class="product__big__img" src="${pageContext.request.contextPath}/images/${file_name}" alt="">
+	                        	</c:forEach>
                             </div>
                         </div>
                     </div>
@@ -128,13 +122,13 @@
                         
                         
                         
-                            <a href="product_delete?product_id=${product.product_id}" class="cart-btn" ><span class="icon_bag_alt"></span> 제품 삭제 </a>
-                            <a href="product_update?product_id=${product.product_id}" class="cart-btn" ><span class="icon_bag_alt"></span> 제품 수정 </a>
+                            <a href="product_delete?product_id=${product.product_id}" class="cart-btn" > 제품 삭제 </a>
+                            <a href="product_update?product_id=${product.product_id}" class="cart-btn" > 제품 수정 </a>
                             
                             
 			                    <div class="product_add_input">
 			                        <form action="/project/product_add" method="post">
-			                            <input type="number" class="quantity-input pro-qty" name="product_add"  value="1" min="1" size="30">
+			                            <input type="number" class="quantity-input pro-qty" name="product_add"  value="1" min="1" size="15">
 			                            <input type="hidden" name="product_id" value="${product.product_id}" />
 			                            <button type="submit" class="site-btn">수량 추가</button>
 			                        </form>

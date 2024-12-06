@@ -263,6 +263,7 @@ public class ProjectController {
 			}
 			List<ProductVO> list = projectService.mypageDetailProduct(productno);
 			model.addAttribute("randomProductList", list);
+			model.addAttribute("imageList", listSelect(list));
 		}
 
 		// 해당 제품에 대한 리뷰 조회
@@ -282,7 +283,8 @@ public class ProjectController {
 		
 		ProductVO productVO = projectService.productDetail(product_id);
 		int totalReview = projectService.totalReview(product_id);
-
+		List<String> file_name = projectService.fileSelect(product_id);
+		model.addAttribute("file_name", file_name);
 		model.addAttribute("totalReview", totalReview);
 		model.addAttribute("product", productVO);
 
@@ -405,10 +407,20 @@ public class ProjectController {
 
 		Map<String, Object> user = (Map) session.getAttribute("user");
 		String user_id = (String) user.get("user_id");
-
-		int totalRecord = projectService.cart_totalRecord(user_id);
-
+		
 		ModelAndView mav = new ModelAndView();
+		
+		
+		List<CartVO> firstList = projectService.listCart(user_id);
+		for (CartVO cart : firstList) {
+			if (cart.getProduct_remain() == 0) {
+				ScriptUtils.alertAndMovePage(response, "매진된 상품은 구매할 수 없습니다.", "cart");
+				mav.setViewName("cart");
+				return mav;
+			}
+		}		
+		
+		int totalRecord = projectService.cart_totalRecord(user_id);
 
 		if (totalRecord == 0) {
 			ScriptUtils.alertAndMovePage(response, "장바구니에 상품이 없습니다.", "cart");
@@ -466,7 +478,12 @@ public class ProjectController {
 		int r = projectService.buyRegister(buy_address, buy_receive, totalRecord, user_id, totalPrice);
 		int v = projectService.salesUpdate(list);
 		int u = projectService.findBuyno();
-		int s = projectService.buyDetailRegister(list, u);
+		
+		int discount = projectService.gradeDetail(user_id).getGrade_discount();
+		int s = projectService.buyDetailRegister(list, u, discount);
+		
+		updateBuydetailCode();
+		
 		int t = projectService.cartDelete(user_id);
 
 		if (r > 0) {
@@ -816,7 +833,24 @@ public class ProjectController {
 
 	}
 	
-	
+	public void updateBuydetailCode() {
+		
+		List<BuydetailVO> salesList = projectService.listSales();
+		
+		for (BuydetailVO buydetail : salesList) {
+				
+				int buydetail_no = buydetail.getBuydetail_no();
+				int buydetail_buyno = buydetail.getBuydetail_buyno();
+				
+				String code1 = buydetail.getBuy_regdate().substring(0,10).replaceAll("-", "");
+				String code2 = String.format("%04d", buydetail_no % 10000);
+				String code3 = String.format("%04d", buydetail_buyno % 10000);
+				String code = code1 + code2 + code3;
+				
+				int r = projectService.updateBuydetailCode(buydetail_no, code);
+
+		}
+	}
 	
 			
 	// 리뷰 구분선
@@ -1316,7 +1350,16 @@ public class ProjectController {
 	}		
 	
 	
-	
+	@RequestMapping(value = "project/sales", method = RequestMethod.GET)
+	public String sales(Model model) {
+		
+		updateBuydetailCode();
+		
+		List<BuydetailVO> listSales = projectService.listSales();
+		model.addAttribute("salesList", listSales);
+		
+		return "sales";
+	}
 	
 	
 }

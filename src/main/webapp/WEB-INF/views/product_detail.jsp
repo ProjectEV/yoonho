@@ -37,13 +37,15 @@
             
         });
         
+      
+        
+	
         
         $(function () {
            
             setInterval(function () {
                 $(".owl-next").click();
             }, 5000);
-
         });
 
 
@@ -301,8 +303,11 @@
                             </div>
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
                                 <div>
+                                	<c:if test="${totalReview == 0}">
+                                		<p>아직 등록된 리뷰가 없습니다. 첫 번째 리뷰를 등록해주세요!</p>
+                                	</c:if>
 	                                <c:forEach var="review_list" items="${review_list}">
-	        							<div class="review-item">
+	        							<div class="review-item">${review_list.boards_review_score} &nbsp;&nbsp;
 	        								<c:forEach begin="1" end="${review_list.boards_review_score}">
 	                    						<i class="fa fa-star"></i>
 	                						</c:forEach>
@@ -334,18 +339,24 @@
                     </div>
                 </div>
                 
+                <c:if test="${size == 0 }">
+                	<p> 해당 카테고리 내에 다른 상품이 존재하지 않습니다. </p>
+                </c:if>
+                
                 <c:forEach var="product" items="${randomProductList }" varStatus="status">
+                <c:forEach var="imageList" items="${imageList}">
+                                     	<c:if test="${imageList.file_connection_id == product.product_id}">
                 
                 	<div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/resources/img/product/related/rp-2.jpg">
+                        <div class="product__item__pic set-bg" data-setbg="${pageContext.request.contextPath}/images/${imageList.file_name}">
                             <c:if test="${product.product_remain < 1}">
                             	<div class="label stockout">out of stock</div>
                             </c:if>
                             <ul class="product__hover">
-                                <li><a href="${pageContext.request.contextPath}/resources/img/product/related/rp-2.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                <li><a href="${pageContext.request.contextPath}/images/${imageList.file_name}" class="image-popup"><span class="arrow_expand"></span></a></li>
                                 <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                <li><a href="/project/cart_register?product_id=${product.product_id}&amount=1"><span class="icon_bag_alt"></span></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
@@ -362,7 +373,8 @@
                         </div>
                     </div>
                 </div>
-                
+                </c:if>
+                </c:forEach>
                 </c:forEach>
                 
                 
